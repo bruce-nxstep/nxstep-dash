@@ -80,6 +80,7 @@ class DatabaseManager:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS content_plan (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                linkedin_account_id INTEGER,
                 title TEXT NOT NULL,
                 post_idea TEXT,
                 post_type TEXT DEFAULT 'Post',
@@ -93,9 +94,33 @@ class DatabaseManager:
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+
+        # Table des logs de publication
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS publication_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                post_id INTEGER,
+                title TEXT,
+                status TEXT,
+                message TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
         
-        # Migration: Ajouter post_idea et les 10 colonnes images si elles n'existent pas
-        columns_to_add = ["post_idea", "img1", "img2", "img3", "img4", "img5", "img6", "img7", "img8", "img9", "img10"]
+        # Table des comptes LinkedIn
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS linkedin_accounts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                person_urn TEXT UNIQUE NOT NULL,
+                access_token TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        # Migration
+        columns_to_add = ["post_idea", "img1", "img2", "img3", "img4", "img5", "img6", "img7", "img8", "img9", "img10", "linkedin_account_id"]
         for col in columns_to_add:
             try:
                 cursor.execute(f"ALTER TABLE content_plan ADD COLUMN {col} TEXT")
@@ -110,19 +135,19 @@ class DatabaseManager:
     def add_content_item(self, title, post_idea="", post_type="Post", content="", media_files="[]", 
                          img1="", img2="", img3="", img4="", img5="", 
                          img6="", img7="", img8="", img9="", img10="",
-                         scheduled_at=None, status="Brouillon"):
+                         scheduled_at=None, status="Brouillon", linkedin_account_id=None):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO content_plan (
                 title, post_idea, post_type, content, media_files, 
                 img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,
-                scheduled_at, status
+                scheduled_at, status, linkedin_account_id
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (title, post_idea, post_type, content, media_files, 
               img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,
-              scheduled_at, status))
+              scheduled_at, status, linkedin_account_id))
         conn.commit()
         item_id = cursor.lastrowid
         conn.close()
@@ -147,6 +172,112 @@ class DatabaseManager:
         cursor.execute("DELETE FROM content_plan WHERE id = ?", (item_id,))
         conn.commit()
         conn.close()
+
+    # --- LINKEDIN ACCOUNTS METHODS ---
+
+    def add_or_update_linkedin_account(self, name, person_urn, access_token):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        now = datetime.now().isoformat()
+        
+        # On essaie de mettre à jour si le URN existe déjà, sinon on insère
+        cursor.execute("SELECT id FROM linkedin_accounts WHERE person_urn = ?", (person_urn,))
+        row = cursor.fetchone()
+        
+        if row:
+            cursor.execute('''
+                UPDATE linkedin_accounts 
+                SET name = ?, access_token = ?, updated_at = ? 
+                WHERE person_urn = ?
+            ''', (name, access_token, now, person_urn))
+        else:
+            cursor.execute('''
+                INSERT INTO linkedin_accounts (name, person_urn, access_token, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (name, person_urn, access_token, now, now))
+        
+        conn.commit()
+        conn.close()
+
+    def get_linkedin_accounts(self):
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM linkedin_accounts ORDER BY name ASC")
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(row) for row in rows]
+
+    def get_linkedin_account(self, account_id):
+        if not account_id or account_id == 'None': return None
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM linkedin_accounts WHERE id = ?", (account_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return dict(row) if row else None
+
+    def delete_linkedin_account(self, account_id):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM linkedin_accounts WHERE id = ?", (account_id,))
+        conn.commit()
+        conn.close()
+
+    def get_pending_content(self):
+        """Récupère les posts dont le statut est 'Prêt' et dont la date est passée ou actuelle."""
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        # On récupère tous les 'Prêt' et on filtre en Python pour la robustesse des formats de date
+        cursor.execute("SELECT * FROM content_plan WHERE status = 'Prêt' AND scheduled_at IS NOT NULL AND scheduled_at != ''")
+        rows = cursor.fetchall()
+        conn.close()
+        
+        pending = []
+        now = datetime.now()
+        
+        for row in rows:
+            try:
+                # Nettoyage de la date (gestion du 'Z' et des millisecondes)
+                date_str = row['scheduled_at'].replace('Z', '')
+                if '.' in date_str:
+                    date_str = date_str.split('.')[0] # On ignore les microsecondes pour simplifier
+                
+                # Essai de plusieurs formats courants
+                formats = ['%Y-%m-%dT%H:%M:%S', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M']
+                dt = None
+                for fmt in formats:
+                    try:
+                        dt = datetime.strptime(date_str, fmt)
+                        break
+                    except:
+                        continue
+                
+                if dt and dt <= now:
+                    pending.append(dict(row))
+            except Exception as e:
+                print(f"Erreur de parsing date pour post {row['id']}: {e}")
+                
+        return pending
+
+    def add_publication_log(self, post_id, title, status, message):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO publication_logs (post_id, title, status, message)
+            VALUES (?, ?, ?, ?)
+        ''', (post_id, title, status, message))
+        conn.commit()
+        conn.close()
+
+    def get_publication_logs(self, limit=10):
+        conn = sqlite3.connect(self.db_path)
+        df = pd.read_sql_query(f'SELECT * FROM publication_logs ORDER BY timestamp DESC LIMIT {limit}', conn)
+        conn.close()
+        return df
 
     def get_all_content_df(self):
         conn = sqlite3.connect(self.db_path)

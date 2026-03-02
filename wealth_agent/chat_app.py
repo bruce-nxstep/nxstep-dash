@@ -791,9 +791,98 @@ elif current_page == "▦ Kanban & Organisation":
 
 elif current_page == "📱 Community Manager":
     st.title("📱 Community Manager & Planning")
-    st.markdown("Organisez vos publications LinkedIn et vos carrousels haute-visibilité.")
+    # --- LINKEDIN AUTH FLOW ---
+    from linkedin_automator import LinkedInAutomator
+    linkedin_auth = LinkedInAutomator(db=db)
+    
+    # Vérification du code de retour OAuth
+    if "code" in st.query_params:
+        auth_code = st.query_params["code"]
+        st.info("🔄 Finalisation de la connexion LinkedIn...")
+        success, msg = linkedin_auth.exchange_code_for_token(auth_code)
+        if success:
+            st.success(msg)
+            # Nettoyer l'URL
+            st.query_params.clear()
+            time.sleep(1)
+            st.rerun()
+        else:
+            st.error(msg)
 
-    tab_chat, tab_plan, tab_calendar = st.tabs(["💬 Conversation", "📅 Planning Table", "🗓️ Calendrier Visuel"])
+    # Affichage du statut de connexion
+    accounts = db.get_linkedin_accounts()
+    has_creds = bool(linkedin_auth.client_id and linkedin_auth.client_secret)
+    
+    with st.expander("🔐 Gestion des Comptes LinkedIn API", expanded=not accounts):
+        # 1. Configuration des identifiants API
+        if not has_creds or st.checkbox("Modifier les identifiants API (Client ID/Secret)", key="check_mod_creds"):
+            with st.form("linkedin_creds_form"):
+                st.subheader("⚙️ Identifiants de l'application LinkedIn")
+                new_client_id = st.text_input("Client ID", value=linkedin_auth.client_id or "", type="password")
+                new_client_secret = st.text_input("Client Secret", value=linkedin_auth.client_secret or "", type="password")
+                st.info("💡 Ces identifiants sont globaux pour votre application LinkedIn.")
+                
+                if st.form_submit_button("💾 Enregistrer la configuration"):
+                    from dotenv import set_key, load_dotenv
+                    env_path = os.path.join(os.path.dirname(__file__), ".env")
+                    set_key(env_path, "LINKEDIN_CLIENT_ID", new_client_id)
+                    set_key(env_path, "LINKEDIN_CLIENT_SECRET", new_client_secret)
+                    os.environ["LINKEDIN_CLIENT_ID"] = new_client_id
+                    os.environ["LINKEDIN_CLIENT_SECRET"] = new_client_secret
+                    load_dotenv(env_path, override=True)
+                    st.success("Configuration enregistrée !")
+                    time.sleep(0.5)
+                    st.rerun()
+        
+        # 2. Liste des comptes connectés
+        st.markdown("---")
+        if accounts:
+            st.subheader("👥 Comptes connectés")
+            for acc in accounts:
+                col1, col2 = st.columns([0.8, 0.2])
+                col1.write(f"✅ **{acc['name']}** (`{acc['person_urn']}`)")
+                if col2.button("🗑️", key=f"del_acc_{acc['id']}"):
+                    db.delete_linkedin_account(acc['id'])
+                    st.rerun()
+            st.markdown("---")
+
+        # 3. Bouton d'ajout de compte
+        if has_creds:
+            auth_url = linkedin_auth.get_authorization_url()
+            st.markdown(f'<a href="{auth_url}" target="_self" style="background-color: #0077b5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">+ Ajouter un compte LinkedIn</a>', unsafe_allow_html=True)
+            st.caption("Vous pouvez connecter plusieurs comptes en utilisant le même bouton.")
+        else:
+            st.info("Veuillez d'abord configurer vos identifiants Client ID et Client Secret.")
+
+    tab_chat, tab_plan, tab_calendar, tab_logs = st.tabs(["💬 Conversation", "📅 Planning Table", "🗓️ Calendrier Visuel", "📊 Activité & Logs"])
+
+    with tab_logs:
+        st.markdown("### 📊 Historique d'Activité du Worker")
+        
+        # Affichage des logs
+        logs_df = db.get_publication_logs(limit=20)
+        
+        if not logs_df.empty:
+            # Indicateur d'état du worker (basé sur le dernier heartbeat)
+            last_heartbeat = logs_df[logs_df['status'] == 'Heartbeat'].iloc[0] if not logs_df[logs_df['status'] == 'Heartbeat'].empty else None
+            if last_heartbeat is not None:
+                st.success(f"🤖 **Worker Actif** (Dernier signal : `{last_heartbeat['message'].split()[-1]}`)")
+            else:
+                st.warning("⚠️ **Worker Inactif** ou en attente de démarrage.")
+            
+            st.dataframe(
+                logs_df,
+                use_container_width=True,
+                column_config={
+                    "timestamp": st.column_config.DatetimeColumn("Heure", format="HH:mm:ss"),
+                    "status": st.column_config.TextColumn("Statut"),
+                    "title": st.column_config.TextColumn("Post"),
+                    "message": st.column_config.TextColumn("Détails")
+                },
+                hide_index=True
+            )
+        else:
+            st.info("Aucune activité enregistrée pour le moment. Lancez le fichier `start_all.bat` pour démarrer le worker.")
 
     with tab_chat:
         st.markdown("### 🤖 Agent Joy")
@@ -852,9 +941,19 @@ elif current_page == "📱 Community Manager":
             st.markdown(
                 "*Gérez vos idées de posts et carrousels. Ajoutez les liens de vos images pour les carrousels (1 à 10).*")
             
+            # Liste des comptes pour le sélecteur
+            acc_list = db.get_linkedin_accounts()
+            acc_options = {acc['id']: acc['name'] for acc in acc_list}
+            acc_names = ["Aucun"] + list(acc_options.values())
+
             # Configuration des colonnes
             col_config = {
                 "id": st.column_config.NumberColumn("ID", disabled=True),
+                "linkedin_account_id": st.column_config.SelectboxColumn(
+                    "👤 Compte", 
+                    options=acc_names,
+                    help="Choisissez le compte LinkedIn qui publiera ce post."
+                ),
                 "title": st.column_config.TextColumn("Titre / Sujet", width="medium"),
                 "post_idea": st.column_config.TextColumn("💡 Idée de post", width="medium"),
                 "post_type": st.column_config.SelectboxColumn("Type", options=["Post", "Carousel"]),
@@ -869,34 +968,36 @@ elif current_page == "📱 Community Manager":
 
             # Préparer les miniatures pour le tableau (données base64)
             df_display = df_content.copy()
+            df_display['linkedin_account_id'] = df_display['linkedin_account_id'].apply(
+                lambda x: acc_options.get(int(x)) if x and str(x).isdigit() else "Aucun"
+            )
             for i in range(1, 11):
                 df_display[f'img{i}'] = df_display[f'img{i}'].apply(get_image_base64)
 
-            edited_content = st.data_editor(
-                df_display,
-                use_container_width=True,
-                hide_index=True,
-                num_rows="dynamic",
-                key="content_editor",
-                column_config=col_config
-            )
-
-            if st.button("💾 Sauvegarder le planning"):
+            # Fonction de sauvegarde automatique
+            def auto_save_planning():
                 changes = st.session_state.get("content_editor", {})
+                if not changes:
+                    return
+                
                 try:
                     # 1. Suppressions
                     for row_idx in changes.get("deleted_rows", []):
                         db.delete_content_item(int(df_content.iloc[row_idx]["id"]))
 
-                    # 2. Additions
+                    # 2. Ajouts
                     for new_row in changes.get("added_rows", []):
+                        acc_name = new_row.get("linkedin_account_id", "Aucun")
+                        acc_id = next((k for k, v in acc_options.items() if v == acc_name), None)
+                        
                         db.add_content_item(
-                            title=new_row.get("title", "Nouvelle idée"),
+                            title=new_row.get("title", "Sans titre"),
                             post_idea=new_row.get("post_idea", ""),
                             post_type=new_row.get("post_type", "Post"),
-                            status=new_row.get("status", "Brouillon"),
                             content=new_row.get("content", ""),
-                            scheduled_at=new_row.get("scheduled_at"),
+                            scheduled_at=new_row.get("scheduled_at", None),
+                            status=new_row.get("status", "Brouillon"),
+                            linkedin_account_id=acc_id,
                             img1=new_row.get("img1", ""), img2=new_row.get("img2", ""),
                             img3=new_row.get("img3", ""), img4=new_row.get("img4", ""),
                             img5=new_row.get("img5", ""), img6=new_row.get("img6", ""),
@@ -904,17 +1005,30 @@ elif current_page == "📱 Community Manager":
                             img9=new_row.get("img9", ""), img10=new_row.get("img10", "")
                         )
 
-                    # 3. Updates
+                    # 3. Mises à jour
                     for row_idx_str, cell_updates in changes.get("edited_rows", {}).items():
                         row_idx = int(row_idx_str)
-                        db.update_content_item(
-                            int(df_content.iloc[row_idx]["id"]), cell_updates)
-
-                    st.success("Planning éditorial synchronisé ! 🚀")
-                    time.sleep(1)
-                    st.rerun()
+                        item_id = int(df_content.iloc[row_idx]["id"])
+                        
+                        if "linkedin_account_id" in cell_updates:
+                            acc_name = cell_updates["linkedin_account_id"]
+                            cell_updates["linkedin_account_id"] = next((k for k, v in acc_options.items() if v == acc_name), None)
+                            
+                        db.update_content_item(item_id, cell_updates)
+                    
+                    st.toast("✅ Planning sauvegardé automatiquement", icon="💾")
                 except Exception as e:
-                    st.error(f"Erreur technique : {e}")
+                    st.error(f"Erreur lors de l'auto-save : {e}")
+
+            edited_content = st.data_editor(
+                df_display,
+                use_container_width=True,
+                hide_index=True,
+                num_rows="dynamic",
+                key="content_editor",
+                column_config=col_config,
+                on_change=auto_save_planning
+            )
 
             # Gestion des médias pour la ligne sélectionnée
             st.markdown("---")
