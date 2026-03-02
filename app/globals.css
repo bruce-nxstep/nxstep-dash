@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* ─── DESIGN TOKENS ─────────────────────────────────────────────────────────
+   All editable via the Design Token editor in the Streamlit agent interface.
+   Variables prefixed with --color-* use hex values (picker-friendly).
+   Variables prefixed with --font-size-* use px values (slider-friendly).
+   Variables prefixed with --bg-* use hex values (picker-friendly).
+────────────────────────────────────────────────────────────────────────────*/
+@theme {
+  /* ── Brand Colors ── */
+  --color-primary: #9602b5;
+  --color-primary-light: #00d2ce;
+  --color-primary-dark: #c815fb;
+
+  /* ── Semantic Colors ── */
+  --color-success: #c52222;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #a53bf6;
+
+  /* ── Text Colors ── */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #52525b;
+
+  /* ── Backgrounds ── */
+  --color-bg-app: #141414;
+  --color-bg-card: #111118;
+  --color-bg-sidebar: #0d0d12;
+  --color-bg-input: #1a1a24;
+
+  /* ── Typography Scale ── */
+  --font-size-h1: 48px;
+  --font-size-h2: 36px;
+  --font-size-h3: 24px;
+  --font-size-body: 16px;
+  --font-size-sm: 14px;
+  --font-size-xs: 12px;
+
+  /* ── Borders & Radius ── */
+  --color-border: #27272a;
+
+  /* ── Chart / Component Colors (AssetAllocationRing) ── */
+  --color-chart-equities: #db0000;
+  --color-chart-real-estate: #3b82f6;
+  --color-chart-fixed-income: #81ea28;
+  --color-chart-crypto: #34d399;
+
+  /* ── Chart Colors (PortfolioChart) ── */
+  --color-chart-portfolio-purple: #13db00;
+  --color-chart-portfolio-gold: #eab308;
+
+  /* ── Special ── */
+  --color-text-on-dark: #ffffff;
+  --color-bg-page: #181818;
+
+  /* ── Typography — Font Sizes ── */
+  --font-size-h1: 48px;
+  --font-size-h2: 36px;
+  --font-size-h3: 24px;
+  --font-size-h4: 22px;
+  --font-size-h5: 18px;
+  --font-size-h6: 16px;
+  --font-size-body: 16px;
+  --font-size-caption: 13px;
+  --font-size-small: 12px;
+  --font-size-xs: 12px;
+
+  /* ── Typography — Font Weights ── */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* ── Typography — Line Heights ── */
+  --line-height-tight: 120;
+  --line-height-snug: 135;
+  --line-height-normal: 150;
+  --line-height-relaxed: 165;
+  --line-height-loose: 200;
+
+  /* ── Spacing Grid (base 4px) ── */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* ── Border Radius ── */
+  --radius-none: 0px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 9px;
+  --radius-xl: 17px;
+  --radius-2xl: 30px;
+  --radius-3xl: 46px;
+
+  /* ── Blur Effects ── */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 32px;
+  --blur-2xl: 64px;
+  --blur-3xl: 120px;
+}
+
+@layer base {
+  :root {
+    /* ── shadcn/Radix primitives ── */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 271 100% 43%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 271 100% 43%;
+    --radius: 1rem;
+
+    /* ── Brand Colors (mirrors @theme) ── */
+    --color-primary: #9602b5;
+    --color-primary-light: #00d2ce;
+    --color-primary-dark: #c815fb;
+
+    /* ── Semantic Colors ── */
+    --color-success: #c52222;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #a53bf6;
+
+    /* ── Text Colors ── */
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #52525b;
+    --color-text-on-dark: #ffffff;
+
+    /* ── Backgrounds ── */
+    --color-bg-app: #141414;
+    --color-bg-card: #111118;
+    --color-bg-sidebar: #0d0d12;
+    --color-bg-input: #1a1a24;
+    --color-bg-page: #181818;
+
+    /* ── Borders ── */
+    --color-border: #27272a;
+
+    /* ── Chart Colors ── */
+    --color-chart-equities: #db0000;
+    --color-chart-real-estate: #3b82f6;
+    --color-chart-fixed-income: #81ea28;
+    --color-chart-crypto: #34d399;
+    --color-chart-portfolio-purple: #13db00;
+    --color-chart-portfolio-gold: #eab308;
+
+    /* ── Typography — Font Sizes ── */
+    --font-size-h1: 48px;
+    --font-size-h2: 36px;
+    --font-size-h3: 24px;
+    --font-size-h4: 22px;
+    --font-size-h5: 18px;
+    --font-size-h6: 16px;
+    --font-size-body: 16px;
+    --font-size-caption: 13px;
+    --font-size-small: 12px;
+    --font-size-sm: 14px;
+    --font-size-xs: 12px;
+
+    /* ── Typography — Font Weights ── */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-black: 900;
+
+    /* ── Typography — Line Heights ── */
+    --line-height-tight: 120;
+    --line-height-snug: 135;
+    --line-height-normal: 150;
+    --line-height-relaxed: 165;
+    --line-height-loose: 200;
+
+    /* ── Spacing Grid (base 4px) ── */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-10: 40px;
+    --spacing-12: 48px;
+    --spacing-16: 64px;
+    --spacing-20: 80px;
+    --spacing-24: 96px;
+
+    /* ── Border Radius ── */
+    --radius-none: 0px;
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 9px;
+    --radius-xl: 17px;
+    --radius-2xl: 30px;
+    --radius-3xl: 46px;
+
+    /* ── Blur Effects ── */
+    --blur-sm: 4px;
+    --blur-md: 8px;
+    --blur-lg: 16px;
+    --blur-xl: 32px;
+    --blur-2xl: 64px;
+    --blur-3xl: 120px;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/40 backdrop-blur-3xl border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-gradient-to-br from-white/10 to-transparent backdrop-blur-3xl border border-white/20 shadow-2xl;
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(130, 0, 219, 0.5);
+  }
+
+  .bg-glow-purple {
+    box-shadow: 0 0 30px rgba(130, 0, 219, 0.2);
+  }
+}
+
+/* ─── Apply tokens to standard elements ────────────────────────────── */
+body {
+  @apply antialiased min-h-screen font-sans;
+  background-color: var(--color-bg-app);
+  color: var(--color-text-primary);
+  background-image:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary) 10%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at bottom right, color-mix(in srgb, var(--color-primary) 5%, transparent) 0%, transparent 40%);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+}
+
+p,
+li {
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+}
+
+small {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
