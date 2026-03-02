@@ -1,0 +1,640 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 24
+                        }
+                    ]
+                }
+            },
+            "id": "ee24a770-17d5-4aa1-81aa-2c29706048c8",
+            "name": "Daily Schedule17",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                912,
+                4976
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// CONFIGURATION\n// Add the LinkedIn Username (slug) of the profiles you want to monitor.\n\nreturn [\n  { json: { username: \"jean-marie-bruce-a1581463\" } },\n  { json: { username: \"billgates\" } }\n];"
+            },
+            "id": "a995f0b7-ba49-4374-8d52-7d224156b8c5",
+            "name": "Config: Target Profiles16",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1136,
+                5088
+            ]
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "id": "1ac62e61-84df-4995-8361-995b2249d96d",
+            "name": "Split In Batches17",
+            "type": "n8n-nodes-base.splitInBatches",
+            "typeVersion": 3,
+            "position": [
+                1360,
+                5088
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Extract the latest post and URN\nconst items = $input.all().map(item => item.json);\nif (!items || items.length === 0) return [];\n\nconst latestPost = items[0];\n\n// URL field\nconst url = latestPost.url || latestPost.postUrl || latestPost.articleUrl || latestPost.shareUrl || \"\";\n\n// ---- URN extraction ----\n// Apify returns urn as an OBJECT: { activity_urn, share_urn, ugcPost_urn }\n// full_urn is a TOP-LEVEL field on latestPost (not inside urn object)\nlet urn = \"\";\nconst urnObj = latestPost.urn;\n// 1. Prefer top-level full_urn if it points to ugcPost (most reliable)\nif (latestPost.full_urn && latestPost.full_urn.startsWith(\"urn:li:ugcPost:\")) {\n  urn = latestPost.full_urn;\n} else if (urnObj && typeof urnObj === \"object\") {\n  // 2. Prefer ugcPost_urn — LinkedIn Comments API requires this, NOT activity_urn\n  if (urnObj.ugcPost_urn) urn = \"urn:li:ugcPost:\" + urnObj.ugcPost_urn;\n  else if (urnObj.share_urn) urn = \"urn:li:share:\" + urnObj.share_urn;\n  // Only fall back to activity_urn as last resort (may cause 400 errors)\n  else if (urnObj.activity_urn) urn = \"urn:li:activity:\" + urnObj.activity_urn;\n} else if (typeof urnObj === \"string\" && urnObj) {\n  urn = urnObj;\n}\n// Also accept full_urn even if not ugcPost (e.g. share)\nif (!urn && latestPost.full_urn) urn = latestPost.full_urn;\n\n// If still empty, try extracting from post URL\nif (!urn) {\n  const urnMatch = url.match(/(urn:li:[a-zA-Z]+:[0-9]+)/);\n  if (urnMatch) urn = urnMatch[1];\n}\n\n// If urn is a bare number, prefix with urn:li:activity:\nif (urn && /^[0-9]+$/.test(urn)) {\n  urn = \"urn:li:activity:\" + urn;\n}\n\n// ---- Author extraction ----\n// Avoid \"undefined undefined\" by checking each field exists before using\nconst authorRaw = latestPost.author;\nlet author = \"\";\nif (typeof authorRaw === \"string\") {\n  author = authorRaw;\n} else if (authorRaw && typeof authorRaw === \"object\") {\n  const first = authorRaw.firstName || authorRaw.first_name || \"\";\n  const last = authorRaw.lastName || authorRaw.last_name || \"\";\n  author = authorRaw.name || [first, last].filter(Boolean).join(\" \") || \"\";\n}\nif (!author) author = latestPost.actorName || $('Split In Batches17').item.json.username || \"\";\n\nreturn {\n  json: {\n    post_text: latestPost.text || latestPost.commentary || latestPost.description || latestPost.content || \"\",\n    author: author,\n    post_url: url,\n    urn: urn\n  }\n};\n"
+            },
+            "id": "e24968a0-d625-4b33-93d0-54b565540644",
+            "name": "Get Latest Post & URN7",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2016,
+                5104
+            ]
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=You happen to be an Expert LinkedIn Networker and Thought Leader.\nYour task is to write a short, engaging comment on a LinkedIn post. \nGuidelines:\nuse simple words.\nuse a \"Chris do style from the futur\"\n**Be Concise:** Keep it under 50 words. Short and punchy.  \ndo not make it too exited\n**Add Value:** Do not say \\\"Great post\\\" or \\\"Thanks for sharing\\\". Offer a specific insight, agreement, or polite counter-point based on the text.  \n**Engage:** End with a relevant, open-ended short question to encourage a reply.  \n**Tone:** Professional but conversational. No hashtags.\nContext: \n- Author: {{ $json.author }}\n- Post Text: {{ $json.post_text }}",
+                "options": {}
+            },
+            "id": "776936e2-27b3-4627-b18f-683441c09f77",
+            "name": "AI Agent16",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1.6,
+            "position": [
+                2240,
+                4640
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {
+                    "temperature": 0.5
+                }
+            },
+            "id": "0d738dca-c085-48a5-bbfb-b033a7109bb3",
+            "name": "OpenAI Chat Model16",
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1,
+            "position": [
+                2336,
+                4912
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "t2cz4ELY3Z7liWec",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ \"https://api.linkedin.com/v2/socialActions/\" + encodeURIComponent($('Get Latest Post & URN7').item.json.urn) + \"/comments\" }}",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "X-Restli-Protocol-Version",
+                            "value": "2.0.0"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"actor\": \"urn:li:person:{{ $('Get My LinkedIn ID1').item.json.sub }}\",\n  \"message\": {\n    \"text\": \"{{ $('AI Agent16').item.json.output }}\"\n  }\n}",
+                "options": {}
+            },
+            "id": "53567a1c-303f-41e1-8526-6127ee83b1dc",
+            "name": "LinkedIn: Publish Comment4",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2784,
+                5088
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            },
+            "notes": "Requires LinkedIn OAuth2 Credentials with 'w_member_social' scope. Actor URN is now fetched dynamically from /v2/userinfo."
+        },
+        {
+            "parameters": {
+                "resource": "Datasets",
+                "datasetId": "={{ $json.defaultDatasetId }}",
+                "offset": {},
+                "limit": 5
+            },
+            "id": "51915343-203f-40d4-a9c8-229f6330e4fb",
+            "name": "2. Get Scraped Data2",
+            "type": "@apify/n8n-nodes-apify.apify",
+            "typeVersion": 1,
+            "position": [
+                1808,
+                4896
+            ],
+            "credentials": {
+                "apifyApi": {
+                    "id": "upF0lFpB0J9ySfOe",
+                    "name": "Apify account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "actorSource": "store",
+                "actorId": {
+                    "__rl": true,
+                    "value": "LQQIXN9Othf8f7R5n",
+                    "mode": "list",
+                    "cachedResultName": "Profile Posts Scraper for LinkedIn [No Cookies] (apimaestro/linkedin-profile-posts)",
+                    "cachedResultUrl": "https://console.apify.com/actors/LQQIXN9Othf8f7R5n/input"
+                },
+                "customBody": "={{ JSON.stringify({\n  username: $node[\"Split In Batches14\"].json.username,\n  takePages: 1,\n  maxItems: 5\n}) }}",
+                "timeout": {}
+            },
+            "id": "3804a88e-0106-453d-bf17-8576073efb4c",
+            "name": "1. Run Apify Scraper2",
+            "type": "@apify/n8n-nodes-apify.apify",
+            "typeVersion": 1,
+            "position": [
+                1568,
+                4896
+            ],
+            "credentials": {
+                "apifyApi": {
+                    "id": "PN2XzAvu5rRQj78D",
+                    "name": "Apify account jsam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "url": "https://api.linkedin.com/v2/userinfo",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "options": {}
+            },
+            "id": "e0e872fa-9bc1-4e5b-9a53-cf2b62c21b37",
+            "name": "Get My LinkedIn ID1",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2656,
+                4752
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            },
+            "notes": "Fetches the authenticated user's LinkedIn sub (member ID) so we can build the actor URN dynamically. Returns: { sub, name, email, ... }"
+        }
+    ],
+    "connections": {
+        "Daily Schedule17": {
+            "main": [
+                [
+                    {
+                        "node": "Config: Target Profiles16",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Config: Target Profiles16": {
+            "main": [
+                [
+                    {
+                        "node": "Split In Batches17",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Split In Batches17": {
+            "main": [
+                [],
+                [
+                    {
+                        "node": "1. Run Apify Scraper2",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Latest Post & URN7": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent16",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Agent16": {
+            "main": [
+                [
+                    {
+                        "node": "Get My LinkedIn ID1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model16": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent16",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "LinkedIn: Publish Comment4": {
+            "main": [
+                [
+                    {
+                        "node": "Split In Batches17",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "2. Get Scraped Data2": {
+            "main": [
+                [
+                    {
+                        "node": "Get Latest Post & URN7",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "1. Run Apify Scraper2": {
+            "main": [
+                [
+                    {
+                        "node": "2. Get Scraped Data2",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get My LinkedIn ID1": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment4",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {
+        "2. Get Scraped Data2": [
+            {
+                "urn": {
+                    "activity_urn": "7213852315630321664",
+                    "share_urn": null,
+                    "ugcPost_urn": "7212480850238582785"
+                },
+                "full_urn": "urn:li:ugcPost:7212480850238582785",
+                "posted_at": {
+                    "date": "2024-07-02 12:33:38",
+                    "relative": "1 year ago • Edited • Visible to anyone on or off LinkedIn",
+                    "timestamp": 1719916418941
+                },
+                "text": "🚀 Ravi de revenir sur le succès récent de notre événement: \"Réinventer l'Expérience des Collaborateurs LVMH\", dédié à l'amélioration de l'expérience employé !\n\nUn grand merci à tous nos participants pour leur énergie et leurs idées innovantes tout au long de cette après-midi rythmée de différents temps :\n1️⃣ Un atelier de design thinking focalisé sur l'amélioration de l'expérience utilisateur, animé par des Facilitateurs Saegus, avec un objectif d'identifier et de proposer des outils pour un on-boarding engageant et réussi. Une occasion enrichissante de collaborer étroitement entre Maisons du groupe et de découvrir ce qui marche dans d'autres contexte.\n2️⃣ Une présentation par le responsable produit LumApps de la roadmap des évolutions à venir, en lien avec les attentes des Maisons\n3️⃣ Une table ronde stimulante animée par notre équipe LumApps Fabrik, qui a permis d'échanger sur les pratiques d'adoption, le support et les projets en cours. Merci à Grégoire Prêté (Imerys), Léana RUH (Céline),  Christiane FERREIRA BENTO (Sephora), Axel Guez (Forward), Yazid Benhammada (Beauty Tech) et Benjamyn Bigot-Petruzzi (Dior) pour leurs interventions captivantes\n4️⃣ La soirée s'est clôturée par des échanges informels autour d'un cocktail, l’occasion de renforcer les liens entre éditeur, intégrateur et contributeur.\n\nEnsemble, nous façonnons non seulement l’avenir des outils numériques du groupe mais aussi celui des collaborations et des méthodes agiles grâce à la Fabrik LumApps : Étienne Machicoane, Aya BOUNI, Jean-Marie Bruce, Coralie BERNAL, Naomi Soumah et Lucia Lapidus Pini le support de LumApps et l'implication de l'ensemble de nos Maisons. \n\nNotre prochains évènements aura une porté plus internationale. Rendez vous en fin d'année, d'ici la nous travaillerons à maximiser l’adoption au sein de nos Maisons et développer de nouveaux services. \n \n#ExperienceEmploye #DesignThinking #LumApps #LVMH #InnovationCollaborative #DigitalWorkplace #Saegus.",
+                "url": "https://www.linkedin.com/posts/jocelyn-giard-0664462_experienceemploye-designthinking-lumapps-ugcPost-7212480850238582785-YPs-?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGTA5qoB_R6m804mVPTtbuinNdfqT6FvAjc",
+                "post_type": "repost",
+                "author": {
+                    "first_name": "Jocelyn",
+                    "last_name": "Giard",
+                    "headline": "Head of IT Digital & Communication, LVMH / IT Holding & Group Applications",
+                    "username": "jocelyn-giard-0664462",
+                    "profile_url": "https://www.linkedin.com/in/jocelyn-giard-0664462?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAABrvM4BNXxzuyph2uZ6sbTd6ggNfStqegU",
+                    "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQFfiE4QiJ27NQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1712323202901?e=1773273600&v=beta&t=WeB4ZJYF75FwmDg62UqU7qa4hcpZyRzNOR3mKe3JUtA"
+                },
+                "stats": {
+                    "total_reactions": 124,
+                    "like": 104,
+                    "support": 0,
+                    "love": 9,
+                    "insight": 0,
+                    "celebrate": 11,
+                    "funny": 0,
+                    "comments": 3,
+                    "reposts": 5
+                },
+                "media": {
+                    "type": "images",
+                    "url": "https://media.licdn.com/dms/image/v2/D4E22AQH1KJ99jc45Ag/feedshare-shrink_1280/feedshare-shrink_1280/0/1719589434213?e=1773273600&v=beta&t=duKFmRe7qPiGr5JcPpGhuZkqhnDoPTbFzoJpERjllQU",
+                    "images": [
+                        {
+                            "url": "https://media.licdn.com/dms/image/v2/D4E22AQH1KJ99jc45Ag/feedshare-shrink_1280/feedshare-shrink_1280/0/1719589434213?e=1773273600&v=beta&t=duKFmRe7qPiGr5JcPpGhuZkqhnDoPTbFzoJpERjllQU",
+                            "width": 1280,
+                            "height": 1707
+                        },
+                        {
+                            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGCa0RpCxVdcA/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719589434639?e=1773273600&v=beta&t=9b1Aw5WlmfmDfAvMKuI1gMUN4Xl07w8Qd_DV7pshuEw",
+                            "width": 2048,
+                            "height": 1536
+                        },
+                        {
+                            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGcXlS68hg3iQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1719589434626?e=1773273600&v=beta&t=7v1jn4t_H2V3KeQ1vTASZAYTdOotddlk6NCGdYm7Teo",
+                            "width": 1280,
+                            "height": 1707
+                        }
+                    ]
+                },
+                "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY4NTIxODk3OTczMDYzODg0ODAtMTYzMzY4OTM1NTE5Mg=="
+            },
+            {
+                "urn": {
+                    "activity_urn": "7212105000766861312",
+                    "share_urn": null,
+                    "ugcPost_urn": "7211751654101037056"
+                },
+                "full_urn": "urn:li:ugcPost:7211751654101037056",
+                "posted_at": {
+                    "date": "2024-06-27 16:50:26",
+                    "relative": "1 year ago • Visible to anyone on or off LinkedIn",
+                    "timestamp": 1719499826614
+                },
+                "text": "📢Découvrez notre nouvel article : \"Du stade fondamental vers le stade appliqué, pour une organisation augmentée\" ! 🚀\n \n💡 Pour exploiter pleinement l'IA en entreprise, il est crucial de l'adapter au contexte organisationnel et de maintenir le contrôle humain. Notre article explore trois questions clés :\n\nPourquoi ? 🎯 Objectif business\nQuoi et comment ? 📊 Tactique et stratégie\nQuel usage approprié ? ⚖️ Éthique et responsabilité\n\nLire l'article complet 👇 \n\n\n#IA #innovation #technologie #business #éthique",
+                "url": "https://www.linkedin.com/posts/breople_ia-innovation-technologie-ugcPost-7211751654101037056-zy5B?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGTA5qoB_R6m804mVPTtbuinNdfqT6FvAjc",
+                "post_type": "repost",
+                "author": {
+                    "first_name": "Breople",
+                    "headline": "2,229 followers",
+                    "profile_url": "https://www.linkedin.com/company/breople/posts"
+                },
+                "stats": {
+                    "total_reactions": 15,
+                    "like": 14,
+                    "support": 0,
+                    "love": 0,
+                    "insight": 1,
+                    "celebrate": 0,
+                    "funny": 0,
+                    "comments": 0,
+                    "reposts": 5
+                },
+                "article": {
+                    "url": "https://www.linkedin.com/pulse/lia-du-stade-fondamental-vers-le-appliqu%25C3%25A9-pour-servir-une-organisation-o5fue?trackingId=2QgRpB7DNIo1tjhCRAfxfw%3D%3D",
+                    "title": "L'IA - Du stade « fondamental » vers le stade « appliqué », pour servir une organisation augmentée",
+                    "subtitle": "Breople",
+                    "thumbnail": "https://media.licdn.com/dms/image/v2/D5612AQGJeOLT-STBUQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1719391218524?e=1773273600&v=beta&t=ovox3jDl6j4juNx0E4i-n7gw-tOUKMWBaYaaBNq4N8s"
+                },
+                "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY4NTIxODk3OTczMDYzODg0ODAtMTYzMzY4OTM1NTE5Mg=="
+            },
+            {
+                "urn": {
+                    "activity_urn": "7046723476304375808",
+                    "share_urn": null,
+                    "ugcPost_urn": "7046168830745681920"
+                },
+                "full_urn": "urn:li:ugcPost:7046168830745681920",
+                "posted_at": {
+                    "date": "2023-03-29 08:03:18",
+                    "relative": "2 years ago • Visible to anyone on or off LinkedIn",
+                    "timestamp": 1680069798542
+                },
+                "text": "\"Qui a envie de travailler plus ?\" \nBRUT PHILO.  Retraite, semaine de 4 jours… Mais au fait, on en est où de notre rapport au travail en 2023 ? On a posé la question à la philosophe Julia de Funès.\n\n \"Le siècle des égarés\", le dernier livre de Julia de Funès est publié aux Editions de l'Observatoire.",
+                "url": "https://www.linkedin.com/posts/brut%2E_on-en-est-o%C3%B9-de-notre-rapport-au-travail-ugcPost-7046168830745681920-H5II?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGTA5qoB_R6m804mVPTtbuinNdfqT6FvAjc",
+                "post_type": "repost",
+                "author": {
+                    "first_name": "Brut.",
+                    "headline": "580,943 followers",
+                    "profile_url": "https://www.linkedin.com/company/brut./posts"
+                },
+                "stats": {
+                    "total_reactions": 10368,
+                    "like": 8445,
+                    "support": 41,
+                    "love": 550,
+                    "insight": 1103,
+                    "celebrate": 204,
+                    "funny": 12,
+                    "comments": 300,
+                    "reposts": 3201
+                },
+                "media": {
+                    "type": "video",
+                    "url": "https://dms.licdn.com/playlist/vid/v2/C4E05AQFEYFNFpl7wiw/mp4-720p-30fp-crf28/mp4-720p-30fp-crf28/0/1679937698198?e=1772200800&v=beta&t=vYJ8HcS5hhVY7ZGKcHgFvphdbF1MPnSErwfaXfnLpRk"
+                },
+                "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY4NTIxODk3OTczMDYzODg0ODAtMTYzMzY4OTM1NTE5Mg=="
+            },
+            {
+                "urn": {
+                    "activity_urn": "6989177553278136321",
+                    "share_urn": null,
+                    "ugcPost_urn": "6988224540539506688"
+                },
+                "full_urn": "urn:li:ugcPost:6988224540539506688",
+                "posted_at": {
+                    "date": "2022-10-21 12:56:21",
+                    "relative": "3 years ago • Edited • Visible to anyone on or off LinkedIn",
+                    "timestamp": 1666349781341
+                },
+                "text": "📢 #Internship Summer 2023 📢\n\nCurrently, in my last year (5th year) apprentice engineering program in #DevOps, I have the opportunity to realize at least an 8 opportunity week internship internationally. I'm looking for an internship as a #DevOpsEngineer or as a #SoftwareEngineer from June 2023 for a period between 2 and 3 months.\n\nFeel free to contact me should you require any further information and don’t hesitate to share this post 😁",
+                "url": "https://www.linkedin.com/posts/kalilp_kalil-pelissier-cvs-ugcPost-6988224540539506688-7B1l?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGTA5qoB_R6m804mVPTtbuinNdfqT6FvAjc",
+                "post_type": "repost",
+                "author": {
+                    "first_name": "Kalil",
+                    "last_name": "Pelissier",
+                    "headline": "🚀 DevOps Engineer | Automation | Rustacean 🦀 | CI/CD pipelines | Cloud Architect | #DevOps #Cloud ☁️",
+                    "username": "kalilp",
+                    "profile_url": "https://www.linkedin.com/in/kalilp?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAABvANPABVB_6eNmgdDRRNtPFDfIqQnbujRU",
+                    "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQFFXfkPt7uUcA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1704885560765?e=1773273600&v=beta&t=U4I96WkxmGJYnqF1HBLkHpogoXMxhmZ4Y_7eWDPT-jU"
+                },
+                "stats": {
+                    "total_reactions": 30,
+                    "like": 30,
+                    "support": 0,
+                    "love": 0,
+                    "insight": 0,
+                    "celebrate": 0,
+                    "funny": 0,
+                    "comments": 0,
+                    "reposts": 10
+                },
+                "document": {
+                    "title": "Kalil PELISSIER CV's",
+                    "page_count": 1,
+                    "url": "https://media.licdn.com/dms/document/media/v2/D4E1FAQG1i0AsdvTjwQ/feedshare-document-url-metadata-scrapper-pdf/feedshare-document-url-metadata-scrapper-pdf/0/1666119876904?e=1772200800&v=beta&t=p4gI6dwIOWkwjnr_5O6_7s9fbWNExNjrSwJfCR5FS3A",
+                    "thumbnail": "https://media.licdn.com/dms/image/v2/D4E1FAQG1i0AsdvTjwQ/feedshare-document-cover-images_1920/feedshare-document-cover-images_1920/0/1666119877548?e=1772200800&v=beta&t=IgineO3h53EHNSGPmIDBjOSpMj8GSutbKW5eIUmW8L0"
+                },
+                "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY4NTIxODk3OTczMDYzODg0ODAtMTYzMzY4OTM1NTE5Mg=="
+            },
+            {
+                "urn": {
+                    "activity_urn": "6989177019938799616",
+                    "share_urn": "6988839504170123264",
+                    "ugcPost_urn": null
+                },
+                "full_urn": "urn:li:activity:6988885440212692992",
+                "posted_at": {
+                    "date": "2022-10-21 12:54:14",
+                    "relative": "3 years ago • Visible to anyone on or off LinkedIn",
+                    "timestamp": 1666349654183
+                },
+                "text": "🚨 #RecrutementPro 🚨\nPlombiers, serruriers ou chauffagistes.\nÉlectriciens, vitriers ou peintres...\nRejoignez le réseau MesDépanneurs.fr\n\n✅ Contrat sans engagement \n✅ Complément d'activité\n✅ Mise en relation gratuite \n✅ Leads qualifiés par nos équipes \n✅ Chantiers et interventions de proximités \n✅ Gestion administrative simplifiée\n\nLa qualité de vos interventions et la satisfaction clients sont vos priorités ? Le réseau MesDépanneurs.fr est fait pour vous !\n\nPour postuler, c'est par ici ➡️ https://lnkd.in/eTBge7cA\n\n#recrutement #plateforme #artisan #plombier #serrurier #electricien #chauffage #peintre #dépannage #rénovation",
+                "url": "https://www.linkedin.com/posts/mesdepanneurs-fr_rejoignez-le-r%C3%A9seau-dartisans-mesd%C3%A9panneursfr-share-6988839504170123264-TldV?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGTA5qoB_R6m804mVPTtbuinNdfqT6FvAjc",
+                "post_type": "repost",
+                "author": {
+                    "first_name": "MesDépanneurs.fr",
+                    "headline": "2,429 followers",
+                    "profile_url": "https://www.linkedin.com/company/mesdepanneurs-fr/posts"
+                },
+                "stats": {
+                    "total_reactions": 22,
+                    "like": 22,
+                    "support": 0,
+                    "love": 0,
+                    "insight": 0,
+                    "celebrate": 0,
+                    "funny": 0,
+                    "comments": 0,
+                    "reposts": 17
+                },
+                "media": {
+                    "type": "image",
+                    "url": "https://media.licdn.com/dms/image/v2/C4E22AQH3EXXHobqElg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1666269051904?e=1773273600&v=beta&t=kVDNoi_1xrLUJoy6TpttwA3CxALrOQSK-6zu6N9VJD0"
+                },
+                "article": {
+                    "url": "https://espacepro.mesdepanneurs.fr/",
+                    "title": "Rejoignez le réseau d'artisans MesDépanneurs.fr et augmentez vos revenus et votre flux clients",
+                    "subtitle": "espacepro.mesdepanneurs.fr",
+                    "thumbnail": "https://media.licdn.com/dms/image/v2/C4E22AQH3EXXHobqElg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1666269051904?e=1773273600&v=beta&t=kVDNoi_1xrLUJoy6TpttwA3CxALrOQSK-6zu6N9VJD0"
+                },
+                "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY4NTIxODk3OTczMDYzODg0ODAtMTYzMzY4OTM1NTE5Mg=="
+            }
+        ],
+        "1. Run Apify Scraper2": [
+            {
+                "id": "oHcQuC8t6BHcw05e0",
+                "actId": "LQQIXN9Othf8f7R5n",
+                "userId": "wGCyefuFi7VsrSgrx",
+                "startedAt": "2026-02-20T13:25:22.651Z",
+                "finishedAt": "2026-02-20T13:25:26.949Z",
+                "status": "SUCCEEDED",
+                "meta": {
+                    "origin": "API",
+                    "userAgent": "axios/1.12.0"
+                },
+                "stats": {
+                    "inputBodyLen": 95,
+                    "migrationCount": 0,
+                    "rebootCount": 0,
+                    "restartCount": 0,
+                    "durationMillis": 4078,
+                    "resurrectCount": 0,
+                    "runTimeSecs": 4.078,
+                    "metamorph": 0,
+                    "computeUnits": 0.0011327777777777777,
+                    "memAvgBytes": 46233842.71970159,
+                    "memMaxBytes": 63193088,
+                    "memCurrentBytes": 0,
+                    "cpuAvgUsage": 1.853460882885639,
+                    "cpuMaxUsage": 47.19443396226415,
+                    "cpuCurrentUsage": 0,
+                    "netRxBytes": 27603,
+                    "netTxBytes": 10384
+                },
+                "options": {
+                    "build": "0.1.56",
+                    "timeoutSecs": 3600,
+                    "memoryMbytes": 1024,
+                    "maxItems": 858,
+                    "maxTotalChargeUsd": 4.294983,
+                    "diskMbytes": 2048
+                },
+                "buildId": "nzCOFiKvVXRzUKnq3",
+                "exitCode": 0,
+                "defaultKeyValueStoreId": "ZcksKLqrqLZoJJPxg",
+                "defaultDatasetId": "go5uK7sQpgaxbmxaV",
+                "defaultRequestQueueId": "CZeFqbpeTKR0XsNlh",
+                "storageIds": {
+                    "keyValueStores": {
+                        "default": "ZcksKLqrqLZoJJPxg"
+                    },
+                    "datasets": {
+                        "default": "go5uK7sQpgaxbmxaV"
+                    },
+                    "requestQueues": {
+                        "default": "CZeFqbpeTKR0XsNlh"
+                    }
+                },
+                "pricingInfo": {
+                    "pricingModel": "PAY_PER_EVENT",
+                    "createdAt": "2026-01-21T18:04:32.785Z",
+                    "startedAt": "2026-01-21T18:04:32.785Z",
+                    "apifyMarginPercentage": 0.2,
+                    "isPriceChangeNotificationSuppressed": true,
+                    "reasonForChange": "Migration from Pay Per Result to Pay Per Event with apify-default-dataset-item event",
+                    "forceContainsSignificantPriceChange": false,
+                    "pricingPerEvent": {
+                        "actorChargeEvents": {
+                            "apify-default-dataset-item": {
+                                "eventTitle": "result",
+                                "eventDescription": "Single result in the default dataset.",
+                                "isPrimaryEvent": true,
+                                "eventPriceUsd": 0.005
+                            }
+                        }
+                    }
+                },
+                "chargedEventCounts": {
+                    "apify-default-dataset-item": 0
+                },
+                "platformUsageBillingModel": "DEVELOPER",
+                "accountedChargedEventCounts": {
+                    "apify-default-dataset-item": 0
+                },
+                "integrationTracking": {
+                    "platform": "n8n",
+                    "appId": null,
+                    "isAiTool": false
+                },
+                "generalAccess": "FOLLOW_USER_SETTING",
+                "buildNumber": "0.1.56",
+                "containerUrl": "https://dflvuukqzcf1.runs.apify.net",
+                "usageTotalUsd": 0,
+                "consoleUrl": "https://console.apify.com/view/runs/oHcQuC8t6BHcw05e0"
+            }
+        ]
+    },
+    "meta": {
+        "instanceId": "2066d44b6582e11313e53d7aafdb0f2bb55b706de5515e8a6d09b5c3a9da8c28"
+    }
+}

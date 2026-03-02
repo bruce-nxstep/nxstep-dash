@@ -8,7 +8,7 @@
 ────────────────────────────────────────────────────────────────────────────*/
 @theme {
   /* ── Brand Colors ── */
-  --color-primary: #9602b5;
+  --color-primary: #2cb502;
   --color-primary-light: #00d2ce;
   --color-primary-dark: #c815fb;
 
@@ -138,7 +138,7 @@
     --radius: 1rem;
 
     /* ── Brand Colors (mirrors @theme) ── */
-    --color-primary: #9602b5;
+    --color-primary: #2cb502;
     --color-primary-light: #00d2ce;
     --color-primary-dark: #c815fb;
 

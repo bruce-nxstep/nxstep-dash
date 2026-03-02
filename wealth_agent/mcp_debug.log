@@ -1,0 +1,1362 @@
+[2026-03-01 02:34:51] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 02:35:46] list_tools called
+[2026-03-01 02:35:46] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 02:35:46] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 02:35:46] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 02:35:46] stdio_client context entered. Creating session...
+[2026-03-01 02:35:46] Session created. Initializing...
+[2026-03-01 02:35:47] ✅ MCP Connection Initialized successfully!
+[2026-03-01 02:35:47] Fetching tool list from session...
+[2026-03-01 02:35:48] call_tool called for: generate_screen_from_text
+[2026-03-01 02:35:48] Sending request for tool: generate_screen_from_text
+[2026-03-01 02:35:48] Response received for tool: generate_screen_from_text
+[2026-03-01 11:39:43] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:40:31] call_tool called for: generate_screen_from_text
+[2026-03-01 11:40:31] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:40:31] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:40:31] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:40:31] stdio_client context entered. Creating session...
+[2026-03-01 11:40:31] Session created. Initializing...
+[2026-03-01 11:40:31] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:40:31] Sending request for tool: generate_screen_from_text
+[2026-03-01 11:40:31] Response received for tool: generate_screen_from_text
+[2026-03-01 11:40:33] call_tool called for: get_screen_code
+[2026-03-01 11:40:33] Sending request for tool: get_screen_code
+[2026-03-01 11:40:33] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 11:44:25] call_tool called for: generate_screen_from_text
+[2026-03-01 11:44:25] Sending request for tool: generate_screen_from_text
+[2026-03-01 11:44:25] Response received for tool: generate_screen_from_text
+[2026-03-01 11:44:26] call_tool called for: get_screen_code
+[2026-03-01 11:44:26] Sending request for tool: get_screen_code
+[2026-03-01 11:44:26] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 11:47:10] StitchMCPClient initialized with API Key present: No
+[2026-03-01 11:47:10] call_tool called for: list_projects
+[2026-03-01 11:47:10] ERROR: Attempted to get server params without API Key.
+[2026-03-01 11:47:10] ❌ Connection failed: STITCH_API_KEY is missing. Archi requires a key to operate.
+Traceback (most recent call last):
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 105, in _connect
+    params = self._get_server_params()
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 71, in _get_server_params
+    raise RuntimeError("STITCH_API_KEY is missing. Archi requires a key to operate.")
+RuntimeError: STITCH_API_KEY is missing. Archi requires a key to operate.
+
+[2026-03-01 11:47:10] ❌ call_tool failed: STITCH_API_KEY is missing. Archi requires a key to operate.
+[2026-03-01 11:48:47] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:48:47] call_tool called for: list_projects
+[2026-03-01 11:48:47] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:48:47] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:48:47] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:48:47] stdio_client context entered. Creating session...
+[2026-03-01 11:48:47] Session created. Initializing...
+[2026-03-01 11:48:53] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:48:53] Sending request for tool: list_projects
+[2026-03-01 11:48:53] Response received for tool: list_projects
+[2026-03-01 11:51:55] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:51:55] call_tool called for: get_project
+[2026-03-01 11:51:55] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:51:55] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:51:55] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:51:55] stdio_client context entered. Creating session...
+[2026-03-01 11:51:55] Session created. Initializing...
+[2026-03-01 11:51:56] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:51:56] Sending request for tool: get_project
+[2026-03-01 11:51:56] Response received for tool: get_project
+[2026-03-01 11:51:56] call_tool called for: generate_screen_from_text
+[2026-03-01 11:51:56] Sending request for tool: generate_screen_from_text
+[2026-03-01 11:51:56] Response received for tool: generate_screen_from_text
+[2026-03-01 11:52:14] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:52:14] call_tool called for: list_projects
+[2026-03-01 11:52:14] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:52:14] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:52:14] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:52:14] stdio_client context entered. Creating session...
+[2026-03-01 11:52:14] Session created. Initializing...
+[2026-03-01 11:52:15] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:52:15] Sending request for tool: list_projects
+[2026-03-01 11:52:15] Response received for tool: list_projects
+[2026-03-01 11:52:48] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:52:48] call_tool called for: generate_screen_from_text
+[2026-03-01 11:52:48] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:52:48] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:52:48] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:52:48] stdio_client context entered. Creating session...
+[2026-03-01 11:52:48] Session created. Initializing...
+[2026-03-01 11:52:49] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:52:49] Sending request for tool: generate_screen_from_text
+[2026-03-01 11:52:49] Response received for tool: generate_screen_from_text
+[2026-03-01 11:53:51] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:53:51] call_tool called for: get_project
+[2026-03-01 11:53:51] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:53:51] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:53:51] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:53:51] stdio_client context entered. Creating session...
+[2026-03-01 11:53:51] Session created. Initializing...
+[2026-03-01 11:53:52] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:53:52] Sending request for tool: get_project
+[2026-03-01 11:53:52] Response received for tool: get_project
+[2026-03-01 11:53:52] call_tool called for: generate_screen_from_text
+[2026-03-01 11:53:52] Sending request for tool: generate_screen_from_text
+[2026-03-01 11:53:52] Response received for tool: generate_screen_from_text
+[2026-03-01 11:53:52] call_tool called for: get_project
+[2026-03-01 11:53:52] Sending request for tool: get_project
+[2026-03-01 11:53:52] Response received for tool: get_project
+[2026-03-01 11:53:52] call_tool called for: get_screen_code
+[2026-03-01 11:53:52] Sending request for tool: get_screen_code
+[2026-03-01 11:53:52] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 11:54:13] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:54:13] list_tools called
+[2026-03-01 11:54:13] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:54:13] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:54:13] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:54:13] stdio_client context entered. Creating session...
+[2026-03-01 11:54:13] Session created. Initializing...
+[2026-03-01 11:54:13] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:54:13] Fetching tool list from session...
+[2026-03-01 11:54:27] StitchMCPClient initialized with API Key present: No
+[2026-03-01 11:54:27] call_tool called for: get_screen
+[2026-03-01 11:54:27] ERROR: Attempted to get server params without API Key.
+[2026-03-01 11:54:27] ❌ Connection failed: STITCH_API_KEY is missing. Archi requires a key to operate.
+Traceback (most recent call last):
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 105, in _connect
+    params = self._get_server_params()
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 71, in _get_server_params
+    raise RuntimeError("STITCH_API_KEY is missing. Archi requires a key to operate.")
+RuntimeError: STITCH_API_KEY is missing. Archi requires a key to operate.
+
+[2026-03-01 11:54:27] ❌ call_tool failed: STITCH_API_KEY is missing. Archi requires a key to operate.
+[2026-03-01 11:54:42] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:54:42] call_tool called for: get_screen
+[2026-03-01 11:54:42] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:54:42] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:54:42] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:54:42] stdio_client context entered. Creating session...
+[2026-03-01 11:54:42] Session created. Initializing...
+[2026-03-01 11:54:42] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:54:42] Sending request for tool: get_screen
+[2026-03-01 11:54:42] Response received for tool: get_screen
+[2026-03-01 11:55:30] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 11:55:30] call_tool called for: get_screen
+[2026-03-01 11:55:30] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 11:55:30] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:55:30] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 11:55:30] stdio_client context entered. Creating session...
+[2026-03-01 11:55:30] Session created. Initializing...
+[2026-03-01 11:55:30] ✅ MCP Connection Initialized successfully!
+[2026-03-01 11:55:30] Sending request for tool: get_screen
+[2026-03-01 11:55:30] Response received for tool: get_screen
+[2026-03-01 12:01:39] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:01:39] call_tool called for: get_project
+[2026-03-01 12:01:39] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:01:39] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:01:39] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:01:39] stdio_client context entered. Creating session...
+[2026-03-01 12:01:39] Session created. Initializing...
+[2026-03-01 12:01:40] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:01:40] Sending request for tool: get_project
+[2026-03-01 12:01:40] Response received for tool: get_project
+[2026-03-01 12:01:40] call_tool called for: generate_screen_from_text
+[2026-03-01 12:01:40] Sending request for tool: generate_screen_from_text
+[2026-03-01 12:01:40] Response received for tool: generate_screen_from_text
+[2026-03-01 12:01:40] call_tool called for: get_project
+[2026-03-01 12:01:40] Sending request for tool: get_project
+[2026-03-01 12:01:40] Response received for tool: get_project
+[2026-03-01 12:01:40] call_tool called for: get_screen_code
+[2026-03-01 12:01:40] Sending request for tool: get_screen_code
+[2026-03-01 12:01:40] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 12:01:40] call_tool called for: get_screen
+[2026-03-01 12:01:40] Sending request for tool: get_screen
+[2026-03-01 12:01:40] Response received for tool: get_screen
+[2026-03-01 12:02:06] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:02:06] call_tool called for: get_screen
+[2026-03-01 12:02:06] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:02:06] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:06] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:06] stdio_client context entered. Creating session...
+[2026-03-01 12:02:06] Session created. Initializing...
+[2026-03-01 12:02:08] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:02:08] Sending request for tool: get_screen
+[2026-03-01 12:02:08] Response received for tool: get_screen
+[2026-03-01 12:02:23] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:02:23] call_tool called for: get_screen
+[2026-03-01 12:02:23] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:02:23] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:23] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:23] stdio_client context entered. Creating session...
+[2026-03-01 12:02:23] Session created. Initializing...
+[2026-03-01 12:02:24] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:02:24] Sending request for tool: get_screen
+[2026-03-01 12:02:24] Response received for tool: get_screen
+[2026-03-01 12:02:40] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:02:40] call_tool called for: get_screen
+[2026-03-01 12:02:40] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:02:40] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:40] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:02:40] stdio_client context entered. Creating session...
+[2026-03-01 12:02:40] Session created. Initializing...
+[2026-03-01 12:02:40] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:02:40] Sending request for tool: get_screen
+[2026-03-01 12:02:40] Response received for tool: get_screen
+[2026-03-01 12:04:27] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:04:27] call_tool called for: list_screens
+[2026-03-01 12:04:27] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:04:27] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:04:27] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:04:27] stdio_client context entered. Creating session...
+[2026-03-01 12:04:27] Session created. Initializing...
+[2026-03-01 12:04:27] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:04:27] Sending request for tool: list_screens
+[2026-03-01 12:04:28] Response received for tool: list_screens
+[2026-03-01 12:04:56] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:04:56] call_tool called for: list_screens
+[2026-03-01 12:04:56] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:04:56] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:04:56] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:04:56] stdio_client context entered. Creating session...
+[2026-03-01 12:04:56] Session created. Initializing...
+[2026-03-01 12:04:56] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:04:56] Sending request for tool: list_screens
+[2026-03-01 12:04:56] Response received for tool: list_screens
+[2026-03-01 12:38:05] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:38:05] list_tools called
+[2026-03-01 12:38:05] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:38:05] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:38:05] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:38:05] stdio_client context entered. Creating session...
+[2026-03-01 12:38:05] Session created. Initializing...
+[2026-03-01 12:38:06] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:38:06] Fetching tool list from session...
+[2026-03-01 12:41:22] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:41:22] list_tools called
+[2026-03-01 12:41:22] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:41:22] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:41:22] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:41:22] stdio_client context entered. Creating session...
+[2026-03-01 12:41:22] Session created. Initializing...
+[2026-03-01 12:41:22] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:41:22] Fetching tool list from session...
+[2026-03-01 12:42:32] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:42:32] call_tool called for: list_projects
+[2026-03-01 12:42:32] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:42:32] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:42:32] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:42:32] stdio_client context entered. Creating session...
+[2026-03-01 12:42:32] Session created. Initializing...
+[2026-03-01 12:42:32] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:42:32] Sending request for tool: list_projects
+[2026-03-01 12:42:32] Response received for tool: list_projects
+[2026-03-01 12:42:54] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:42:54] call_tool called for: list_projects
+[2026-03-01 12:42:54] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:42:54] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:42:54] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:42:54] stdio_client context entered. Creating session...
+[2026-03-01 12:42:54] Session created. Initializing...
+[2026-03-01 12:42:55] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:42:55] Sending request for tool: list_projects
+[2026-03-01 12:42:55] Response received for tool: list_projects
+[2026-03-01 12:43:32] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:43:32] call_tool called for: list_projects
+[2026-03-01 12:43:32] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:43:32] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:43:32] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:43:32] stdio_client context entered. Creating session...
+[2026-03-01 12:43:32] Session created. Initializing...
+[2026-03-01 12:43:32] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:43:32] Sending request for tool: list_projects
+[2026-03-01 12:43:32] Response received for tool: list_projects
+[2026-03-01 12:43:32] call_tool called for: create_project
+[2026-03-01 12:43:32] Sending request for tool: create_project
+[2026-03-01 12:43:32] Response received for tool: create_project
+[2026-03-01 12:44:28] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:44:28] call_tool called for: list_projects
+[2026-03-01 12:44:28] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:44:28] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:44:28] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:44:28] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:44:28] stdio_client context entered. Creating session...
+[2026-03-01 12:44:28] Session created. Initializing...
+[2026-03-01 12:44:29] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:44:29] Sending request for tool: list_projects
+[2026-03-01 12:44:29] Response received for tool: list_projects
+[2026-03-01 12:44:29] call_tool called for: create_project
+[2026-03-01 12:44:29] Sending request for tool: create_project
+[2026-03-01 12:44:29] Response received for tool: create_project
+[2026-03-01 12:45:33] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:45:33] call_tool called for: list_projects
+[2026-03-01 12:45:33] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:45:33] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:45:33] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:45:33] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:45:33] stdio_client context entered. Creating session...
+[2026-03-01 12:45:33] Session created. Initializing...
+[2026-03-01 12:45:33] ❌ Connection failed: Connection closed
+Traceback (most recent call last):
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 156, in _connect
+    await asyncio.wait_for(self.session.initialize(), timeout=30)
+  File "C:\Python313\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\venv\Lib\site-packages\mcp\client\session.py", line 171, in initialize
+    result = await self.send_request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<16 lines>...
+    )
+    ^
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\venv\Lib\site-packages\mcp\shared\session.py", line 306, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Connection closed
+
+[2026-03-01 12:45:33] ❌ call_tool failed: Connection closed
+[2026-03-01 12:45:33] call_tool called for: create_project
+[2026-03-01 12:45:33] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:45:33] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:45:33] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:45:33] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:45:33] stdio_client context entered. Creating session...
+[2026-03-01 12:45:33] Session created. Initializing...
+[2026-03-01 12:45:33] ❌ Connection failed: Connection closed
+Traceback (most recent call last):
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\src\mcp_client.py", line 156, in _connect
+    await asyncio.wait_for(self.session.initialize(), timeout=30)
+  File "C:\Python313\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\venv\Lib\site-packages\mcp\client\session.py", line 171, in initialize
+    result = await self.send_request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<16 lines>...
+    )
+    ^
+  File "C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\venv\Lib\site-packages\mcp\shared\session.py", line 306, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Connection closed
+
+[2026-03-01 12:45:33] ❌ call_tool failed: Connection closed
+[2026-03-01 12:46:27] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:46:27] call_tool called for: generate_screen_from_text
+[2026-03-01 12:46:27] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:46:27] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:46:27] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:46:27] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:46:27] stdio_client context entered. Creating session...
+[2026-03-01 12:46:27] Session created. Initializing...
+[2026-03-01 12:46:27] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:46:27] Sending request for tool: generate_screen_from_text
+[2026-03-01 12:46:27] Response received for tool: generate_screen_from_text
+[2026-03-01 12:46:27] call_tool called for: list_screens
+[2026-03-01 12:46:27] Sending request for tool: list_screens
+[2026-03-01 12:46:27] Response received for tool: list_screens
+[2026-03-01 12:54:58] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:55:30] call_tool called for: get_project
+[2026-03-01 12:55:30] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:55:30] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:55:30] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:55:30] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:55:30] stdio_client context entered. Creating session...
+[2026-03-01 12:55:30] Session created. Initializing...
+[2026-03-01 12:55:31] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:55:31] Sending request for tool: get_project
+[2026-03-01 12:55:31] Response received for tool: get_project
+[2026-03-01 12:55:31] call_tool called for: get_screen_code
+[2026-03-01 12:55:31] Sending request for tool: get_screen_code
+[2026-03-01 12:55:31] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 12:55:31] call_tool called for: get_screen
+[2026-03-01 12:55:31] Sending request for tool: get_screen
+[2026-03-01 12:55:31] Response received for tool: get_screen
+[2026-03-01 12:56:37] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 12:56:37] call_tool called for: list_projects
+[2026-03-01 12:56:37] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 12:56:37] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:56:37] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 12:56:37] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 12:56:37] stdio_client context entered. Creating session...
+[2026-03-01 12:56:37] Session created. Initializing...
+[2026-03-01 12:56:41] ✅ MCP Connection Initialized successfully!
+[2026-03-01 12:56:41] Sending request for tool: list_projects
+[2026-03-01 12:56:41] Response received for tool: list_projects
+[2026-03-01 12:56:41] call_tool called for: create_project
+[2026-03-01 12:56:41] Sending request for tool: create_project
+[2026-03-01 12:56:41] Response received for tool: create_project
+[2026-03-01 12:56:41] call_tool called for: generate_screen_from_text
+[2026-03-01 12:56:41] Sending request for tool: generate_screen_from_text
+[2026-03-01 12:56:41] Response received for tool: generate_screen_from_text
+[2026-03-01 12:56:41] call_tool called for: list_screens
+[2026-03-01 12:56:41] Sending request for tool: list_screens
+[2026-03-01 12:56:41] Response received for tool: list_screens
+[2026-03-01 13:13:45] call_tool called for: get_project
+[2026-03-01 13:13:45] Sending request for tool: get_project
+[2026-03-01 13:13:46] Response received for tool: get_project
+[2026-03-01 13:13:46] call_tool called for: generate_screen_from_text
+[2026-03-01 13:13:46] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:13:46] Response received for tool: generate_screen_from_text
+[2026-03-01 13:14:24] call_tool called for: get_project
+[2026-03-01 13:14:24] Sending request for tool: get_project
+[2026-03-01 13:14:24] Response received for tool: get_project
+[2026-03-01 13:14:24] call_tool called for: get_screen_code
+[2026-03-01 13:14:24] Sending request for tool: get_screen_code
+[2026-03-01 13:14:24] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 13:14:24] call_tool called for: get_screen
+[2026-03-01 13:14:24] Sending request for tool: get_screen
+[2026-03-01 13:14:24] Response received for tool: get_screen
+[2026-03-01 13:15:47] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:15:47] call_tool called for: list_projects
+[2026-03-01 13:15:47] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:15:47] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:15:47] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:15:47] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:15:47] stdio_client context entered. Creating session...
+[2026-03-01 13:15:47] Session created. Initializing...
+[2026-03-01 13:15:54] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:15:54] Sending request for tool: list_projects
+[2026-03-01 13:15:54] Response received for tool: list_projects
+[2026-03-01 13:15:54] call_tool called for: create_project
+[2026-03-01 13:15:54] Sending request for tool: create_project
+[2026-03-01 13:15:54] Response received for tool: create_project
+[2026-03-01 13:15:54] call_tool called for: generate_screen_from_text
+[2026-03-01 13:15:54] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:15:54] Response received for tool: generate_screen_from_text
+[2026-03-01 13:15:54] call_tool called for: list_screens
+[2026-03-01 13:15:54] Sending request for tool: list_screens
+[2026-03-01 13:15:54] Response received for tool: list_screens
+[2026-03-01 13:19:43] call_tool called for: get_project
+[2026-03-01 13:19:43] Sending request for tool: get_project
+[2026-03-01 13:19:43] Response received for tool: get_project
+[2026-03-01 13:19:43] call_tool called for: get_screen_code
+[2026-03-01 13:19:43] Sending request for tool: get_screen_code
+[2026-03-01 13:19:43] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 13:19:43] call_tool called for: get_screen
+[2026-03-01 13:19:43] Sending request for tool: get_screen
+[2026-03-01 13:19:43] Response received for tool: get_screen
+[2026-03-01 13:19:51] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:20:27] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:20:27] call_tool called for: list_projects
+[2026-03-01 13:20:27] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:20:27] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:20:27] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:20:27] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:20:27] stdio_client context entered. Creating session...
+[2026-03-01 13:20:27] Session created. Initializing...
+[2026-03-01 13:20:32] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:20:32] Sending request for tool: list_projects
+[2026-03-01 13:20:32] Response received for tool: list_projects
+[2026-03-01 13:20:32] call_tool called for: create_project
+[2026-03-01 13:20:32] Sending request for tool: create_project
+[2026-03-01 13:20:32] Response received for tool: create_project
+[2026-03-01 13:20:32] call_tool called for: generate_screen_from_text
+[2026-03-01 13:20:32] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:20:32] Response received for tool: generate_screen_from_text
+[2026-03-01 13:20:32] call_tool called for: list_screens
+[2026-03-01 13:20:33] Sending request for tool: list_screens
+[2026-03-01 13:20:33] Response received for tool: list_screens
+[2026-03-01 13:21:44] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:21:44] call_tool called for: list_projects
+[2026-03-01 13:21:44] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:21:44] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:21:44] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:21:44] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:21:44] stdio_client context entered. Creating session...
+[2026-03-01 13:21:44] Session created. Initializing...
+[2026-03-01 13:21:49] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:21:49] Sending request for tool: list_projects
+[2026-03-01 13:21:50] Response received for tool: list_projects
+[2026-03-01 13:21:50] call_tool called for: create_project
+[2026-03-01 13:21:50] Sending request for tool: create_project
+[2026-03-01 13:21:50] Response received for tool: create_project
+[2026-03-01 13:21:50] call_tool called for: generate_screen_from_text
+[2026-03-01 13:21:50] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:21:50] Response received for tool: generate_screen_from_text
+[2026-03-01 13:21:50] call_tool called for: list_screens
+[2026-03-01 13:21:50] Sending request for tool: list_screens
+[2026-03-01 13:21:50] Response received for tool: list_screens
+[2026-03-01 13:31:56] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:31:56] call_tool called for: list_projects
+[2026-03-01 13:31:56] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:31:56] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:31:56] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:31:56] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:31:56] stdio_client context entered. Creating session...
+[2026-03-01 13:31:56] Session created. Initializing...
+[2026-03-01 13:32:02] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:32:02] Sending request for tool: list_projects
+[2026-03-01 13:32:03] Response received for tool: list_projects
+[2026-03-01 13:32:03] call_tool called for: create_project
+[2026-03-01 13:32:03] Sending request for tool: create_project
+[2026-03-01 13:32:04] Response received for tool: create_project
+[2026-03-01 13:32:04] call_tool called for: generate_screen_from_text
+[2026-03-01 13:32:04] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:33:04] ❌ call_tool failed: 
+[2026-03-01 13:33:04] call_tool called for: list_screens
+[2026-03-01 13:33:04] Sending request for tool: list_screens
+[2026-03-01 13:33:04] Response received for tool: list_screens
+[2026-03-01 13:33:34] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:33:34] list_tools called
+[2026-03-01 13:33:34] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:33:34] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:33:34] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:33:34] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:33:35] stdio_client context entered. Creating session...
+[2026-03-01 13:33:35] Session created. Initializing...
+[2026-03-01 13:33:40] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:33:40] Fetching tool list from session...
+[2026-03-01 13:34:38] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:34:38] list_tools called
+[2026-03-01 13:34:38] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:34:38] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:34:38] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:34:38] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:34:38] stdio_client context entered. Creating session...
+[2026-03-01 13:34:38] Session created. Initializing...
+[2026-03-01 13:34:44] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:34:44] Fetching tool list from session...
+[2026-03-01 13:37:59] StitchMCPClient initialized with API Key present: No
+[2026-03-01 13:38:00] call_tool called for: list_projects
+[2026-03-01 13:38:00] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:38:00] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:38:00] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:38:00] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:38:00] stdio_client context entered. Creating session...
+[2026-03-01 13:38:00] Session created. Initializing...
+[2026-03-01 13:38:05] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:38:05] Sending request for tool: list_projects
+[2026-03-01 13:38:06] Response received for tool: list_projects
+[2026-03-01 13:38:06] call_tool called for: generate_screen_from_text
+[2026-03-01 13:38:06] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:39:06] ❌ call_tool failed: TimeoutError()
+[2026-03-01 13:39:06] call_tool called for: list_screens
+[2026-03-01 13:39:06] Sending request for tool: list_screens
+[2026-03-01 13:39:06] Response received for tool: list_screens
+[2026-03-01 13:49:17] StitchMCPClient initialized with API Key present: No
+[2026-03-01 13:49:17] call_tool called for: list_projects
+[2026-03-01 13:49:17] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:49:17] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:49:17] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:49:17] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:49:17] stdio_client context entered. Creating session...
+[2026-03-01 13:49:17] Session created. Initializing...
+[2026-03-01 13:49:22] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:49:22] Sending request for tool: list_projects
+[2026-03-01 13:49:23] Response received for tool: list_projects
+[2026-03-01 13:49:23] call_tool called for: generate_screen_from_text
+[2026-03-01 13:49:23] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:51:30] Response received for tool: generate_screen_from_text
+[2026-03-01 13:51:30] call_tool called for: list_screens
+[2026-03-01 13:51:30] Sending request for tool: list_screens
+[2026-03-01 13:51:30] Response received for tool: list_screens
+[2026-03-01 13:53:04] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:53:04] call_tool called for: get_project
+[2026-03-01 13:53:04] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:53:04] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:53:04] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:53:04] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:53:04] stdio_client context entered. Creating session...
+[2026-03-01 13:53:04] Session created. Initializing...
+[2026-03-01 13:53:09] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:53:09] Sending request for tool: get_project
+[2026-03-01 13:53:10] Response received for tool: get_project
+[2026-03-01 13:53:10] call_tool called for: get_project
+[2026-03-01 13:53:10] Sending request for tool: get_project
+[2026-03-01 13:53:11] Response received for tool: get_project
+[2026-03-01 13:53:11] call_tool called for: generate_screen_from_text
+[2026-03-01 13:53:11] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:53:11] Response received for tool: generate_screen_from_text
+[2026-03-01 13:53:35] StitchMCPClient initialized with API Key present: No
+[2026-03-01 13:53:35] call_tool called for: get_project
+[2026-03-01 13:53:35] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:53:35] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:53:35] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:53:35] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:53:35] stdio_client context entered. Creating session...
+[2026-03-01 13:53:35] Session created. Initializing...
+[2026-03-01 13:53:40] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:53:40] Sending request for tool: get_project
+[2026-03-01 13:53:41] Response received for tool: get_project
+[2026-03-01 13:54:10] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 13:54:10] call_tool called for: get_project
+[2026-03-01 13:54:10] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 13:54:10] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:54:10] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 13:54:10] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 13:54:10] stdio_client context entered. Creating session...
+[2026-03-01 13:54:10] Session created. Initializing...
+[2026-03-01 13:54:15] ✅ MCP Connection Initialized successfully!
+[2026-03-01 13:54:15] Sending request for tool: get_project
+[2026-03-01 13:54:16] Response received for tool: get_project
+[2026-03-01 13:54:16] call_tool called for: list_projects
+[2026-03-01 13:54:16] Sending request for tool: list_projects
+[2026-03-01 13:54:16] Response received for tool: list_projects
+[2026-03-01 13:54:16] call_tool called for: get_project
+[2026-03-01 13:54:16] Sending request for tool: get_project
+[2026-03-01 13:54:17] Response received for tool: get_project
+[2026-03-01 13:54:17] call_tool called for: generate_screen_from_text
+[2026-03-01 13:54:17] Sending request for tool: generate_screen_from_text
+[2026-03-01 13:56:06] Response received for tool: generate_screen_from_text
+[2026-03-01 13:56:06] call_tool called for: get_project
+[2026-03-01 13:56:06] Sending request for tool: get_project
+[2026-03-01 13:56:07] Response received for tool: get_project
+[2026-03-01 13:56:07] call_tool called for: get_screen_code
+[2026-03-01 13:56:07] Sending request for tool: get_screen_code
+[2026-03-01 13:56:07] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 13:56:07] call_tool called for: get_screen
+[2026-03-01 13:56:07] Sending request for tool: get_screen
+[2026-03-01 13:56:08] Response received for tool: get_screen
+[2026-03-01 15:00:25] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:02:11] call_tool called for: get_project
+[2026-03-01 15:02:11] Sending request for tool: get_project
+[2026-03-01 15:02:12] Response received for tool: get_project
+[2026-03-01 15:02:12] call_tool called for: generate_screen_from_text
+[2026-03-01 15:02:12] Sending request for tool: generate_screen_from_text
+[2026-03-01 15:02:12] Response received for tool: generate_screen_from_text
+[2026-03-01 15:02:13] call_tool called for: get_project
+[2026-03-01 15:02:13] Sending request for tool: get_project
+[2026-03-01 15:02:13] Response received for tool: get_project
+[2026-03-01 15:02:13] call_tool called for: get_screen_code
+[2026-03-01 15:02:13] Sending request for tool: get_screen_code
+[2026-03-01 15:02:13] ❌ call_tool failed: Tools Call name is not found in the list of tools
+[2026-03-01 15:02:13] call_tool called for: get_screen
+[2026-03-01 15:02:13] Sending request for tool: get_screen
+[2026-03-01 15:02:13] Response received for tool: get_screen
+[2026-03-01 15:07:07] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:07:07] call_tool called for: get_project
+[2026-03-01 15:07:07] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:07:07] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:07:07] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:07:07] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:07:08] stdio_client context entered. Creating session...
+[2026-03-01 15:07:08] Session created. Initializing...
+[2026-03-01 15:07:16] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:07:16] Sending request for tool: get_project
+[2026-03-01 15:07:17] Response received for tool: get_project
+[2026-03-01 15:08:35] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:08:35] call_tool called for: get_project
+[2026-03-01 15:08:35] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:08:35] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:08:35] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:08:35] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:08:35] stdio_client context entered. Creating session...
+[2026-03-01 15:08:35] Session created. Initializing...
+[2026-03-01 15:08:40] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:08:40] Sending request for tool: get_project
+[2026-03-01 15:08:41] Response received for tool: get_project
+[2026-03-01 15:13:47] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:13:47] call_tool called for: get_project
+[2026-03-01 15:13:47] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:13:47] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:13:47] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:13:47] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:13:47] stdio_client context entered. Creating session...
+[2026-03-01 15:13:47] Session created. Initializing...
+[2026-03-01 15:13:53] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:13:53] Sending request for tool: get_project
+[2026-03-01 15:13:54] Response received for tool: get_project
+[2026-03-01 15:13:54] call_tool called for: get_project
+[2026-03-01 15:13:54] Sending request for tool: get_project
+[2026-03-01 15:13:54] Response received for tool: get_project
+[2026-03-01 15:13:54] call_tool called for: generate_screen_from_text
+[2026-03-01 15:13:54] Sending request for tool: generate_screen_from_text
+[2026-03-01 15:15:44] Response received for tool: generate_screen_from_text
+[2026-03-01 15:15:44] call_tool called for: get_project
+[2026-03-01 15:15:44] Sending request for tool: get_project
+[2026-03-01 15:15:45] Response received for tool: get_project
+[2026-03-01 15:15:45] call_tool called for: get_screen_code
+[2026-03-01 15:15:45] Sending request for tool: get_screen_code
+[2026-03-01 15:15:45] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 15:15:45] call_tool called for: get_screen
+[2026-03-01 15:15:45] Sending request for tool: get_screen
+[2026-03-01 15:15:45] Response received for tool: get_screen
+[2026-03-01 15:16:11] StitchMCPClient initialized with API Key present: No
+[2026-03-01 15:16:11] call_tool called for: get_screen
+[2026-03-01 15:16:11] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:16:11] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:16:11] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:16:11] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:16:11] stdio_client context entered. Creating session...
+[2026-03-01 15:16:11] Session created. Initializing...
+[2026-03-01 15:16:15] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:16:15] Sending request for tool: get_screen
+[2026-03-01 15:16:16] Response received for tool: get_screen
+[2026-03-01 15:16:57] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:16:57] call_tool called for: get_project
+[2026-03-01 15:16:57] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:16:57] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:16:57] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:16:57] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:16:57] stdio_client context entered. Creating session...
+[2026-03-01 15:16:57] Session created. Initializing...
+[2026-03-01 15:17:02] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:17:02] Sending request for tool: get_project
+[2026-03-01 15:17:03] Response received for tool: get_project
+[2026-03-01 15:17:03] call_tool called for: get_screen_code
+[2026-03-01 15:17:03] Sending request for tool: get_screen_code
+[2026-03-01 15:17:03] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 15:17:03] call_tool called for: get_screen
+[2026-03-01 15:17:03] Sending request for tool: get_screen
+[2026-03-01 15:17:03] Response received for tool: get_screen
+[2026-03-01 15:17:24] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:17:24] call_tool called for: get_project
+[2026-03-01 15:17:24] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:17:24] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:17:24] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:17:24] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:17:24] stdio_client context entered. Creating session...
+[2026-03-01 15:17:24] Session created. Initializing...
+[2026-03-01 15:17:28] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:17:28] Sending request for tool: get_project
+[2026-03-01 15:17:29] Response received for tool: get_project
+[2026-03-01 15:17:29] call_tool called for: get_project
+[2026-03-01 15:17:29] Sending request for tool: get_project
+[2026-03-01 15:17:30] Response received for tool: get_project
+[2026-03-01 15:17:30] call_tool called for: generate_screen_from_text
+[2026-03-01 15:17:30] Sending request for tool: generate_screen_from_text
+[2026-03-01 15:19:30] Response received for tool: generate_screen_from_text
+[2026-03-01 15:19:30] call_tool called for: get_project
+[2026-03-01 15:19:30] Sending request for tool: get_project
+[2026-03-01 15:19:30] Response received for tool: get_project
+[2026-03-01 15:19:31] call_tool called for: get_screen_code
+[2026-03-01 15:19:31] Sending request for tool: get_screen_code
+[2026-03-01 15:19:31] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 15:19:31] call_tool called for: get_screen
+[2026-03-01 15:19:31] Sending request for tool: get_screen
+[2026-03-01 15:19:31] Response received for tool: get_screen
+[2026-03-01 15:20:32] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:21:42] call_tool called for: get_project
+[2026-03-01 15:21:42] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:21:42] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:21:42] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:21:42] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:21:42] stdio_client context entered. Creating session...
+[2026-03-01 15:21:42] Session created. Initializing...
+[2026-03-01 15:21:43] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:21:43] Sending request for tool: get_project
+[2026-03-01 15:21:43] Response received for tool: get_project
+[2026-03-01 15:21:43] call_tool called for: generate_screen_from_text
+[2026-03-01 15:21:43] Sending request for tool: generate_screen_from_text
+[2026-03-01 15:21:43] Response received for tool: generate_screen_from_text
+[2026-03-01 15:33:02] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:33:02] call_tool called for: get_project
+[2026-03-01 15:33:02] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:33:02] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:33:02] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:33:02] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:33:02] stdio_client context entered. Creating session...
+[2026-03-01 15:33:02] Session created. Initializing...
+[2026-03-01 15:33:11] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:33:11] Sending request for tool: get_project
+[2026-03-01 15:33:12] Response received for tool: get_project
+[2026-03-01 15:33:12] call_tool called for: generate_screen_from_text
+[2026-03-01 15:33:12] Sending request for tool: generate_screen_from_text
+[2026-03-01 15:35:13] Response received for tool: generate_screen_from_text
+[2026-03-01 15:37:57] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:37:57] call_tool called for: get_project
+[2026-03-01 15:37:57] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:37:57] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:37:57] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:37:57] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:37:57] stdio_client context entered. Creating session...
+[2026-03-01 15:37:57] Session created. Initializing...
+[2026-03-01 15:38:03] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:38:03] Sending request for tool: get_project
+[2026-03-01 15:38:03] Response received for tool: get_project
+[2026-03-01 15:38:03] call_tool called for: get_screen_code
+[2026-03-01 15:38:03] Sending request for tool: get_screen_code
+[2026-03-01 15:38:03] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 15:38:03] call_tool called for: get_screen
+[2026-03-01 15:38:03] Sending request for tool: get_screen
+[2026-03-01 15:38:04] Response received for tool: get_screen
+[2026-03-01 15:42:34] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 15:59:20] call_tool called for: get_project
+[2026-03-01 15:59:20] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 15:59:20] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:59:20] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 15:59:20] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 15:59:20] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 15:59:20] stdio_client context entered. Creating session...
+[2026-03-01 15:59:20] Session created. Initializing...
+[2026-03-01 15:59:28] ✅ MCP Connection Initialized successfully!
+[2026-03-01 15:59:28] Sending request for tool: get_project
+[2026-03-01 15:59:29] Response received for tool: get_project
+[2026-03-01 15:59:29] call_tool called for: generate_screen_from_text
+[2026-03-01 15:59:29] Sending request for tool: generate_screen_from_text
+[2026-03-01 16:02:09] Response received for tool: generate_screen_from_text
+[2026-03-01 16:02:11] call_tool called for: get_project
+[2026-03-01 16:02:12] Sending request for tool: get_project
+[2026-03-01 16:02:12] Response received for tool: get_project
+[2026-03-01 16:02:12] call_tool called for: get_screen_code
+[2026-03-01 16:02:12] Sending request for tool: get_screen_code
+[2026-03-01 16:02:12] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 16:02:12] call_tool called for: get_screen
+[2026-03-01 16:02:12] Sending request for tool: get_screen
+[2026-03-01 16:02:13] Response received for tool: get_screen
+[2026-03-01 16:54:30] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 16:54:30] call_tool called for: get_project
+[2026-03-01 16:54:31] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 16:54:31] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:54:31] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 16:54:31] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:54:33] stdio_client context entered. Creating session...
+[2026-03-01 16:54:33] Session created. Initializing...
+[2026-03-01 16:55:03] ❌ Connection failed: Timeout during initialization
+[2026-03-01 16:55:05] ❌ call_tool failed: RuntimeError("Timeout lors de l'initialisation du serveur Stitch.")
+[2026-03-01 16:55:05] call_tool called for: list_projects
+[2026-03-01 16:55:05] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 16:55:06] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:55:06] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 16:55:06] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:55:06] stdio_client context entered. Creating session...
+[2026-03-01 16:55:07] Session created. Initializing...
+[2026-03-01 16:55:37] ❌ Connection failed: Timeout during initialization
+[2026-03-01 16:55:39] ❌ call_tool failed: RuntimeError("Timeout lors de l'initialisation du serveur Stitch.")
+[2026-03-01 16:55:39] call_tool called for: create_project
+[2026-03-01 16:55:40] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 16:55:40] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:55:40] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 16:55:40] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:55:40] stdio_client context entered. Creating session...
+[2026-03-01 16:55:40] Session created. Initializing...
+[2026-03-01 16:56:11] ❌ Connection failed: Timeout during initialization
+[2026-03-01 16:56:16] ❌ call_tool failed: RuntimeError("Timeout lors de l'initialisation du serveur Stitch.")
+[2026-03-01 16:56:17] call_tool called for: generate_screen_from_text
+[2026-03-01 16:56:18] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 16:56:18] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:56:18] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 16:56:18] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 16:56:19] stdio_client context entered. Creating session...
+[2026-03-01 16:56:19] Session created. Initializing...
+[2026-03-01 16:56:49] ❌ Connection failed: Timeout during initialization
+[2026-03-01 16:56:50] ❌ call_tool failed: RuntimeError("Timeout lors de l'initialisation du serveur Stitch.")
+[2026-03-01 17:02:27] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 17:10:31] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 17:10:31] call_tool called for: get_project
+[2026-03-01 17:10:31] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:10:31] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:10:31] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:10:31] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:10:32] stdio_client context entered. Creating session...
+[2026-03-01 17:10:33] Session created. Initializing...
+[2026-03-01 17:12:32] ❌ call_tool failed: TimeoutError()
+[2026-03-01 17:12:33] ❌ Connection failed: Timeout during initialization
+[2026-03-01 17:12:33] call_tool called for: list_projects
+[2026-03-01 17:12:34] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:12:35] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:12:35] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:12:35] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:12:38] stdio_client context entered. Creating session...
+[2026-03-01 17:12:38] Session created. Initializing...
+[2026-03-01 17:14:34] ❌ call_tool failed: TimeoutError()
+[2026-03-01 17:14:34] call_tool called for: create_project
+[2026-03-01 17:14:34] Sending request for tool: create_project
+[2026-03-01 17:14:39] ❌ Connection failed: Timeout during initialization
+[2026-03-01 17:16:34] ❌ call_tool failed: TimeoutError()
+[2026-03-01 17:16:34] call_tool called for: generate_screen_from_text
+[2026-03-01 17:16:34] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:16:35] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:16:35] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:16:35] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:16:36] stdio_client context entered. Creating session...
+[2026-03-01 17:16:36] Session created. Initializing...
+[2026-03-01 17:18:36] ❌ Connection failed: Timeout during initialization
+[2026-03-01 17:18:37] ❌ call_tool failed: RuntimeError("Timeout lors de l'initialisation du serveur Stitch.")
+[2026-03-01 17:27:10] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 17:27:10] call_tool called for: get_project
+[2026-03-01 17:27:10] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:27:10] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:27:10] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:27:10] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:27:11] stdio_client context entered. Creating session...
+[2026-03-01 17:27:11] Session created. Initializing...
+[2026-03-01 17:29:11] ❌ Connection failed: Timeout during initialization
+[2026-03-01 17:29:11] ❌ call_tool failed: TimeoutError()
+[2026-03-01 17:29:11] call_tool called for: list_projects
+[2026-03-01 17:29:11] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:29:12] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:29:12] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:29:12] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:29:12] stdio_client context entered. Creating session...
+[2026-03-01 17:29:12] Session created. Initializing...
+[2026-03-01 17:30:42] ✅ MCP Connection Initialized successfully!
+[2026-03-01 17:30:42] Sending request for tool: list_projects
+[2026-03-01 17:30:42] Response received for tool: list_projects
+[2026-03-01 17:30:42] call_tool called for: generate_screen_from_text
+[2026-03-01 17:30:42] Sending request for tool: generate_screen_from_text
+[2026-03-01 17:32:22] Response received for tool: generate_screen_from_text
+[2026-03-01 17:32:23] call_tool called for: get_project
+[2026-03-01 17:32:23] Sending request for tool: get_project
+[2026-03-01 17:32:25] Response received for tool: get_project
+[2026-03-01 17:32:25] call_tool called for: get_screen_code
+[2026-03-01 17:32:25] Sending request for tool: get_screen_code
+[2026-03-01 17:32:25] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 17:32:26] call_tool called for: get_screen
+[2026-03-01 17:32:26] Sending request for tool: get_screen
+[2026-03-01 17:32:27] Response received for tool: get_screen
+[2026-03-01 17:34:36] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 17:38:58] call_tool called for: get_project
+[2026-03-01 17:38:58] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 17:38:58] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:38:58] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 17:38:58] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 17:38:58] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 17:38:58] stdio_client context entered. Creating session...
+[2026-03-01 17:38:58] Session created. Initializing...
+[2026-03-01 17:39:03] ✅ MCP Connection Initialized successfully!
+[2026-03-01 17:39:03] Sending request for tool: get_project
+[2026-03-01 17:39:04] Response received for tool: get_project
+[2026-03-01 17:39:04] call_tool called for: generate_screen_from_text
+[2026-03-01 17:39:04] Sending request for tool: generate_screen_from_text
+[2026-03-01 17:41:35] Response received for tool: generate_screen_from_text
+[2026-03-01 17:42:13] call_tool called for: get_project
+[2026-03-01 17:42:13] Sending request for tool: get_project
+[2026-03-01 17:42:14] Response received for tool: get_project
+[2026-03-01 17:42:14] call_tool called for: get_screen_code
+[2026-03-01 17:42:14] Sending request for tool: get_screen_code
+[2026-03-01 17:42:14] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 17:42:14] call_tool called for: get_screen
+[2026-03-01 17:42:14] Sending request for tool: get_screen
+[2026-03-01 17:42:15] Response received for tool: get_screen
+[2026-03-01 17:56:39] call_tool called for: get_project
+[2026-03-01 17:56:39] Sending request for tool: get_project
+[2026-03-01 17:56:41] Response received for tool: get_project
+[2026-03-01 17:56:41] call_tool called for: generate_screen_from_text
+[2026-03-01 17:56:41] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:01:41] Response received for tool: generate_screen_from_text
+[2026-03-01 18:02:54] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 18:02:54] call_tool called for: get_project
+[2026-03-01 18:02:54] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 18:02:54] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:02:54] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 18:02:54] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:02:54] stdio_client context entered. Creating session...
+[2026-03-01 18:02:54] Session created. Initializing...
+[2026-03-01 18:03:08] ✅ MCP Connection Initialized successfully!
+[2026-03-01 18:03:08] Sending request for tool: get_project
+[2026-03-01 18:03:09] Response received for tool: get_project
+[2026-03-01 18:03:09] call_tool called for: generate_screen_from_text
+[2026-03-01 18:03:09] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:04:28] Response received for tool: generate_screen_from_text
+[2026-03-01 18:04:28] call_tool called for: get_project
+[2026-03-01 18:04:28] Sending request for tool: get_project
+[2026-03-01 18:04:29] Response received for tool: get_project
+[2026-03-01 18:04:29] call_tool called for: get_screen_code
+[2026-03-01 18:04:29] Sending request for tool: get_screen_code
+[2026-03-01 18:04:29] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 18:04:29] call_tool called for: get_screen
+[2026-03-01 18:04:29] Sending request for tool: get_screen
+[2026-03-01 18:04:30] Response received for tool: get_screen
+[2026-03-01 18:06:22] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 18:06:22] call_tool called for: get_project
+[2026-03-01 18:06:22] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 18:06:22] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:06:22] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 18:06:22] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:06:22] stdio_client context entered. Creating session...
+[2026-03-01 18:06:22] Session created. Initializing...
+[2026-03-01 18:06:28] ✅ MCP Connection Initialized successfully!
+[2026-03-01 18:06:28] Sending request for tool: get_project
+[2026-03-01 18:06:28] Response received for tool: get_project
+[2026-03-01 18:06:28] call_tool called for: generate_screen_from_text
+[2026-03-01 18:06:28] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:08:02] Response received for tool: generate_screen_from_text
+[2026-03-01 18:08:02] call_tool called for: get_project
+[2026-03-01 18:08:02] Sending request for tool: get_project
+[2026-03-01 18:08:02] Response received for tool: get_project
+[2026-03-01 18:08:02] call_tool called for: get_screen_code
+[2026-03-01 18:08:02] Sending request for tool: get_screen_code
+[2026-03-01 18:08:02] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 18:08:02] call_tool called for: get_screen
+[2026-03-01 18:08:02] Sending request for tool: get_screen
+[2026-03-01 18:08:03] Response received for tool: get_screen
+[2026-03-01 18:10:05] call_tool called for: get_project
+[2026-03-01 18:10:05] Sending request for tool: get_project
+[2026-03-01 18:10:06] Response received for tool: get_project
+[2026-03-01 18:10:06] call_tool called for: generate_screen_from_text
+[2026-03-01 18:10:06] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:14:56] Response received for tool: generate_screen_from_text
+[2026-03-01 18:26:51] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 18:27:58] call_tool called for: get_project
+[2026-03-01 18:27:58] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 18:27:58] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:27:58] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 18:27:58] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 18:27:58] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:27:58] stdio_client context entered. Creating session...
+[2026-03-01 18:27:58] Session created. Initializing...
+[2026-03-01 18:28:07] ✅ MCP Connection Initialized successfully!
+[2026-03-01 18:28:07] Sending request for tool: get_project
+[2026-03-01 18:28:08] Response received for tool: get_project
+[2026-03-01 18:28:08] call_tool called for: generate_screen_from_text
+[2026-03-01 18:28:08] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:33:09] Response received for tool: generate_screen_from_text
+[2026-03-01 18:39:03] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 18:40:03] call_tool called for: get_project
+[2026-03-01 18:40:03] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 18:40:03] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:40:03] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 18:40:03] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 18:40:03] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 18:40:03] stdio_client context entered. Creating session...
+[2026-03-01 18:40:03] Session created. Initializing...
+[2026-03-01 18:40:10] ✅ MCP Connection Initialized successfully!
+[2026-03-01 18:40:10] Sending request for tool: get_project
+[2026-03-01 18:40:11] Response received for tool: get_project
+[2026-03-01 18:40:11] call_tool called for: generate_screen_from_text
+[2026-03-01 18:40:11] Sending request for tool: generate_screen_from_text
+[2026-03-01 18:42:28] Response received for tool: generate_screen_from_text
+[2026-03-01 18:43:06] call_tool called for: get_project
+[2026-03-01 18:43:06] Sending request for tool: get_project
+[2026-03-01 18:43:07] Response received for tool: get_project
+[2026-03-01 18:43:07] call_tool called for: get_screen_code
+[2026-03-01 18:43:07] Sending request for tool: get_screen_code
+[2026-03-01 18:43:07] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 18:43:07] call_tool called for: get_screen
+[2026-03-01 18:43:07] Sending request for tool: get_screen
+[2026-03-01 18:43:08] Response received for tool: get_screen
+[2026-03-01 19:07:37] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 19:08:28] call_tool called for: get_project
+[2026-03-01 19:08:28] Sending request for tool: get_project
+[2026-03-01 19:08:29] Response received for tool: get_project
+[2026-03-01 19:08:29] call_tool called for: generate_screen_from_text
+[2026-03-01 19:08:29] Sending request for tool: generate_screen_from_text
+[2026-03-01 19:18:25] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 19:18:29] ❌ call_tool failed: TimeoutError()
+[2026-03-01 19:20:11] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 19:22:10] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 19:24:56] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 19:27:51] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 20:44:04] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 20:44:41] call_tool called for: get_project
+[2026-03-01 20:44:41] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 20:44:41] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 20:44:41] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 20:44:41] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 20:44:41] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 20:44:41] stdio_client context entered. Creating session...
+[2026-03-01 20:44:41] Session created. Initializing...
+[2026-03-01 20:44:48] ✅ MCP Connection Initialized successfully!
+[2026-03-01 20:44:48] Sending request for tool: get_project
+[2026-03-01 20:44:49] Response received for tool: get_project
+[2026-03-01 20:44:49] call_tool called for: generate_screen_from_text
+[2026-03-01 20:44:49] Sending request for tool: generate_screen_from_text
+[2026-03-01 20:47:08] Response received for tool: generate_screen_from_text
+[2026-03-01 20:47:32] call_tool called for: get_project
+[2026-03-01 20:47:32] Sending request for tool: get_project
+[2026-03-01 20:47:32] Response received for tool: get_project
+[2026-03-01 20:47:32] call_tool called for: get_screen_code
+[2026-03-01 20:47:32] Sending request for tool: get_screen_code
+[2026-03-01 20:47:32] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 20:47:32] call_tool called for: get_screen
+[2026-03-01 20:47:32] Sending request for tool: get_screen
+[2026-03-01 20:47:33] Response received for tool: get_screen
+[2026-03-01 21:17:19] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 21:17:41] call_tool called for: get_project
+[2026-03-01 21:17:41] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 21:17:41] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 21:17:41] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 21:17:41] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 21:17:41] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 21:17:41] stdio_client context entered. Creating session...
+[2026-03-01 21:17:41] Session created. Initializing...
+[2026-03-01 21:17:49] ✅ MCP Connection Initialized successfully!
+[2026-03-01 21:17:49] Sending request for tool: get_project
+[2026-03-01 21:17:49] Response received for tool: get_project
+[2026-03-01 21:17:49] call_tool called for: get_screen_code
+[2026-03-01 21:17:49] Sending request for tool: get_screen_code
+[2026-03-01 21:17:49] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 21:17:49] call_tool called for: get_screen
+[2026-03-01 21:17:49] Sending request for tool: get_screen
+[2026-03-01 21:17:50] Response received for tool: get_screen
+[2026-03-01 21:19:45] call_tool called for: get_project
+[2026-03-01 21:19:45] Sending request for tool: get_project
+[2026-03-01 21:19:46] Response received for tool: get_project
+[2026-03-01 21:19:46] call_tool called for: generate_screen_from_text
+[2026-03-01 21:19:46] Sending request for tool: generate_screen_from_text
+[2026-03-01 21:24:46] Response received for tool: generate_screen_from_text
+[2026-03-01 22:00:07] StitchMCPClient initialized with API Key present: No
+[2026-03-01 22:00:07] list_tools called
+[2026-03-01 22:00:07] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 22:00:07] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:00:07] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 22:00:07] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:00:07] stdio_client context entered. Creating session...
+[2026-03-01 22:00:07] Session created. Initializing...
+[2026-03-01 22:00:35] ✅ MCP Connection Initialized successfully!
+[2026-03-01 22:00:35] Fetching tool list from session...
+[2026-03-01 22:09:17] call_tool called for: get_project
+[2026-03-01 22:09:17] Sending request for tool: get_project
+[2026-03-01 22:09:19] Response received for tool: get_project
+[2026-03-01 22:09:19] call_tool called for: generate_screen_from_text
+[2026-03-01 22:09:19] Sending request for tool: generate_screen_from_text
+[2026-03-01 22:14:20] Response received for tool: generate_screen_from_text
+[2026-03-01 22:14:31] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 22:26:14] StitchMCPClient initialized with API Key present: No
+[2026-03-01 22:26:14] list_tools called
+[2026-03-01 22:26:14] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 22:26:14] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:26:15] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 22:26:15] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:26:15] stdio_client context entered. Creating session...
+[2026-03-01 22:26:15] Session created. Initializing...
+[2026-03-01 22:27:11] ✅ MCP Connection Initialized successfully!
+[2026-03-01 22:27:12] Fetching tool list from session...
+[2026-03-01 22:27:12] call_tool called for: generate_screen_from_text
+[2026-03-01 22:27:12] Sending request for tool: generate_screen_from_text
+[2026-03-01 22:27:12] Response received for tool: generate_screen_from_text
+[2026-03-01 22:27:12] Tool Response Content (snippet): [TextContent(type='text', text='Requested entity was not found.', annotations=None, meta=None)]
+[2026-03-01 22:30:02] StitchMCPClient initialized with API Key present: No
+[2026-03-01 22:30:02] list_tools called
+[2026-03-01 22:30:02] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 22:30:02] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:30:02] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 22:30:02] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:30:02] stdio_client context entered. Creating session...
+[2026-03-01 22:30:02] Session created. Initializing...
+[2026-03-01 22:30:31] ✅ MCP Connection Initialized successfully!
+[2026-03-01 22:30:31] Fetching tool list from session...
+[2026-03-01 22:38:44] call_tool called for: get_project
+[2026-03-01 22:38:44] Sending request for tool: get_project
+[2026-03-01 22:38:45] Response received for tool: get_project
+[2026-03-01 22:38:45] call_tool called for: generate_screen_from_text
+[2026-03-01 22:38:45] Sending request for tool: generate_screen_from_text
+[2026-03-01 22:41:05] Response received for tool: generate_screen_from_text
+[2026-03-01 22:41:17] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 22:41:40] call_tool called for: get_project
+[2026-03-01 22:41:41] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 22:41:41] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:41:41] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 22:41:41] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 22:41:41] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 22:41:41] stdio_client context entered. Creating session...
+[2026-03-01 22:41:41] Session created. Initializing...
+[2026-03-01 22:42:11] ✅ MCP Connection Initialized successfully!
+[2026-03-01 22:42:11] Sending request for tool: get_project
+[2026-03-01 22:42:12] Response received for tool: get_project
+[2026-03-01 22:42:12] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T21:38:49.591297Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-01 22:42:12] call_tool called for: get_screen_code
+[2026-03-01 22:42:12] Sending request for tool: get_screen_code
+[2026-03-01 22:42:13] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 22:42:13] call_tool called for: get_screen
+[2026-03-01 22:42:13] Sending request for tool: get_screen
+[2026-03-01 22:42:14] Response received for tool: get_screen
+[2026-03-01 22:42:14] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/802daa712492481fa9be6a85aabe4388","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/5e5e85fa2b5748009891614b0ca124d5","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidV9VfMTGJk027uKqUg-dbZSyRWSwgyQibcg49w740-ziKCkjVjQjWx_IH-H-Gj0__rkaFq8nZ24hedwFeg9NLz59A5W1BpVvZqTVcFSt3pCL1kSktMZTca8a8XB2luNH6jx8tGdNkD5sOG0fgjvKPkgokrP5GVmaocxS-excmbERkqinTE1vJhgEkbk
+[2026-03-01 22:42:54] call_tool called for: get_project
+[2026-03-01 22:42:54] Sending request for tool: get_project
+[2026-03-01 22:42:55] Response received for tool: get_project
+[2026-03-01 22:42:55] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T21:38:49.591297Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-01 22:42:55] call_tool called for: get_screen_code
+[2026-03-01 22:42:55] Sending request for tool: get_screen_code
+[2026-03-01 22:42:57] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 22:42:57] call_tool called for: get_screen
+[2026-03-01 22:42:57] Sending request for tool: get_screen
+[2026-03-01 22:42:57] Response received for tool: get_screen
+[2026-03-01 22:42:57] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/802daa712492481fa9be6a85aabe4388","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/5e5e85fa2b5748009891614b0ca124d5","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidV9VfMTGJk027uKqUg-dbZSyRWSwgyQibcg49w740-ziKCkjVjQjWx_IH-H-Gj0__rkaFq8nZ24hedwFeg9NLz59A5W1BpVvZqTVcFSt3pCL1kSktMZTca8a8XB2luNH6jx8tGdNkD5sOG0fgjvKPkgokrP5GVmaocxS-excmbERkqinTE1vJhgEkbk
+[2026-03-01 22:44:47] call_tool called for: get_project
+[2026-03-01 22:44:47] Sending request for tool: get_project
+[2026-03-01 22:44:48] Response received for tool: get_project
+[2026-03-01 22:44:48] call_tool called for: generate_screen_from_text
+[2026-03-01 22:44:48] Sending request for tool: generate_screen_from_text
+[2026-03-01 22:47:14] Response received for tool: generate_screen_from_text
+[2026-03-01 22:48:04] call_tool called for: get_project
+[2026-03-01 22:48:04] Sending request for tool: get_project
+[2026-03-01 22:48:05] Response received for tool: get_project
+[2026-03-01 22:48:05] call_tool called for: get_screen_code
+[2026-03-01 22:48:05] Sending request for tool: get_screen_code
+[2026-03-01 22:48:05] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 22:48:05] call_tool called for: get_screen
+[2026-03-01 22:48:05] Sending request for tool: get_screen
+[2026-03-01 22:48:06] Response received for tool: get_screen
+[2026-03-01 22:48:28] call_tool called for: get_project
+[2026-03-01 22:48:28] Sending request for tool: get_project
+[2026-03-01 22:48:29] Response received for tool: get_project
+[2026-03-01 22:48:29] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T21:44:52.548818Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-01 22:48:29] call_tool called for: get_screen_code
+[2026-03-01 22:48:29] Sending request for tool: get_screen_code
+[2026-03-01 22:48:29] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 22:48:29] call_tool called for: get_screen
+[2026-03-01 22:48:29] Sending request for tool: get_screen
+[2026-03-01 22:48:30] Response received for tool: get_screen
+[2026-03-01 22:48:30] Tool Response Content (snippet): [TextContent(type='text', text='Requested entity was not found.', annotations=None, meta=None)]
+[2026-03-01 23:03:53] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 23:03:53] call_tool called for: get_project
+[2026-03-01 23:03:53] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 23:03:53] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 23:03:53] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 23:03:53] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 23:03:53] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 23:03:53] stdio_client context entered. Creating session...
+[2026-03-01 23:03:53] Session created. Initializing...
+[2026-03-01 23:04:12] ✅ MCP Connection Initialized successfully!
+[2026-03-01 23:04:12] Sending request for tool: get_project
+[2026-03-01 23:04:13] Response received for tool: get_project
+[2026-03-01 23:04:13] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T21:44:52.548818Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-01 23:04:13] Attempting get_screen_code for projects/11546334643543187661/screens/6e2adb7986904706bf4a80c5b353e263
+[2026-03-01 23:04:13] call_tool called for: get_screen_code
+[2026-03-01 23:04:13] Sending request for tool: get_screen_code
+[2026-03-01 23:04:13] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 23:04:13] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-01 23:04:13] Falling back to get_screen for projects/11546334643543187661/screens/6e2adb7986904706bf4a80c5b353e263
+[2026-03-01 23:04:13] call_tool called for: get_screen
+[2026-03-01 23:04:13] Sending request for tool: get_screen
+[2026-03-01 23:04:13] Response received for tool: get_screen
+[2026-03-01 23:04:13] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/6e2adb7986904706bf4a80c5b353e263","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/50d3019502154acb99def2e762f7f370","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidVRPh6-SQPdeKWeFfTNXzxFJ92dChmVublz5sl6S9BK85tyQUigtb0JyJ220JxXpA0Y8dqgXYoUs7Ev8FxkGzK8rVDpGUhvl35n6tbmOKzZpLbpLRxXIxNgA4TOBhchpcxTw6_1cBkoc11xBQZqZlkKk_yov3PebOb9hOB59c-KEWP26uG3VOg6r_MY
+[2026-03-01 23:04:13] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/6e2adb7986904706bf4a80c5b353e263","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/50d301950215...
+[2026-03-01 23:04:13] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sX2I5MDZiZmYxZTkwYjQ1MWQ4NzBhNzM0MDEzYTA5MjA5EgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242
+[2026-03-01 23:09:08] StitchMCPClient initialized with API Key present: Yes
+[2026-03-01 23:12:36] call_tool called for: get_project
+[2026-03-01 23:12:36] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-01 23:12:36] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 23:12:36] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-01 23:12:36] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-01 23:12:36] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-01 23:12:36] stdio_client context entered. Creating session...
+[2026-03-01 23:12:36] Session created. Initializing...
+[2026-03-01 23:12:45] ✅ MCP Connection Initialized successfully!
+[2026-03-01 23:12:45] Sending request for tool: get_project
+[2026-03-01 23:12:46] Response received for tool: get_project
+[2026-03-01 23:12:46] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T21:44:52.548818Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-01 23:12:46] call_tool called for: generate_screen_from_text
+[2026-03-01 23:12:46] Sending request for tool: generate_screen_from_text
+[2026-03-01 23:17:19] Response received for tool: generate_screen_from_text
+[2026-03-01 23:17:19] Tool Response Content (snippet): [TextContent(type='text', text='{"projectId":"11546334643543187661","sessionId":"13826116823111920141","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/8b68a15678e74b01b3cfbb68df820aae","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidWOqyqlJmM5kg76y7VNq4WGyWqAts8aHOSwTAc0EGK7U1xPQMCALOpDpjBq8Z8oUetOJq8fVmtOMftJxD5yRidt7fR00o1d96pQhEX-cCxHQW5UJYt_LZJ2Z9bjekGL3_t41zF1c8jVb_lSDyVbbTR38iiyoXI4yQqI03rWd703Bx31OQxBWtUdgrHiWCAop93vBnjfd_4t
+[2026-03-01 23:17:19] DEBUG: Combined Stitch result: {"projectId":"11546334643543187661","sessionId":"13826116823111920141","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/8b68a15678e74b01b3cfbb68df820aae","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidWOqyqlJmM5kg76y7VNq4WGyWqAts8aHOSwTAc0EGK7U1xPQMCALOpDpjBq8Z8oUetOJq8fVmtOMftJxD5yRidt7fR00o1d96pQhEX-cCxHQW5UJYt_LZJ2Z9bjekGL3_t41zF1c8jVb_lSDyVbbTR38iiyoXI4yQqI03rWd703Bx31OQxBWtUdgrHiWCAop93vBnjfd_4tSTcykeDI-yXZz41CZM3_td_X7Z_3IAKe...
+[2026-03-01 23:17:58] Attempting get_screen_code for projects/11546334643543187661/screens/b2d36422c8624fc48b89aefb9b0af0ca
+[2026-03-01 23:17:58] call_tool called for: get_screen_code
+[2026-03-01 23:17:58] Sending request for tool: get_screen_code
+[2026-03-01 23:17:58] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-01 23:17:58] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-01 23:17:58] Falling back to get_screen for projects/11546334643543187661/screens/b2d36422c8624fc48b89aefb9b0af0ca
+[2026-03-01 23:17:58] call_tool called for: get_screen
+[2026-03-01 23:17:58] Sending request for tool: get_screen
+[2026-03-01 23:17:59] Response received for tool: get_screen
+[2026-03-01 23:17:59] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/b2d36422c8624fc48b89aefb9b0af0ca","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/8b68a15678e74b01b3cfbb68df820aae","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidWOqyqlJmM5kg76y7VNq4WGyWqAts8aHOSwTAc0EGK7U1xPQMCALOpDpjBq8Z8oUetOJq8fVmtOMftJxD5yRidt7fR00o1d96pQhEX-cCxHQW5UJYt_LZJ2Z9bjekGL3_t41zF1c8jVb_lSDyVbbTR38iiyoXI4yQqI03rWd703Bx31OQxBWtUdgrHi
+[2026-03-01 23:17:59] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/b2d36422c8624fc48b89aefb9b0af0ca","title":"NXstep Unified Access Dynamic Homepage","screenshot":{"name":"projects/11546334643543187661/files/8b68a15678e7...
+[2026-03-01 23:17:59] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sX2VjNDZmMDdlM2JjNzQwYjY4Nzc5ZDc0MzIxZWM2OTUxEgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242
+[2026-03-02 02:58:09] StitchMCPClient initialized with API Key present: Yes
+[2026-03-02 02:59:32] call_tool called for: get_project
+[2026-03-02 02:59:32] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-02 02:59:32] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 02:59:32] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-02 02:59:32] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-02 02:59:32] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 02:59:32] stdio_client context entered. Creating session...
+[2026-03-02 02:59:32] Session created. Initializing...
+[2026-03-02 02:59:37] ✅ MCP Connection Initialized successfully!
+[2026-03-02 02:59:37] Sending request for tool: get_project
+[2026-03-02 02:59:38] Response received for tool: get_project
+[2026-03-02 02:59:38] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-01T22:12:50.007393Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 02:59:38] call_tool called for: generate_screen_from_text
+[2026-03-02 02:59:38] Sending request for tool: generate_screen_from_text
+[2026-03-02 03:04:39] Response received for tool: generate_screen_from_text
+[2026-03-02 03:04:39] Tool Response Content (snippet): [TextContent(type='text', text='The service is currently unavailable.', annotations=None, meta=None)]
+[2026-03-02 03:04:39] DEBUG: Combined Stitch result: The service is currently unavailable....
+[2026-03-02 03:04:39] DEBUG: Parsing failed. Raw result snippet: The service is currently unavailable.
+[2026-03-02 03:32:56] call_tool called for: get_project
+[2026-03-02 03:32:56] Sending request for tool: get_project
+[2026-03-02 03:32:57] Response received for tool: get_project
+[2026-03-02 03:32:57] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-02T01:59:43.097862Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 03:32:57] call_tool called for: generate_screen_from_text
+[2026-03-02 03:32:57] Sending request for tool: generate_screen_from_text
+[2026-03-02 03:37:04] Response received for tool: generate_screen_from_text
+[2026-03-02 03:37:04] Tool Response Content (snippet): [TextContent(type='text', text='{"projectId":"11546334643543187661","sessionId":"16732000174993069509","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/d2244d55eeab4196842e9e27d633691f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUWObO_a1kjzl6686KsWhXMmMVZf-rupi24Oo2jGy8giFj3Wv9-7x0VlcHsVpPr-RwwWoP9aumv4lDEHIS4xz7MkFozNr0zu2IYhA0-kvi3BxVN4GFjJrjPKn4IUjmdPErSK6FG3VPdcdWlNnR8wVFW1_-2FQGb1IwsMMWEIWllqboQOhWjVEjDauOLFxI2puf-VUypyZoD
+[2026-03-02 03:37:04] DEBUG: Combined Stitch result: {"projectId":"11546334643543187661","sessionId":"16732000174993069509","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/d2244d55eeab4196842e9e27d633691f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUWObO_a1kjzl6686KsWhXMmMVZf-rupi24Oo2jGy8giFj3Wv9-7x0VlcHsVpPr-RwwWoP9aumv4lDEHIS4xz7MkFozNr0zu2IYhA0-kvi3BxVN4GFjJrjPKn4IUjmdPErSK6FG3VPdcdWlNnR8wVFW1_-2FQGb1IwsMMWEIWllqboQOhWjVEjDauOLFxI2puf-VUypyZoDOQFudI2tBa8i0x5zFQ8tokQF0mOb2L16...
+[2026-03-02 03:46:38] Attempting get_screen_code for projects/11546334643543187661/screens/2921e6562c7d49dc9b2995a86c344d45
+[2026-03-02 03:46:38] call_tool called for: get_screen_code
+[2026-03-02 03:46:38] Sending request for tool: get_screen_code
+[2026-03-02 03:46:38] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-02 03:46:38] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-02 03:46:38] Falling back to get_screen for projects/11546334643543187661/screens/2921e6562c7d49dc9b2995a86c344d45
+[2026-03-02 03:46:38] call_tool called for: get_screen
+[2026-03-02 03:46:38] Sending request for tool: get_screen
+[2026-03-02 03:46:38] Response received for tool: get_screen
+[2026-03-02 03:46:38] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/2921e6562c7d49dc9b2995a86c344d45","title":"NxStep AI Automation High-Conversion Homepage","screenshot":{"name":"projects/11546334643543187661/files/d2244d55eeab4196842e9e27d633691f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUWObO_a1kjzl6686KsWhXMmMVZf-rupi24Oo2jGy8giFj3Wv9-7x0VlcHsVpPr-RwwWoP9aumv4lDEHIS4xz7MkFozNr0zu2IYhA0-kvi3BxVN4GFjJrjPKn4IUjmdPErSK6FG3VPdcdWlNnR8wVFW1_-2FQGb1IwsMMWEIWllqboQOhWjV
+[2026-03-02 03:46:38] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/2921e6562c7d49dc9b2995a86c344d45","title":"NxStep AI Automation High-Conversion Homepage","screenshot":{"name":"projects/11546334643543187661/files/d2244...
+[2026-03-02 03:46:38] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sX2EwMjFlMWNlMzNiNjQ4ZjliZGY2YmZiYWJhNTZlM2U4EgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242
+[2026-03-02 04:04:37] call_tool called for: get_project
+[2026-03-02 04:04:37] Sending request for tool: get_project
+[2026-03-02 04:04:37] Response received for tool: get_project
+[2026-03-02 04:04:37] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-02T02:33:01.711243Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 04:04:37] call_tool called for: generate_screen_from_text
+[2026-03-02 04:04:37] Sending request for tool: generate_screen_from_text
+[2026-03-02 04:09:39] Response received for tool: generate_screen_from_text
+[2026-03-02 04:09:39] Tool Response Content (snippet): [TextContent(type='text', text='The service is currently unavailable.', annotations=None, meta=None)]
+[2026-03-02 04:09:39] DEBUG: Combined Stitch result: The service is currently unavailable....
+[2026-03-02 04:09:39] DEBUG: Parsing failed. Raw result snippet: The service is currently unavailable.
+[2026-03-02 04:10:01] call_tool called for: get_project
+[2026-03-02 04:10:01] Sending request for tool: get_project
+[2026-03-02 04:10:02] Response received for tool: get_project
+[2026-03-02 04:10:02] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-02T03:04:43.434007Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 04:10:02] call_tool called for: generate_screen_from_text
+[2026-03-02 04:10:02] Sending request for tool: generate_screen_from_text
+[2026-03-02 04:13:00] Response received for tool: generate_screen_from_text
+[2026-03-02 04:13:00] Tool Response Content (snippet): [TextContent(type='text', text='{"projectId":"11546334643543187661","sessionId":"2533589998053384978","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/a297362f41b54bb0a132ee5e6b036f55","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXwK_VNoHmWPuH7jt-PI72pX9NRvkEynRZrrKH9A6p9TuuDnHAr1yKzfu43nXcJ7NzFCCJbpT6Z2peI_ctmZibGdwsXiZ7KyjHb6zOoVoi0YWishq6Yi4_iOrHtBDLj9Bn3tfDgh3WvJukNDos4rX84H4QaR9F87Gk5DYz6GuRaBrDZ5596sJmgR7J3bJiOsuwC9O6MNXdLR
+[2026-03-02 04:13:00] DEBUG: Combined Stitch result: {"projectId":"11546334643543187661","sessionId":"2533589998053384978","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/a297362f41b54bb0a132ee5e6b036f55","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXwK_VNoHmWPuH7jt-PI72pX9NRvkEynRZrrKH9A6p9TuuDnHAr1yKzfu43nXcJ7NzFCCJbpT6Z2peI_ctmZibGdwsXiZ7KyjHb6zOoVoi0YWishq6Yi4_iOrHtBDLj9Bn3tfDgh3WvJukNDos4rX84H4QaR9F87Gk5DYz6GuRaBrDZ5596sJmgR7J3bJiOsuwC9O6MNXdLR2Khhjo1i6WPINy2okvZjNxUHdoQS4PMq...
+[2026-03-02 04:16:51] Attempting get_screen_code for projects/11546334643543187661/screens/b064241891f84705bca0f5188d6c0c50
+[2026-03-02 04:16:51] call_tool called for: get_screen_code
+[2026-03-02 04:16:51] Sending request for tool: get_screen_code
+[2026-03-02 04:16:51] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-02 04:16:51] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-02 04:16:51] Falling back to get_screen for projects/11546334643543187661/screens/b064241891f84705bca0f5188d6c0c50
+[2026-03-02 04:16:51] call_tool called for: get_screen
+[2026-03-02 04:16:51] Sending request for tool: get_screen
+[2026-03-02 04:16:51] Response received for tool: get_screen
+[2026-03-02 04:16:51] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/b064241891f84705bca0f5188d6c0c50","title":"NxStep AI Automation High-Conversion Homepage","screenshot":{"name":"projects/11546334643543187661/files/a297362f41b54bb0a132ee5e6b036f55","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXwK_VNoHmWPuH7jt-PI72pX9NRvkEynRZrrKH9A6p9TuuDnHAr1yKzfu43nXcJ7NzFCCJbpT6Z2peI_ctmZibGdwsXiZ7KyjHb6zOoVoi0YWishq6Yi4_iOrHtBDLj9Bn3tfDgh3WvJukNDos4rX84H4QaR9F87Gk5DYz6GuRaBrDZ5596s
+[2026-03-02 04:16:51] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/b064241891f84705bca0f5188d6c0c50","title":"NxStep AI Automation High-Conversion Homepage","screenshot":{"name":"projects/11546334643543187661/files/a2973...
+[2026-03-02 04:16:51] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sXzJjODE3MjQ1YTI2MDRiOThiNzM3ZjcyZDZjZWIwODQwEgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242
+[2026-03-02 04:31:02] StitchMCPClient initialized with API Key present: Yes
+[2026-03-02 04:32:10] call_tool called for: get_project
+[2026-03-02 04:32:10] Sending request for tool: get_project
+[2026-03-02 04:32:13] Response received for tool: get_project
+[2026-03-02 04:32:13] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-02T03:10:06.374851Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 04:32:13] call_tool called for: generate_screen_from_text
+[2026-03-02 04:32:13] Sending request for tool: generate_screen_from_text
+[2026-03-02 04:34:31] Response received for tool: generate_screen_from_text
+[2026-03-02 04:34:31] Tool Response Content (snippet): [TextContent(type='text', text='{"projectId":"11546334643543187661","sessionId":"12650547832398348874","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/1d17d06b72e74f6784281d0997e50c72","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidVnm0aGqWM2hzbTrgvFv8sDFHOq6JZyI23s9M19mAISFyxEqddt3OzQyRVqMW353vFXXAXsGjAlRbfteVeAC_GGChAlL-Ikc4GPnv8q2oZrJrrIWoMQN9dRbHROZ7uSfwmNMB8intLsZ_KBo9Ngc8_VJ8H72LTO0zxCZEF1d9bSiKsONFreUAU7YGjv8jBrrm93ES6psLKT
+[2026-03-02 04:34:31] DEBUG: Combined Stitch result: {"projectId":"11546334643543187661","sessionId":"12650547832398348874","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/1d17d06b72e74f6784281d0997e50c72","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidVnm0aGqWM2hzbTrgvFv8sDFHOq6JZyI23s9M19mAISFyxEqddt3OzQyRVqMW353vFXXAXsGjAlRbfteVeAC_GGChAlL-Ikc4GPnv8q2oZrJrrIWoMQN9dRbHROZ7uSfwmNMB8intLsZ_KBo9Ngc8_VJ8H72LTO0zxCZEF1d9bSiKsONFreUAU7YGjv8jBrrm93ES6psLKT1KndDE95bGrxeOOFDf_SCYEPNT4YHvxK...
+[2026-03-02 04:34:50] Attempting get_screen_code for projects/11546334643543187661/screens/47087f3983514eff941fe02a480efbd0
+[2026-03-02 04:34:50] call_tool called for: get_screen_code
+[2026-03-02 04:34:50] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-02 04:34:50] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 04:34:50] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-02 04:34:50] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-02 04:34:50] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 04:34:50] stdio_client context entered. Creating session...
+[2026-03-02 04:34:50] Session created. Initializing...
+[2026-03-02 04:34:55] ✅ MCP Connection Initialized successfully!
+[2026-03-02 04:34:55] Sending request for tool: get_screen_code
+[2026-03-02 04:34:55] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-02 04:34:55] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-02 04:34:55] Falling back to get_screen for projects/11546334643543187661/screens/47087f3983514eff941fe02a480efbd0
+[2026-03-02 04:34:55] call_tool called for: get_screen
+[2026-03-02 04:34:55] Sending request for tool: get_screen
+[2026-03-02 04:34:56] Response received for tool: get_screen
+[2026-03-02 04:34:56] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/47087f3983514eff941fe02a480efbd0","title":"Nxstep AI Strategy Event Landing Page","screenshot":{"name":"projects/11546334643543187661/files/1d17d06b72e74f6784281d0997e50c72","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidVnm0aGqWM2hzbTrgvFv8sDFHOq6JZyI23s9M19mAISFyxEqddt3OzQyRVqMW353vFXXAXsGjAlRbfteVeAC_GGChAlL-Ikc4GPnv8q2oZrJrrIWoMQN9dRbHROZ7uSfwmNMB8intLsZ_KBo9Ngc8_VJ8H72LTO0zxCZEF1d9bSiKsONFreUAU7YGjv8
+[2026-03-02 04:34:56] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/47087f3983514eff941fe02a480efbd0","title":"Nxstep AI Strategy Event Landing Page","screenshot":{"name":"projects/11546334643543187661/files/1d17d06b72e74...
+[2026-03-02 04:34:56] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sX2M4MGQxZWJkMTAwYTQzYTlhMDJlOTkyNTA4NjIxMmIzEgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242
+[2026-03-02 05:36:14] StitchMCPClient initialized with API Key present: Yes
+[2026-03-02 11:13:55] StitchMCPClient initialized with API Key present: Yes
+[2026-03-02 11:22:07] StitchMCPClient initialized with API Key present: Yes
+[2026-03-02 11:26:29] call_tool called for: get_project
+[2026-03-02 11:26:29] Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+[2026-03-02 11:26:29] Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 11:26:29] Found Google Credentials at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\google_credentials.json
+[2026-03-02 11:26:29] Removing STITCH_API_KEY from env to prioritize Google Credentials
+[2026-03-02 11:26:29] Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\wealth_agent\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+[2026-03-02 11:26:29] stdio_client context entered. Creating session...
+[2026-03-02 11:26:29] Session created. Initializing...
+[2026-03-02 11:26:45] ✅ MCP Connection Initialized successfully!
+[2026-03-02 11:26:45] Sending request for tool: get_project
+[2026-03-02 11:26:46] Response received for tool: get_project
+[2026-03-02 11:26:46] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661","title":"Test Project","visibility":"PRIVATE","createTime":"2026-03-01T12:32:03.760916Z","updateTime":"2026-03-02T03:32:18.592701Z","projectType":"PROJECT_DESIGN","thumbnailScreenshot":{"name":"projects/11546334643543187661/files/fc3b33bf114e4c91b43a93d98465583f","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidXlAWAIvF4e_mo_9WHRtjxFu_rPo7WmkxQXON2hZ9FL2hysUTjlM7kONMO8J0NB1QbcMl4Lt1A-fsla6mmukJhQ6iVxD0RQ7RqPURmfhb
+[2026-03-02 11:26:46] call_tool called for: generate_screen_from_text
+[2026-03-02 11:26:46] Sending request for tool: generate_screen_from_text
+[2026-03-02 11:29:00] Response received for tool: generate_screen_from_text
+[2026-03-02 11:29:00] Tool Response Content (snippet): [TextContent(type='text', text='{"projectId":"11546334643543187661","sessionId":"7190868668353163416","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/9b7a2e1884874dcfaeb73f1b305bfe86","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUGmNTMXBIV_xfOaFMwkbI7e5ud6aFgmX4HJIrgsZgaHOxyF2CVPr6dfvWgvCzi3X-RxE8XB7fyQiynbckxbIERWStq4I8LwN7SPHUuT0r1RviHZxJsSQsen7AO3kMgIzHYNrBr6YpFWxn9XUKxiEcrCKV_kAP8Raes7eoCciS3llRNZPqFwKBOIe92N3J2GBzXzocXoljla
+[2026-03-02 11:29:00] DEBUG: Combined Stitch result: {"projectId":"11546334643543187661","sessionId":"7190868668353163416","outputComponents":[{"design":{"screens":[{"screenshot":{"name":"projects/11546334643543187661/files/9b7a2e1884874dcfaeb73f1b305bfe86","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUGmNTMXBIV_xfOaFMwkbI7e5ud6aFgmX4HJIrgsZgaHOxyF2CVPr6dfvWgvCzi3X-RxE8XB7fyQiynbckxbIERWStq4I8LwN7SPHUuT0r1RviHZxJsSQsen7AO3kMgIzHYNrBr6YpFWxn9XUKxiEcrCKV_kAP8Raes7eoCciS3llRNZPqFwKBOIe92N3J2GBzXzocXoljla1JcuykOK110gJ78MtDxtmoFgTOOTN3C5...
+[2026-03-02 11:29:25] Attempting get_screen_code for projects/11546334643543187661/screens/cdff4afa2ea543a1a8267903ef1ff4c7
+[2026-03-02 11:29:25] call_tool called for: get_screen_code
+[2026-03-02 11:29:25] Sending request for tool: get_screen_code
+[2026-03-02 11:29:25] ❌ call_tool failed: McpError('Tools Call name is not found in the list of tools')
+[2026-03-02 11:29:25] Virtual tool get_screen_code failed: Tools Call name is not found in the list of tools
+[2026-03-02 11:29:25] Falling back to get_screen for projects/11546334643543187661/screens/cdff4afa2ea543a1a8267903ef1ff4c7
+[2026-03-02 11:29:25] call_tool called for: get_screen
+[2026-03-02 11:29:25] Sending request for tool: get_screen
+[2026-03-02 11:29:26] Response received for tool: get_screen
+[2026-03-02 11:29:26] Tool Response Content (snippet): [TextContent(type='text', text='{"name":"projects/11546334643543187661/screens/cdff4afa2ea543a1a8267903ef1ff4c7","title":"ISO HYBRID Badges Presentation Page","screenshot":{"name":"projects/11546334643543187661/files/9b7a2e1884874dcfaeb73f1b305bfe86","downloadUrl":"https://lh3.googleusercontent.com/aida/AOfcidUGmNTMXBIV_xfOaFMwkbI7e5ud6aFgmX4HJIrgsZgaHOxyF2CVPr6dfvWgvCzi3X-RxE8XB7fyQiynbckxbIERWStq4I8LwN7SPHUuT0r1RviHZxJsSQsen7AO3kMgIzHYNrBr6YpFWxn9XUKxiEcrCKV_kAP8Raes7eoCciS3llRNZPqFwKBOIe92N3J
+[2026-03-02 11:29:26] DEBUG: get_screen raw result: {"name":"projects/11546334643543187661/screens/cdff4afa2ea543a1a8267903ef1ff4c7","title":"ISO HYBRID Badges Presentation Page","screenshot":{"name":"projects/11546334643543187661/files/9b7a2e1884874dc...
+[2026-03-02 11:29:26] Downloading HTML from: https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ9Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpcCiVodG1sXzRjZThjY2NhNDhmZTRmYzBiYTBiYjg2YjM1NDE3ZDI0EgwSCBDbheauy4BAGAGSASQKCnByb2plY3RfaWQSFkIUMTE1NDYzMzQ2NDM1NDMxODc2NjE&filename=&opi=96797242

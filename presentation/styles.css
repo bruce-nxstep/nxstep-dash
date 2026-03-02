@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* Reset & Base */
+body {
+    margin: 0;
+    padding: 0;
+    width: 10in;
+    /* 960px */
+    height: 5.625in;
+    /* 540px - 16:9 Aspect Ratio */
+    background-color: #0f172a;
+    /* Slate 950 */
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background Elements - Simplified for PPTX compatibility */
+.bg-gradient,
+.bg-accent,
+.bg-grid {
+    display: none;
+}
+
+/* Layout Containers */
+.container {
+    padding: 40px;
+    /* Reduced padding to prevent overflow */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Typography */
+h1 {
+    font-size: 44pt;
+    /* Slightly reduced */
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 28pt;
+    /* Slightly reduced */
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    color: #38bdf8;
+    /* Sky 400 */
+}
+
+p {
+    font-size: 16pt;
+    /* Slightly reduced */
+    line-height: 1.4;
+    margin: 0 0 10px 0;
+    color: #cbd5e1;
+    /* Slate 300 */
+}
+
+ul {
+    margin: 0;
+    padding-left: 30px;
+}
+
+li {
+    font-size: 16pt;
+    margin-bottom: 10px;
+    color: #e2e8f0;
+    /* Slate 200 */
+    line-height: 1.3;
+}
+
+/* Components */
+.card {
+    background-color: #1e293b;
+    /* Slate 800 */
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #334155;
+    /* Slate 700 */
+}
+
+.card h3 {
+    font-size: 18pt;
+    margin: 0 0 10px 0;
+    color: #f8fafc;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #0ea5e9;
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18pt;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.highlight {
+    color: #38bdf8;
+    font-weight: 600;
+}

@@ -1,0 +1,98 @@
+{
+    "name": "⚙️ Auto-Renew: Gmail Watch (Every 6 Days)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "days",
+                            "daysInterval": 6
+                        }
+                    ]
+                }
+            },
+            "id": "schedule-trigger",
+            "name": "Every 6 Days",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                0,
+                300
+            ],
+            "notes": "Renews the Gmail watch every 6 days. Gmail watch expires after 7 days so this keeps it alive automatically."
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://www.googleapis.com/gmail/v1/users/me/watch",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "gmailOAuth2",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "{\n  \"topicName\": \"projects/gen-lang-client-0858201865/topics/gmail-linkedin-notifications\",\n  \"labelIds\": [\"INBOX\"]\n}",
+                "options": {}
+            },
+            "id": "gmail-watch",
+            "name": "Register Gmail Watch",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                240,
+                300
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "YOUR_GMAIL_CREDENTIAL_ID",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const result = $input.item.json;\n\nif (result.historyId && result.expiration) {\n  const expiryDate = new Date(parseInt(result.expiration)).toLocaleString();\n  return [{ json: {\n    status: '✅ Gmail Watch renewed successfully',\n    historyId: result.historyId,\n    expiration: expiryDate,\n    renewedAt: new Date().toLocaleString()\n  }}];\n} else {\n  return [{ json: {\n    status: '❌ Renewal failed',\n    response: result\n  }}];\n}\n"
+            },
+            "id": "check-result",
+            "name": "Log Result",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                480,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Every 6 Days": {
+            "main": [
+                [
+                    {
+                        "node": "Register Gmail Watch",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Register Gmail Watch": {
+            "main": [
+                [
+                    {
+                        "node": "Log Result",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true
+    },
+    "staticData": null,
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true
+    }
+}

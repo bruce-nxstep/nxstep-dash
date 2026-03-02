@@ -1,0 +1,9 @@
+{
+    "name": "wealth-agent",
+    "version": "1.0.0",
+    "description": "Wealth Agent Deployment Package",
+    "type": "module",
+    "dependencies": {
+        "@_davideast/stitch-mcp": "^0.4.0"
+    }
+}

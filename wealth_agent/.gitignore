@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+
+# Data and Databases (Private)
+data/*.db
+data/*.sqlite
+data/*.json
+*.db
+stitch_state.db
+
+# Secrets
+.env
+secret.txt
+
+# Streamlit
+.streamlit/
+
+# Temporary / Debug / Scratch scripts
+fix_db.py
+tmp_*.py
+test_*.py
+check_stitch.py
+db_check.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Static Site Output
+dist/

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
+import { Header } from "@/components/organisms/Header";
 import { Footer } from "@/components/layout/Footer";
+import { NavigationWrapper } from "@/components/layout/NavigationWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -20,15 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className="dark">
       <body
-        className={`${inter.variable} antialiased min-h-screen flex flex-col font-sans`}
+        className={`${inter.variable} antialiased min-h-screen flex flex-col font-sans bg-background text-foreground`}
       >
-        <Navbar />
-        <main className="flex-grow">
+        <NavigationWrapper header={<Header />} footer={<Footer />}>
           {children}
-        </main>
-        <Footer />
+        </NavigationWrapper>
       </body>
     </html>
   );

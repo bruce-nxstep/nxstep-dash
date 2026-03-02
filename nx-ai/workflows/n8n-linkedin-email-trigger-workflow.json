@@ -1,0 +1,773 @@
+{
+    "name": "LinkedIn Email Trigger → Auto Comment (Webhook Push)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "linkedin-gmail-push",
+                "responseMode": "onReceived",
+                "options": {}
+            },
+            "id": "webhook-trigger",
+            "name": "Webhook: Gmail Push (Pub/Sub)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                0,
+                300
+            ],
+            "webhookId": "linkedin-gmail-push",
+            "notes": "Google Cloud Pub/Sub posts here when Gmail receives a new email. Set this webhook URL as your Pub/Sub push endpoint. URL is: https://n8n.srv863249.hstgr.cloud/webhook/linkedin-gmail-push"
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// DECODE Pub/Sub push notification from Gmail\n//\n// Google Pub/Sub sends a base64-encoded message containing:\n// { \"emailAddress\": \"...\", \"historyId\": \"...\" }\n// We decode it and pass the historyId forward.\n// ============================================================\n\nconst body = $input.item.json.body || $input.item.json;\n\nif (!body.message || !body.message.data) {\n  return [{ json: { skip: true, reason: 'No Pub/Sub message data found' } }];\n}\n\nlet decoded;\ntry {\n  const raw = Buffer.from(body.message.data, 'base64').toString('utf8');\n  decoded = JSON.parse(raw);\n} catch (e) {\n  return [{ json: { skip: true, reason: 'Could not decode Pub/Sub message: ' + e.message } }];\n}\n\nconst historyId = decoded.historyId;\nconst emailAddress = decoded.emailAddress || '';\n\nif (!historyId) {\n  return [{ json: { skip: true, reason: 'No historyId in decoded message' } }];\n}\n\nreturn [{ json: { historyId: String(historyId), emailAddress } }];\n"
+            },
+            "id": "decode-pubsub",
+            "name": "Decode Pub/Sub Message",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-decode",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "gate-decode",
+            "name": "Gate: Valid Message?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                480,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "=https://www.googleapis.com/gmail/v1/users/me/history?startHistoryId={{ $json.historyId }}&historyTypes=messageAdded&labelId=INBOX",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "gmailOAuth2",
+                "options": {}
+            },
+            "id": "gmail-list-history",
+            "name": "Gmail: List New Messages (History)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                720,
+                300
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "YOUR_GMAIL_CREDENTIAL_ID",
+                    "name": "Gmail account"
+                }
+            },
+            "notes": "Calls Gmail history API to get new messages since the historyId. Uses same Gmail OAuth2 credential."
+        },
+        {
+            "parameters": {
+                "jsCode": "// Extract all new message IDs from the Gmail history response\nconst history = $input.item.json.history || [];\n\nconst messageIds = [];\nfor (const entry of history) {\n  const added = entry.messagesAdded || [];\n  for (const m of added) {\n    if (m.message && m.message.id) {\n      messageIds.push(m.message.id);\n    }\n  }\n}\n\nif (messageIds.length === 0) {\n  return [{ json: { skip: true, reason: 'No new messages in this history batch' } }];\n}\n\n// Return one item per message ID so we can fetch each in parallel\nreturn messageIds.map(id => ({ json: { messageId: id } }));\n"
+            },
+            "id": "extract-message-ids",
+            "name": "Extract Message IDs",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                960,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-history",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "gate-has-messages",
+            "name": "Gate: Has Messages?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                1200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "=https://www.googleapis.com/gmail/v1/users/me/messages/{{ $json.messageId }}?format=full",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "gmailOAuth2",
+                "options": {}
+            },
+            "id": "gmail-get-message",
+            "name": "Gmail: Get Full Message",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1440,
+                300
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "YOUR_GMAIL_CREDENTIAL_ID",
+                    "name": "Gmail account"
+                }
+            },
+            "notes": "Fetches the full email content including headers and body."
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// PARSE Gmail API message → extract subject, sender, body\n//\n// Gmail API returns email data in a structured format with\n// headers and base64-encoded body parts.\n// ============================================================\n\nconst msg = $input.item.json;\nconst headers = (msg.payload && msg.payload.headers) ? msg.payload.headers : [];\n\nfunction getHeader(name) {\n  const h = headers.find(h => h.name.toLowerCase() === name.toLowerCase());\n  return h ? h.value : '';\n}\n\nfunction decodeBase64(encoded) {\n  if (!encoded) return '';\n  try {\n    return Buffer.from(encoded.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8');\n  } catch(e) { return ''; }\n}\n\nfunction extractBodyText(payload) {\n  if (!payload) return '';\n  if (payload.body && payload.body.data) {\n    return decodeBase64(payload.body.data);\n  }\n  if (payload.parts) {\n    for (const part of payload.parts) {\n      if (part.mimeType === 'text/plain' && part.body && part.body.data) {\n        return decodeBase64(part.body.data);\n      }\n    }\n    // Fallback to HTML part\n    for (const part of payload.parts) {\n      if (part.mimeType === 'text/html' && part.body && part.body.data) {\n        return decodeBase64(part.body.data);\n      }\n    }\n  }\n  return '';\n}\n\nconst subject = getHeader('Subject');\nconst from    = getHeader('From');\nconst snippet = msg.snippet || '';\nconst body    = extractBodyText(msg.payload);\n\nreturn [{ json: { subject, from, snippet, text: body, body, html: body } }];\n"
+            },
+            "id": "parse-gmail-message",
+            "name": "Parse Gmail Message",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1680,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// FILTER — Only process LinkedIn 'new post' notification emails\n// from monitored people.\n//\n// CONFIGURE: Add/remove names to control who triggers the workflow.\n// ============================================================\n\nconst PEOPLE_TO_MONITOR = [\n  \"Sarah Goosse\",          // (10) Sarah Goosse\n  \"Stephanie Courgey\",     // linkedin.com/in/stephaniecourgey\n  \"Yann LeCun\",            // linkedin.com/in/yann-lecun\n  \"Louis Claude\",          // (11) Louis CLAUDE\n  \"Dylan Teixeira\",        // (11) Dylan TEIXEIRA\n  \"Nicolas Hircq\",         // linkedin.com/in/nicolas-hircq\n  \"Zeyneb Madi\",           // linkedin.com/in/zeyneb-madi\n  \"Flav Roff\",             // linkedin.com/in/flavroff — adjust if name differs\n  \"Ousmane Dicko\",         // linkedin.com/in/ousmane-dicko\n  \"Brune Poirson\",         // (11) Brune Poirson\n  \"Eric Djavid\"            // linkedin.com/in/eric-djavid\n];\n\n// Post notification keywords (FR + EN)\nconst POST_KEYWORDS = [\n  \"a publié\", \"a partagé\", \"nouveau billet\", \"nouvelle publication\",\n  \"posted\", \"shared\", \"new post\", \"published a post\"\n];\n\n// Must come from LinkedIn notification sender\nconst LINKEDIN_SENDERS = [\n  \"updates@linkedin.com\",\n  \"notifications-noreply@linkedin.com\",\n  \"no-reply@linkedin.com\",\n  \"member@linkedin.com\",\n  \"linkedin.com\"\n];\n\nconst email = $input.item.json;\nconst from    = (email.from || \"\").toLowerCase();\nconst subject = (email.subject || \"\").toLowerCase();\nconst snippet = (email.snippet || \"\").toLowerCase();\nconst body    = (email.text || email.body || \"\").toLowerCase();\nconst combined = subject + \" \" + snippet + \" \" + body;\n\n// Must be from LinkedIn\nconst isFromLinkedIn = LINKEDIN_SENDERS.some(s => from.includes(s));\nif (!isFromLinkedIn) {\n  return [{ json: { skip: true, reason: `Not from LinkedIn: ${email.from}` } }];\n}\n\n// Must mention a monitored person\nconst matchedPerson = PEOPLE_TO_MONITOR.find(name =>\n  combined.includes(name.toLowerCase())\n);\n\n// Must be a post-type notification\nconst isPostNotif = POST_KEYWORDS.some(kw => combined.includes(kw));\n\nif (!matchedPerson || !isPostNotif) {\n  return [{ json: { skip: true, reason: `Not a monitored post notification. Subject: ${email.subject}` } }];\n}\n\nreturn [{\n  json: {\n    ...email,\n    matched_person: matchedPerson,\n    skip: false\n  }\n}];\n"
+            },
+            "id": "filter-post-notification",
+            "name": "Filter: Is Post Notification?",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1920,
+                300
+            ],
+            "notes": "Edit PEOPLE_TO_MONITOR to control whose posts trigger the workflow."
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-filter",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "gate-proceed",
+            "name": "Gate: Proceed?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                2160,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// EXTRACT POST URL from the LinkedIn notification email.\n// ============================================================\n\nconst email = $input.item.json;\nconst person = email.matched_person || 'Author';\n\nconst text = [\n  email.text || '',\n  email.body || '',\n  email.html || '',\n  email.snippet || ''\n].join(' ');\n\n// 1. Direct LinkedIn post URL\nconst directMatch = text.match(/https:\\/\\/www\\.linkedin\\.com\\/posts\\/[\\w%\\-._~:/?#[\\]@!$&'()*+,;=]+/i);\nif (directMatch) {\n  return { json: { post_url: directMatch[0], person, email_subject: email.subject } };\n}\n\n// 2. Feed/update URL\nconst feedMatch = text.match(/https:\\/\\/www\\.linkedin\\.com\\/feed\\/update\\/[\\w%\\-._~:/?#[\\]@!$&'()*+,;=]+/i);\nif (feedMatch) {\n  return { json: { post_url: feedMatch[0], person, email_subject: email.subject } };\n}\n\n// 3. LinkedIn tracking redirect\nconst trackMatch = text.match(/https:\\/\\/(lnkd\\.in|www\\.linkedin\\.com\\/comm)[\\w%\\-._~:/?#[\\]@!$&'()*+,;=]+/i);\nif (trackMatch) {\n  return { json: { post_url: trackMatch[0], person, email_subject: email.subject } };\n}\n\n// 4. Any linkedin.com URL\nconst anyMatch = text.match(/https:\\/\\/www\\.linkedin\\.com\\/[\\w%\\-._~:/?#[\\]@!$&'()*+,;=]{10,}/i);\nif (anyMatch) {\n  return { json: { post_url: anyMatch[0], person, email_subject: email.subject } };\n}\n\nreturn { json: { skip: true, reason: 'No LinkedIn URL found in email', subject: email.subject } };\n"
+            },
+            "id": "extract-url-from-email",
+            "name": "Extract Post URL from Email",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-url",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "gate-has-url",
+            "name": "Gate: Has URL?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                2640,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.post_url }}",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "User-Agent",
+                            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                        }
+                    ]
+                },
+                "options": {
+                    "redirect": {
+                        "redirect": {
+                            "followRedirects": true,
+                            "maxRedirects": 5
+                        }
+                    },
+                    "response": {
+                        "response": {
+                            "responseFormat": "text",
+                            "neverError": true
+                        }
+                    }
+                }
+            },
+            "id": "follow-redirect",
+            "name": "Follow Redirect (Get Real URL)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2880,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const originalUrl = $('Extract Post URL from Email').item.json.post_url || '';\nconst person      = $('Extract Post URL from Email').item.json.person || 'Author';\nconst subject     = $('Extract Post URL from Email').item.json.email_subject || '';\nconst pageHtml    = $input.item.json.data || '';\nconst resolvedUrl = $input.item.json.url || originalUrl;\n\nlet urn = '';\nconst ugc = resolvedUrl.match(/ugcPost[-:]([0-9]+)/);\nconst shr = resolvedUrl.match(/share[-:]([0-9]+)/);\nconst act = resolvedUrl.match(/activity[-:]([0-9]+)/);\n\nif (ugc)      urn = 'urn:li:ugcPost:'  + ugc[1];\nelse if (shr) urn = 'urn:li:share:'   + shr[1];\nelse if (act) urn = 'urn:li:activity:' + act[1];\n\nif (!urn) {\n  const u2 = originalUrl.match(/ugcPost[-:]([0-9]+)/);\n  const s2 = originalUrl.match(/share[-:]([0-9]+)/);\n  const a2 = originalUrl.match(/activity[-:]([0-9]+)/);\n  if (u2)      urn = 'urn:li:ugcPost:'  + u2[1];\n  else if (s2) urn = 'urn:li:share:'   + s2[1];\n  else if (a2) urn = 'urn:li:activity:' + a2[1];\n}\n\nif (!urn) {\n  return { json: { skip: true, reason: 'Could not extract URN from: ' + resolvedUrl } };\n}\n\nlet post_text = '';\nconst ogDesc = pageHtml.match(/<meta[^>]+property=[\"']og:description[\"'][^>]+content=[\"']([^\"']+)[\"']/i);\nif (ogDesc) post_text = ogDesc[1];\nif (!post_text) {\n  const metaDesc = pageHtml.match(/<meta[^>]+name=[\"']description[\"'][^>]+content=[\"']([^\"']+)[\"']/i);\n  if (metaDesc) post_text = metaDesc[1];\n}\nif (!post_text) post_text = subject;\n\npost_text = post_text\n  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')\n  .replace(/&quot;/g, '\"').replace(/&#39;/g, \"'\")\n  .replace(/\\\\n/g, ' ').trim();\n\nreturn { json: { urn, post_url: resolvedUrl || originalUrl, post_text, author: person } };\n"
+            },
+            "id": "extract-urn-and-text",
+            "name": "Extract URN + Post Text",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                3120,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-urn",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "gate-has-urn",
+            "name": "Gate: Has URN?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                3360,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=You are an Expert LinkedIn Networker and Thought Leader.\nYour task is to write a short, engaging comment on a LinkedIn post.\n\nGuidelines:\n- Use simple words.\n- Use a \"Chris Do style from The Futur\" — direct, insightful, grounded.\n- **Be Concise:** Keep it under 50 words. Short and punchy.\n- Do not be overly excited. No exclamation overload.\n- **Add Value:** Never say \"Great post\" or \"Thanks for sharing\". Offer a specific insight or a polite counter-point.\n- **Engage:** End with one short open-ended question to invite a reply.\n- **Tone:** Professional but conversational. No hashtags. No emojis.\n- **No Names:** NEVER use the author's name (e.g. \"Yann\", \"Sarah\") in the comment text. Jump straight into the insight.\n- **Language Matching:** MUST ALWAYS write the comment in the exact same language as the the Post Content.\n\nContext:\n- Author: {{ $json.author }}\n- Post URL: {{ $json.post_url }}\n- Post Content: {{ $json.post_text }}\n\nWrite ONLY the comment text — no labels, no preamble.",
+                "options": {}
+            },
+            "id": "ai-agent",
+            "name": "AI Agent (Comment Generator)",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1.6,
+            "position": [
+                3600,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {
+                    "temperature": 0.5
+                }
+            },
+            "id": "openai-model",
+            "name": "OpenAI Chat Model",
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1,
+            "position": [
+                3696,
+                540
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "t2cz4ELY3Z7liWec",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "return {\n  json: {\n    urn:      $('Extract URN + Post Text').item.json.urn,\n    post_url: $('Extract URN + Post Text').item.json.post_url,\n    comment:  $input.item.json.output\n  }\n};\n"
+            },
+            "id": "merge-comment-urn",
+            "name": "Merge Comment + URN",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                3840,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.linkedin.com/v2/userinfo",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "options": {}
+            },
+            "id": "get-my-linkedin-id",
+            "name": "Get My LinkedIn ID",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                4080,
+                300
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ \"https://api.linkedin.com/v2/socialActions/\" + encodeURIComponent($('Merge Comment + URN').item.json.urn) + \"/comments\" }}",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "X-Restli-Protocol-Version",
+                            "value": "2.0.0"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"actor\": \"urn:li:person:{{ $node[\"Get My LinkedIn ID\"].json.sub }}\",\n  \"message\": {\n    \"text\": \"{{ $json['Edited Comment'] || $('Merge Comment + URN').item.json.comment }}\"\n  }\n}",
+                "options": {}
+            },
+            "id": "publish-comment",
+            "name": "LinkedIn: Publish Comment",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                4320,
+                300
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            },
+            "notes": "Requires w_member_social OAuth scope."
+        },
+        {
+            "parameters": {
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "gmailOAuth2",
+                "toEmail": "j.sam.bruce@gmail.com",
+                "subject": "🚨 LinkedIn Auto-Comment: Review & Publish",
+                "emailType": "html",
+                "message": "=<h2>New LinkedIn Comment Ready for Review:</h2><br><ul><li><b>Author:</b> {{ $('Extract URN + Post Text').item.json.author }}</li><li><b>Post URL:</b> <a href=\"{{ $('Extract URN + Post Text').item.json.post_url }}\">{{ $('Extract URN + Post Text').item.json.post_url }}</a></li></ul><br><b>Generated Comment:</b><br><br><i>{{ $('Merge Comment + URN').item.json.comment }}</i><br><br><br><br><br><a href=\"{{ $execution.resumeUrl }}\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px; margin-right: 15px;\">✅ Approve & Publish Now</a><a href=\"https://n8n.srv863249.hstgr.cloud/workflow/{{ $workflow.id }}/executions/{{ $execution.id }}\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #6c757d; text-decoration: none; border-radius: 5px;\">✏️ Edit in n8n</a><br><br><small><i>If you click Edit, simply open the Wait node in n8n, change the comment text, and click Resume.</i></small>"
+            },
+            "id": "notify-email",
+            "name": "Send Email for Approval",
+            "type": "n8n-nodes-base.gmail",
+            "typeVersion": 2.1,
+            "position": [
+                4320,
+                300
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "YOUR_GMAIL_CREDENTIAL_ID",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "resume": "webhook"
+            },
+            "id": "wait-for-action",
+            "name": "Wait For Action",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                4560,
+                300
+            ],
+            "webhookId": "linkedin-comment-action"
+        }
+    ],
+    "connections": {
+        "Webhook: Gmail Push (Pub/Sub)": {
+            "main": [
+                [
+                    {
+                        "node": "Decode Pub/Sub Message",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Decode Pub/Sub Message": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Valid Message?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Valid Message?": {
+            "main": [
+                [
+                    {
+                        "node": "Gmail: List New Messages (History)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gmail: List New Messages (History)": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Message IDs",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Message IDs": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Has Messages?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Has Messages?": {
+            "main": [
+                [
+                    {
+                        "node": "Gmail: Get Full Message",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gmail: Get Full Message": {
+            "main": [
+                [
+                    {
+                        "node": "Parse Gmail Message",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse Gmail Message": {
+            "main": [
+                [
+                    {
+                        "node": "Filter: Is Post Notification?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Filter: Is Post Notification?": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Proceed?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Proceed?": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Post URL from Email",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Post URL from Email": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Has URL?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Has URL?": {
+            "main": [
+                [
+                    {
+                        "node": "Follow Redirect (Get Real URL)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Follow Redirect (Get Real URL)": {
+            "main": [
+                [
+                    {
+                        "node": "Extract URN + Post Text",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract URN + Post Text": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Has URN?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Has URN?": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Agent (Comment Generator)": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Comment + URN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge Comment + URN": {
+            "main": [
+                [
+                    {
+                        "node": "Get My LinkedIn ID",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get My LinkedIn ID": {
+            "main": [
+                [
+                    {
+                        "node": "Send Email for Approval",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Send Email for Approval": {
+            "main": [
+                [
+                    {
+                        "node": "Wait For Action",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait For Action": {
+            "main": [
+                [
+                    {
+                        "node": "Action: Approve or Edit?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Action: Approve or Edit?": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Edit Comment Form",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Edit Comment Form": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "LinkedIn: Publish Comment": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true
+    },
+    "staticData": null,
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true
+    }
+}

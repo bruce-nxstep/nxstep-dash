@@ -1,0 +1,270 @@
+Error processing slides/slide1.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide1.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide2.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide2.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide3.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide3.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide4.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide4.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide5.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide5.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide6.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide6.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide7.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide7.html: browserType.launch: Executable doesn't exist at C:\Users\jeanl\AppData\Local\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide1.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide1.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally
+  2. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide2.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide2.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Manual data entry creates operational bottlenecks ..." ends too close to bottom edge (-0.63" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide3.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide3.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Eliminate human error by up to 99% through validat..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  3. Text box "Data is instantly available across all platforms w..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  4. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide4.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide4.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box " " ends too close to bottom edge (-0.88" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  4. DIV element contains unwrapped text "01". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  5. DIV element contains unwrapped text "Custom Automation Development". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  6. DIV element contains unwrapped text "n8n, Make, Zapier workflows designed for your
+    ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  7. DIV element contains unwrapped text "02". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  8. DIV element contains unwrapped text "AI Agent Implementation". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  9. DIV element contains unwrapped text "Deploy & train custom AI agents to handle
+        ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  10. DIV element contains unwrapped text "03". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  11. DIV element contains unwrapped text "Full-Stack Development". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  12. DIV element contains unwrapped text "Modern web applications built with Next.js and
+   ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide5.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide5.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally and 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Rapid Deployment" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  3. Text box "Agile methodologies ensure you get up and running ..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  4. Text box "Dedicated Support" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  5. Text box "We partner for the long haul, ensuring your system..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  6. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide6.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide6.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "The Solution:" ends too close to bottom edge (-0.53" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  4. DIV element contains unwrapped text "100%". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  5. DIV element contains unwrapped text "Automation Rate". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  6. DIV element contains unwrapped text "0 hrs". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  7. DIV element contains unwrapped text "Manual Work". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  8. DIV element contains unwrapped text "+20%". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  9. DIV element contains unwrapped text "Sales Increase". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide7.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide7.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally
+  2. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  3. DIV element contains unwrapped text "© 2026 Nxstep. All rights reserved.". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide1.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide1.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally
+  2. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide2.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide2.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Manual data entry creates operational bottlenecks ..." ends too close to bottom edge (-0.63" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide3.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide3.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Eliminate human error by up to 99% through validat..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  3. Text box "Data is instantly available across all platforms w..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  4. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide4.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide4.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box " " ends too close to bottom edge (-0.88" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  4. DIV element contains unwrapped text "01". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  5. DIV element contains unwrapped text "Custom Automation Development". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  6. DIV element contains unwrapped text "n8n, Make, Zapier workflows designed for your
+    ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  7. DIV element contains unwrapped text "02". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  8. DIV element contains unwrapped text "AI Agent Implementation". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  9. DIV element contains unwrapped text "Deploy & train custom AI agents to handle
+        ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  10. DIV element contains unwrapped text "03". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  11. DIV element contains unwrapped text "Full-Stack Development". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  12. DIV element contains unwrapped text "Modern web applications built with Next.js and
+   ...". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide5.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide5.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally and 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Rapid Deployment" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  3. Text box "Agile methodologies ensure you get up and running ..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  4. Text box "Dedicated Support" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  5. Text box "We partner for the long haul, ensuring your system..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  6. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide6.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide6.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "The Solution:" ends too close to bottom edge (-0.53" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  4. DIV element contains unwrapped text "100%". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  5. DIV element contains unwrapped text "Automation Rate". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  6. DIV element contains unwrapped text "0 hrs". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  7. DIV element contains unwrapped text "Manual Work". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  8. DIV element contains unwrapped text "+20%". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+  9. DIV element contains unwrapped text "Sales Increase". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide7.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide7.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally
+  2. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+  3. DIV element contains unwrapped text "© 2026 Nxstep. All rights reserved.". All text must be wrapped in <p>, <h1>-<h6>, <ul>, or <ol> tags to appear in PowerPoint.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide1.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide1.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally
+  2. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide2.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide2.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Manual data entry creates operational bottlenecks ..." ends too close to bottom edge (-0.63" from bottom, minimum 0.5" required)
+  3. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide3.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide3.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Eliminate human error by up to 99% through validat..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  3. Text box "Data is instantly available across all platforms w..." ends too close to bottom edge (-0.19" from bottom, minimum 0.5" required)
+  4. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide4.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide4.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box " " ends too close to bottom edge (-1.13" from bottom, minimum 0.5" required)
+  3. Text box "03" ends too close to bottom edge (-0.57" from bottom, minimum 0.5" required)
+  4. Text box "Full-Stack Development" ends too close to bottom edge (-0.39" from bottom, minimum 0.5" required)
+  5. Text box "Modern web applications built with Next.js and Rea..." ends too close to bottom edge (-0.76" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide5.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide5.html: Multiple validation errors found:
+  1. HTML content overflows body by 74.3pt horizontally and 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "Rapid Deployment" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  3. Text box "Agile methodologies ensure you get up and running ..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  4. Text box "Dedicated Support" ends too close to bottom edge (0.45" from bottom, minimum 0.5" required)
+  5. Text box "We partner for the long haul, ensuring your system..." ends too close to bottom edge (-0.66" from bottom, minimum 0.5" required)
+  6. Background images on DIV elements are not supported. Use solid colors or borders for shapes, or use slide.addImage() in PptxGenJS to layer images.
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide6.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide6.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "The Solution:" ends too close to bottom edge (-0.53" from bottom, minimum 0.5" required)
+  3. Text box "Manual Work" ends too close to bottom edge (0.49" from bottom, minimum 0.5" required)
+  4. Text box "+20%" ends too close to bottom edge (-0.53" from bottom, minimum 0.5" required)
+  5. Text box "Sales Increase" ends too close to bottom edge (-0.90" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide7.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide7.html: Multiple validation errors found:
+  1. HTML content overflows body by 89.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box "www.nxstep.fr" ends too close to bottom edge (0.30" from bottom, minimum 0.5" required)
+  3. Text box "© 2026 Nxstep. All rights reserved." ends too close to bottom edge (-0.65" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide4.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide4.html: Multiple validation errors found:
+  1. HTML content overflows body by 5.3pt vertically (Remember: leave 0.5" margin at bottom of slide)
+  2. Text box " " ends too close to bottom edge (-0.08" from bottom, minimum 0.5" required)
+  3. Text box "03" ends too close to bottom edge (0.38" from bottom, minimum 0.5" required)
+  4. Text box "Modern web applications built with Next.js and Rea..." ends too close to bottom edge (0.23" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide5.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide5.html: Multiple validation errors found:
+  1. Text box "Agile methodologies ensure you get up and running ..." ends too close to bottom edge (0.44" from bottom, minimum 0.5" required)
+  2. Text box "We partner for the long haul, ensuring your system..." ends too close to bottom edge (0.44" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide6.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide6.html: Text box "Sales Increase" ends too close to bottom edge (0.43" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)
+Error processing slides/slide7.html: Error: C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\slides\slide7.html: Text box "© 2026 Nxstep. All rights reserved." ends too close to bottom edge (0.13" from bottom, minimum 0.5" required)
+    at html2pptx (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\scripts\html2pptx.js:984:19)
+    at async createPresentation (C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\presentation\generate_pptx.js:32:13)

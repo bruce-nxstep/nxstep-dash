@@ -1,6 +1,4 @@
 import React from 'react';
-import { Header } from '@/components/organisms/Header';
-import { Footer } from '@/components/organisms/Footer';
 import { StitchTheme } from '@/components/organisms/StitchTheme';
 
 interface DefaultPageTemplateProps {
@@ -21,12 +19,9 @@ export function DefaultPageTemplate({
     isAiGenerated = false
 }: DefaultPageTemplateProps) {
     return (
-        <div className="flex flex-col min-h-screen bg-background font-sans antialiased">
+        <div className="w-full">
             {/* Design System Tokens & Injections */}
             <StitchTheme />
-
-            {/* Header Organism - Dynamic hierarchical navigation */}
-            <Header />
 
             <main className="flex-grow">
                 {/* 
@@ -76,8 +71,6 @@ export function DefaultPageTemplate({
                     </div>
                 )}
             </main>
-
-            <Footer />
         </div>
     );
 }

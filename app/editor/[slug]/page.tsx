@@ -44,7 +44,7 @@ export default function EditorPage({ params }: EditorPageProps) {
                 storageManager: false,
                 plugins: [gjsPresetWebpage],
                 pluginsOpts: {
-                    [gjsPresetWebpage]: {},
+                    'gjs-preset-webpage': {},
                 },
                 canvas: {
                     styles: [
@@ -128,7 +128,7 @@ export default function EditorPage({ params }: EditorPageProps) {
             const res = await fetch('/api/cms/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: pageData.id, content }),
+                body: JSON.stringify({ id: pageData.id, content, slug }),
             });
 
             if (res.ok) {

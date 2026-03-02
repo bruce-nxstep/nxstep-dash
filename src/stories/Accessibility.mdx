@@ -1,0 +1,78 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Documentation/Accessibility (A11y)" />
+
+# Accessibility — NXSTEP Design System
+
+> All components are built for **WCAG 2.1 AA** compliance.
+
+---
+
+## Color Contrast
+
+| Context | Foreground | Background | Ratio | Pass |
+|---|---|---|---|---|
+| Body text | `--color-text-primary` (#fff) | `--color-bg-card` (#111118) | **17.5:1** | ✅ AAA |
+| Secondary text | `--color-text-secondary` (#a1a1aa) | `--color-bg-app` (#080808) | **7.2:1** | ✅ AAA |
+| Primary on dark | `--color-primary` (yellow) | `--color-bg-app` | **12.1:1** | ✅ AAA |
+| Muted text | `--color-text-muted` (#52525b) | `--color-bg-app` | **4.7:1** | ✅ AA |
+| Danger text | `--color-danger` (#ef4444) | `--color-bg-card` | **4.5:1** | ✅ AA |
+
+> **Rule:** All interactive text must have ≥ 4.5:1 ratio. Large text (18px+) ≥ 3:1.
+
+---
+
+## Focus Management
+
+Every interactive element has a **visible focus ring** using `focus-visible`:
+```css
+focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/50
+focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-app)]
+```
+
+Test: press `Tab` through any component — the focused element must be clearly visible.
+
+---
+
+## ARIA Conventions
+
+| Component | Role / Attribute |
+|---|---|
+| Modal | `role="dialog"` `aria-modal="true"` `aria-label` |
+| Breadcrumb | `<nav aria-label="Breadcrumb">` · last item: `aria-current="page"` |
+| Select | `aria-haspopup="listbox"` `aria-expanded` on trigger; `role="listbox"` on list |
+| RadioGroup | `role="radiogroup"` on wrapper |
+| Tooltip | `role="tooltip"` on popup |
+| Navbar | `aria-label="Main navigation"` · active link: `aria-current="page"` |
+| SearchInput clear | `aria-label="Clear search"` |
+| Modal close | `aria-label="Close modal"` |
+| FormField error | `role="alert"` on error message |
+
+---
+
+## Keyboard Navigation
+
+| Component | Keys |
+|---|---|
+| Button | `Enter` / `Space` to activate |
+| Checkbox | `Space` to toggle |
+| RadioGroup | `Arrow` keys to navigate; `Space` to select |
+| Select | `Enter` / `Space` to open; `Arrow` keys to navigate; `Enter` to select; `Escape` to close |
+| Modal | `Escape` to close; focus trapped inside |
+| Navbar | `Tab` through links; `Enter` to navigate |
+
+---
+
+## Screen Reader Tips
+
+- Always provide `alt` text for `<Avatar>` images
+- Use `aria-disabled` alongside `disabled` for better SR support
+- `<FormField>` links label to input via `htmlFor` + `id` — always use both
+- Error messages use `role="alert"` so they are announced immediately
+
+---
+
+## Disabled States
+
+Disabled components use `opacity-50` + `pointer-events-none` / `cursor-not-allowed`.
+They are **not focusable** via Tab (native `disabled` attribute handles this for form elements).

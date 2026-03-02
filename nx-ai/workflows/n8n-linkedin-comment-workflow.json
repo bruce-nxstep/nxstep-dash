@@ -1,0 +1,178 @@
+{
+    "name": "AI LinkedIn Commenter (Batch)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "linkedin-batch",
+                "options": {}
+            },
+            "id": "webhook-trigger",
+            "name": "Webhook (Batch)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                0,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Split the incoming 'posts' array into individual items for n8n to process\nconst posts = $input.item.json.body.posts || [];\n\nreturn posts.map(post => ({\n  json: {\n    post_text: post.text || post.content || post.description,\n    post_url: post.url,\n    author: post.author || \"Unknown\"\n  }\n}));"
+            },
+            "id": "split-posts",
+            "name": "Split Posts",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                220,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "content": "={{ $json.post_text }}",
+                "options": {}
+            },
+            "id": "agent",
+            "name": "AI Agent",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1.6,
+            "position": [
+                460,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {
+                    "temperature": 0.7,
+                    "systemMessage": "You are a professional LinkedIn networking assistant. \n\nYour goal is to draft engaging, relevant, and professional comments for LinkedIn posts.\n\nInput: The text of a LinkedIn post.\nOutput: A comment that adds value, asks a thoughtful question, or shares a relevant insight. \n\nGuidelines:\n- Keep it under 200 words.\n- Avoid generic phrases like 'Great post!'. \n- Match the tone of the original post but maintain professionalism.\n- Do NOT sound like a bot.\n- If the author is known ({{$json.author}}), feel free to refer to them if appropriate, but usually direct address is better."
+                }
+            },
+            "id": "openai-model",
+            "name": "OpenAI Chat Model",
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1,
+            "position": [
+                420,
+                240
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "YOUR_CREDENTIAL_ID_HERE",
+                    "name": "OpenAI account"
+                }
+            }
+        },
+        {
+            "parameters": {},
+            "id": "manual-trigger",
+            "name": "Manual Trigger",
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [
+                0,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Mock data for manual testing\nreturn [\n  {\n    json: {\n      body: {\n        posts: [\n          {\n            text: \"Excited to announce our Series A funding!\",\n            author: \"Jane Doe\"\n          },\n          {\n            text: \"Here are 5 tips for better React performance...\",\n            author: \"John Smith\"\n          }\n        ]\n      }\n    }\n  }\n];"
+            },
+            "id": "mock-data",
+            "name": "Mock Data",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                220,
+                200
+            ]
+        },
+        {
+            "parameters": {},
+            "id": "memory",
+            "name": "Window Buffer Memory",
+            "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+            "typeVersion": 1,
+            "position": [
+                600,
+                240
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Batch)": {
+            "main": [
+                [
+                    {
+                        "node": "Split Posts",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Split Posts": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Manual Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Mock Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Mock Data": {
+            "main": [
+                [
+                    {
+                        "node": "Split Posts",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Window Buffer Memory": {
+            "ai_memory": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_memory",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "pinData": {}
+}

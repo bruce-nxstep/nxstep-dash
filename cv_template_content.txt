@@ -1,0 +1,76 @@
+=== PAGE 1 ===
+--
+33 ans Français courant ; Anglais intermédiaire ; Conformité aux standards RGPD et ISO
+27001
+FORMATION
+SAVOIR FAIRE
+Gestion des Identités et des Accès (IAM/PAM)
+• Administration centralisée des identités via One Identity | Active Roles
+• Sécurisation et gestion des comptes à privilèges avec CyberArk
+• Gestion du cycle de vie des identités (création, modification, suppression)
+• Administration Active Directory et gestion des politiques de groupe
+• Implémentation du modèle Zero Trust et principe du moindre privilège
+• Notions de SailPoint pour la gouvernance des identités
+Authentification et Sécurité des Accès
+• Déploiement et gestion de l'authentification multi-facteurs (MFA)
+• Configuration d'Okta Verify et Microsoft Authenticator
+• Activation et gestion des profils utilisateurs via Microsoft Intune
+• Vérification et validation des identités utilisateurs
+• Administration des outils de filtrage (Zscaler, GlobalProtect)
+Support Informatique N1/N2
+• Configuration et préparation des postes pour les nouveaux arrivants
+• Gestion des environnements utilisateurs (Intune, Autopilot, Citrix Workspace)
+• Support utilisateurs à distance via BeyondTrust
+• Gestion des incidents et tickets via ServiceNow (SNOW)
+• Restauration de données sensibles et gestion du stock informatique
+Cloud et Virtualisation
+• Administration d'environnements AWS et Azure
+• Gestion des données et synchronisation OneDrive
+• Déploiement et maintenance d'environnements Citrix Workspace
+• Gestion d'environnements hybrides (cloud et on-premise)
+Sécurité et Conformité
+• Conformité aux standards RGPD et ISO 27001
+• Analyse du référentiel SecNumCloud
+• Supervision SIEM avec Wazuh
+• Forensic et investigation : Volatility, Autopsy
+• Tests de sécurité : Wireshark, Nmap, Hydra
+
+=== PAGE 2 ===
+Gestion de Projet et Méthodologies
+• Gestion multi-sites et environnements internationaux
+• Rédaction de rapports techniques et documentation
+• Communication efficace avec les parties prenantes
+• Travail en équipe et gestion du stress
+• Résolution de problèmes complexes et sens de l'écoute
+EXPÉRIENCES PROFESSIONNELLES
+Logiciels
+Cloud
+Sécurité
+Normes
+CONTEXTE
+Missions réalisées par Hait Tech pour trois grands comptes internationaux, menées en
+parallèle selon les besoins des clients dans des environnements critiques et multisites.
+MISSION
+Assurer le support informatique N1/N2, la gestion des identités et la sécurisation des accès
+dans des environnements critiques. Garantir l'intégrité et la sécurité des accès utilisateurs
+tout en maintenant un haut niveau opérationnel et en assurant la continuité de service.
+ACTIVITÉS
+• Administration des comptes via One Identity | Active Roles
+• Sécurisation des accès à privilèges via CyberArk
+• Déploiement et gestion du MFA (Okta Verify, Microsoft Authenticator)
+• Activation des profils utilisateurs via Intune
+• Préparation et configuration des PC et téléphones pour les nouveaux arrivants
+• Gestion des environnements utilisateurs via Intune, Autopilot et Citrix Workspace
+• Administration des outils de filtrage et de sécurité (Zscaler, GlobalProtect)
+• Gestion des incidents et restauration de données sensibles via ServiceNow
+• Support utilisateurs via BeyondTrust
+• Gestion du stock informatique et déploiement de salles de visioconférence
+Environnement Technique : One Identity, CyberArk, Active Directory, ServiceNow, MFA, Intune,
+AWS, Azure, Citrix, ISO 27001, RGPD, Zero Trust
+
+=== PAGE 3 ===
+LANGUES
+• Français : Courant
+• Anglais : Intermédiaire
+CENTRES D'INTÉRÊT
+Documentaires | Karaté | Football | Cinéma

@@ -40,6 +40,21 @@ export async function getPageBySlug(slug: string): Promise<CMSPost | null> {
     return post || null;
 }
 
+export async function getPageBySlugAnyStatus(slug: string): Promise<CMSPost | null> {
+    const db = getDb();
+    const query = `
+    SELECT p.*, GROUP_CONCAT(c.name) as category_names
+    FROM posts p
+    LEFT JOIN post_categories pc ON p.id = pc.post_id
+    LEFT JOIN categories c ON pc.category_id = c.id
+    WHERE p.slug = ?
+    GROUP BY p.id
+    LIMIT 1
+  `;
+    const post = db.prepare(query).get(slug) as CMSPost;
+    return post || null;
+}
+
 export async function getAllPublishedPages(): Promise<CMSPost[]> {
     const db = getDb();
     const query = `

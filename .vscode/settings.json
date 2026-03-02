@@ -1,0 +1,20 @@
+{
+    // Tell VS Code's built-in CSS language server to ignore unknown at-rules
+    // and unknown properties — Tailwind v4 uses @theme, @apply, @layer etc.
+    // which the default linter doesn't understand.
+    "css.lint.unknownAtRules": "ignore",
+    "css.lint.unknownProperties": "ignore",
+    "css.customData": [],
+    // Use the Tailwind CSS IntelliSense extension for token completion instead
+    "editor.quickSuggestions": {
+        "strings": "on"
+    },
+    // Point Tailwind to resolve the CSS entry point (v4 uses CSS not a JS config)
+    "tailwindCSS.experimental.configFile": "app/globals.css",
+    // Teach the Tailwind extension about your custom CSS variable patterns
+    // so var(--radius-xl), var(--color-primary) etc. get autocomplete
+    "tailwindCSS.includeLanguages": {
+        "typescript": "javascript",
+        "typescriptreact": "javascript"
+    }
+}

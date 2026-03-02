@@ -1,0 +1,16 @@
+﻿DEBUG: StitchMCPClient initialized with API Key present: Yes
+DEBUG: pid=12160944451905746072, sid=gen_1772362900
+DEBUG: call_tool called for: get_screen
+DEBUG: Found local binary at C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js. Using direct node execution.
+DEBUG: Launching Stitch MCP with: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+DEBUG: Entering stdio_client context with command: node C:\Users\jeanl\OneDrive\Desktop\JM_project_nxstep\nxstep_site\node_modules\@_davideast\stitch-mcp\bin\stitch-mcp.js proxy
+DEBUG: stdio_client context entered. Creating session...
+DEBUG: Session created. Initializing...
+DEBUG: Sending request for tool: get_screen
+DEBUG: Response received for tool: get_screen
+
+--- FULL RESPONSE OBJECT ---
+[TextContent(type='text', text='API keys are not supported by this API. Expected OAuth2 access token or other authentication credentials that assert a principal. See https://cloud.google.com/docs/authentication', annotations=None, meta=None)]
+
+--- STRING REPRESENTATION ---
+[TextContent(type='text', text='API keys are not supported by this API. Expected OAuth2 access token or other authentication credentials that assert a principal. See https://cloud.google.com/docs/authentication', annotations=None, meta=None)]

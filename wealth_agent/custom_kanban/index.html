@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <style>
+        body {
+            background-color: transparent;
+            color: #fafafa;
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .kanban-board {
+            display: flex;
+            gap: 16px;
+            padding: 10px;
+            align-items: flex-start;
+            min-height: 80vh;
+        }
+
+        .column {
+            background-color: #1e1e24;
+            /* Streamlit dark secondary */
+            border: 1px solid #33333f;
+            border-radius: 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .column-header {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #33333f;
+        }
+
+        .task-list {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 150px;
+            padding-right: 4px;
+        }
+
+        .task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb {
+            background: #4b4b4b;
+            border-radius: 3px;
+        }
+
+        .task-card {
+            background-color: #262730;
+            /* Streamlit dark primary */
+            border: 1px solid #3d3d4e;
+            border-left: 4px solid #4CAF50;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            cursor: grab;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+            position: relative;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border-color: #5d5d6e;
+        }
+
+        .task-card:active {
+            cursor: grabbing;
+        }
+
+        .card-actions {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .task-card:hover .card-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            background: rgba(45, 46, 56, 0.8);
+            border: 1px solid #3d3d4e;
+            border-radius: 4px;
+            color: #8c92a1;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.1s ease;
+        }
+
+        .action-btn:hover {
+            color: #ffffff;
+            background: #3d3d4e;
+            transform: scale(1.05);
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            color: #f0f2f6;
+            width: 90%;
+        }
+
+        .task-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            background: #3a3b45;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+
+        .task-footer {
+            font-size: 11px;
+            color: #8c92a1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #3d3d4e;
+        }
+
+        .sortable-ghost {
+            opacity: 0.3;
+            background-color: #1e1e24 !important;
+            border: 2px dashed #5d5d6e !important;
+        }
+
+        .sortable-drag {
+            background: #2d2e38 !important;
+            cursor: grabbing !important;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script>
+        // Streamlit Component Setup
+        function sendMessageToStreamlitClient(type, data) {
+            window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type: type }, data), "*");
+        }
+        function init() { sendMessageToStreamlitClient("streamlit:componentReady", { apiVersion: 1 }); }
+        function setFrameHeight(height) { sendMessageToStreamlitClient("streamlit:setFrameHeight", { height: height }); }
+        function sendDataToPython(data) { sendMessageToStreamlitClient("streamlit:setComponentValue", { value: data }); }
+
+        let currentTasksStr = "";
+
+        window.addEventListener("message", function (event) {
+            if (event.data.type === "streamlit:render") {
+                const args = event.data.args;
+
+                // Only re-render if tasks actually changed
+                const newTasksStr = JSON.stringify(args.tasks);
+                if (newTasksStr !== currentTasksStr) {
+                    currentTasksStr = newTasksStr;
+                    renderKanban(args.tasks);
+                }
+
+                // Update height after a short delay
+                setTimeout(() => {
+                    const board = document.querySelector('.kanban-board');
+                    if (board) setFrameHeight(board.scrollHeight + 50);
+                }, 150);
+            }
+        });
+
+        function renderKanban(tasks) {
+            const root = document.getElementById("root");
+            root.innerHTML = "";
+
+            const board = document.createElement("div");
+            board.className = "kanban-board";
+
+            const stages = [
+                { id: "A faire", name: "📝 A faire", border: "#f39c12" },    // Orange
+                { id: "En cours", name: "⏳ En cours", border: "#3498db" }, // Blue
+                { id: "Terminé", name: "✅ Terminé", border: "#2ecc71" }    // Green
+            ];
+
+            stages.forEach(stage => {
+                const col = document.createElement("div");
+                col.className = "column";
+
+                const header = document.createElement("div");
+                header.className = "column-header";
+
+                const columnTasks = tasks.filter(t => t.status === stage.id);
+                // Badge for task count
+                header.innerHTML = `<span>${stage.name}</span> <span style="font-size: 12px; background: #3d3d4e; color: #fff; padding: 2px 10px; border-radius: 12px;">${columnTasks.length}</span>`;
+                col.appendChild(header);
+
+                const list = document.createElement("div");
+                list.className = "task-list";
+                list.dataset.stageId = stage.id;
+
+                columnTasks.forEach(task => {
+                    const card = document.createElement("div");
+                    card.className = "task-card";
+                    card.style.borderLeftColor = stage.border;
+                    card.dataset.taskId = task.id;
+
+                    const title = document.createElement("div");
+                    title.className = "task-title";
+                    title.innerText = task.mission;
+                    card.appendChild(title);
+
+                    const actionsContainer = document.createElement("div");
+                    actionsContainer.className = "card-actions";
+
+                    const viewBtn = document.createElement("button");
+                    viewBtn.className = "action-btn";
+                    viewBtn.innerText = "📄";
+                    viewBtn.title = "Ouvrir la carte (Détails & Checklists)";
+                    viewBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        sendDataToPython({
+                            action: "view",
+                            task_id: task.id,
+                            timestamp: Date.now()
+                        });
+                    };
+                    actionsContainer.appendChild(viewBtn);
+
+                    const editBtn = document.createElement("button");
+                    editBtn.className = "action-btn";
+                    editBtn.innerText = "✏️";
+                    editBtn.title = "Éditer les propriétés";
+                    editBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        sendDataToPython({
+                            action: "edit",
+                            task_id: task.id,
+                            timestamp: Date.now()
+                        });
+                    };
+                    actionsContainer.appendChild(editBtn);
+
+                    card.appendChild(actionsContainer);
+
+                    if (task.tags && task.tags.length > 0) {
+                        const tagsContainer = document.createElement("div");
+                        tagsContainer.className = "task-tags";
+                        task.tags.forEach(tagText => {
+                            const tag = document.createElement("span");
+                            tag.className = "tag";
+                            tag.innerText = tagText;
+                            tagsContainer.appendChild(tag);
+                        });
+                        card.appendChild(tagsContainer);
+                    }
+
+                    // Footer layout
+                    if (task.collaborateur || task.date_fin) {
+                        const footer = document.createElement("div");
+                        footer.className = "task-footer";
+                        footer.innerHTML = `<span>${task.collaborateur ? "👤 " + task.collaborateur : ""}</span> <span>${task.date_fin ? "📅 " + task.date_fin : ""}</span>`;
+                        card.appendChild(footer);
+                    }
+
+                    list.appendChild(card);
+                });
+
+                col.appendChild(list);
+                board.appendChild(col);
+
+                // Initialize Sortable logic
+                new Sortable(list, {
+                    group: 'shared',
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: function (evt) {
+                        const taskId = evt.item.dataset.taskId;
+                        const newStage = evt.to.dataset.stageId;
+                        const oldStage = evt.from.dataset.stageId;
+
+                        if (newStage !== oldStage) {
+                            sendDataToPython({
+                                action: "move",
+                                task_id: taskId,
+                                new_status: newStage,
+                                timestamp: Date.now() // Force event update in Streamlit
+                            });
+                        }
+                    },
+                });
+            });
+
+            root.appendChild(board);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

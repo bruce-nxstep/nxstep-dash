@@ -1,0 +1,497 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "linkedin-apps-script",
+                "options": {}
+            },
+            "id": "06651c01-39ad-4f64-ace3-d3dfade338f3",
+            "name": "Webhook: from Apps Script",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                496,
+                208
+            ],
+            "webhookId": "linkedin-apps-script"
+        },
+        {
+            "parameters": {
+                "url": "=https://www.googleapis.com/gmail/v1/users/me/messages/{{ $json.body.messageId }}?format=full",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "gmailOAuth2",
+                "options": {}
+            },
+            "id": "4d127592-13f9-4d09-8e99-559dc0bfc02e",
+            "name": "Gmail: Get Full Message",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                736,
+                208
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "JPCWUsQ8qGzBUnPt",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const msg = $input.item.json;\nconst headers = (msg.payload && msg.payload.headers) ? msg.payload.headers : [];\n\nfunction getHeader(name) {\n  const h = headers.find(h => h.name.toLowerCase() === name.toLowerCase());\n  return h ? h.value : '';\n}\n\nfunction decodeBase64(encoded) {\n  if (!encoded) return '';\n  // Convert base64url to standard base64\n  let standardBase64 = encoded.replace(/-/g, '+').replace(/_/g, '/');\n  // Pad with '=' if necessary\n  while (standardBase64.length % 4) {\n    standardBase64 += '=';\n  }\n  return Buffer.from(standardBase64, 'base64').toString('utf8');\n}\n\nfunction extractBodyText(payload) {\n  if (!payload) return '';\n  \n  if (payload.body && payload.body.data) {\n    return decodeBase64(payload.body.data);\n  }\n  \n  if (payload.parts) {\n    for (const part of payload.parts) {\n      if (part.mimeType === 'text/plain' && part.body && part.body.data) {\n        return decodeBase64(part.body.data);\n      }\n    }\n    for (const part of payload.parts) {\n      if (part.mimeType === 'text/html' && part.body && part.body.data) {\n        return decodeBase64(part.body.data);\n      }\n    }\n  }\n  return '';\n}\n\nconst subject = getHeader('Subject');\nconst from    = getHeader('From');\nconst snippet = msg.snippet || '';\nconst body    = extractBodyText(msg.payload);\n\nreturn [{ json: { subject, from, snippet, text: body, body, html: body } }];"
+            },
+            "id": "03054e8d-4f5a-49ca-aa1a-e6a7f1aef627",
+            "name": "Parse Gmail Message",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                976,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const text = $input.item.json.text || \"\";\nconst html = $input.item.json.html || \"\";\nconst combined = text + \"\\n\" + html;\n\n// Look for the \"En savoir plus :\" link or the raw activity link\nconst regex = /https:\\/\\/(?:www\\.)?linkedin\\.com\\/comm\\/feed\\/update\\/urn:li:activity:\\d+/i;\nconst match = combined.match(regex);\n\nif (match && match[0]) {\n  return [{ json: { ...$input.item.json, post_url: match[0] } }];\n}\n\n// Fallback: Look for the standard LinkedIn share link structure\nconst standardRegex = /https:\\/\\/(?:www\\.)?linkedin\\.com\\/comm\\/posts\\/[^\\s\\\"\\'<>]+/i;\nconst standardMatch = combined.match(standardRegex);\n\nif (standardMatch && standardMatch[0]) {\n  let url = standardMatch[0];\n  url = url.replace(/&amp;/g, '&');\n  return [{ json: { ...$input.item.json, post_url: url } }];\n}\n\n// If we STILL can't find it, dump the text again\nreturn [{ json: { skip: true, reason: 'Could not find url. Email body was: ' + combined.substring(0, 500) } }];\n"
+            },
+            "id": "75a7f450-79b0-447a-9662-2f94ba9699f0",
+            "name": "Extract Post URL from Email",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1216,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 1
+                    },
+                    "conditions": [
+                        {
+                            "id": "not-skip-url",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "bd1de162-ab54-469a-8dac-c298ec5a0b3d",
+            "name": "Gate: Has URL?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                1456,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.post_url }}",
+                "options": {}
+            },
+            "id": "b95db39d-64fd-431b-896f-4b4430ded2ec",
+            "name": "Follow Redirect (Get Real URL)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1696,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const finalUrl = $input.item.json.url || \"\";\nconst html = $input.item.json.data || \"\";\n\n// 1. Find the URN\nconst urnRegex = /urn:li:(?:activity|ugcPost|share):\\d+/;\nconst urnMatch = html.match(urnRegex);\nlet threadUrn = \"\";\n\nif (urnMatch) {\n  threadUrn = urnMatch[0];\n  threadUrn = threadUrn.replace(\":ugcPost:\", \":activity:\").replace(\":share:\", \":activity:\");\n}\n\n// 2. Extract FULL Untruncated Post Text from LinkedIn's background HTML SEO\nlet fullPostText = \"\";\n\ntry {\n  // Try to find LinkedIn's hidden JSON-LD structure\n  const ldRegex = /<script type=[\"']application\\/ld\\+json[\"']>(.*?)<\\/script>/gis;\n  let match;\n  while ((match = ldRegex.exec(html)) !== null) {\n    try {\n      const jsonLd = JSON.parse(match[1].trim());\n      if (jsonLd.articleBody) {\n        fullPostText = jsonLd.articleBody;\n        break;\n      }\n    } catch(e) {}\n  }\n} catch(e) {}\n\n// 3. Fallback: Check standard HTML Meta Description tags\nif (!fullPostText) {\n  const ogRegex = /<meta\\s+(?:property|name)=[\"'](?:og:)?description[\"']\\s+content=[\"']([^\"']+)[\"']/i;\n  const ogMatch = html.match(ogRegex);\n  if (ogMatch && ogMatch[1]) {\n    fullPostText = ogMatch[1]\n      .replace(/&quot;/g, '\"')\n      .replace(/&amp;/g, '&')\n      .replace(/&#39;/g, \"'\")\n      .replace(/&lt;/g, '<')\n      .replace(/&gt;/g, '>');\n  }\n}\n\n// 4. Last Resort: Use the email snippet preview if LinkedIn blocked the page download\nif (!fullPostText) {\n  let emailText = $(\"Parse Gmail Message\").item.json.text || \"\";\n  const textMatch = emailText.match(/(?:partagé un post|a publié|nouvelle publication)\\s*:([\\s\\S]*?)(?:En savoir plus|Afficher le post|View post|Voir le post)/i);\n  if (textMatch && textMatch[1]) {\n    fullPostText = textMatch[1].trim();\n  } else {\n    fullPostText = emailText; \n  }\n}\n\nreturn [{\n  json: {\n    post_url: finalUrl,\n    threadUrn: threadUrn,\n    author: $(\"Parse Gmail Message\").item.json.from.split(\"<\")[0].trim(),\n    \n    // Pass the FULL text string down to the AI Agent!\n    post_text: fullPostText\n  }\n}];\n"
+            },
+            "id": "46d25158-cd29-4f6d-8e32-ace9605873d5",
+            "name": "Extract URN",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1936,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "has-urn",
+                            "leftValue": "={{ $json.threadUrn }}",
+                            "rightValue": "",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "849cbea2-2ae3-4cfb-8ce9-c4b4e0709950",
+            "name": "Gate: Has URN?",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                2176,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=# ROLE\nYou are an Expert LinkedIn Networker and Thought Leader, known for your \"Chris Do style\" (from The Futur). You are direct, insightful, grounded, and unapologetic. You do not flatter; you provide high-value, actionable perspectives that challenge the status quo. \n\n# TASK\nWrite a short, engaging, and high-value comment for the provided LinkedIn post.\n\n# STRICT GUIDELINES\n1. **Be Concise:** Keep the total comment under 50 words and a maximum of 3 sentences. Short, punchy, and highly readable.\n2. **Add Value (No Fluff):** NEVER use generic praise like \"Great post\", \"I agree\", or \"Thanks for sharing\". Start immediately with a specific insight, a fresh perspective, or a polite counter-point.\n3. **Tone:** Professional, conversational, and calm. Do not be overly excited. ZERO exclamation marks (!). ZERO emojis. ZERO hashtags.\n4. **No Names:** NEVER include the author's name or a greeting (e.g., skip \"Hi Yann\", \"Sarah,\"). Jump straight into the meat of your thought. \n5. **Engage:** Conclude with exactly ONE short, open-ended question that provokes deeper thought and invites the author to reply.\n6. **Language Matching:** Your entire response MUST seamlessly match the language of the provided Post Content.\n7. **French Language Constraint:** If the target language is French, NEVER use \"tu\" or \"vous\" (tutoiement/vouvoiement). Instead, use the impersonal \"on\", infinitive verbs, or passive voice to maintain a universal, direct tone.\n\n# COMMENT STRUCTURE\n- Sentence 1: The bold insight or unique perspective.\n- Sentence 2: A brief elaboration or supporting grounded fact.\n- Sentence 3: The open-ended question.\n\n# CONTEXT DATA\n<author>\n{{ $json.author }}\n</author>\n\n<post_url>\n{{ $json.post_url }}\n</post_url>\n\n<post_content>\n{{ $json.post_text }}\n</post_content>\n\n# OUTPUT INSTRUCTIONS\nWrite ONLY the raw comment text. Output exactly what will be posted. Do not include labels, quotes, preamble, or any metadata.\n Interdiction STRICTE d'utiliser le tutoiement (\"tu\") ou le vouvoiement (\"vous\"). Utilise UNIQUEMENT le pronom impersonnel \"on\", des verbes à l'infinitif ou la voix passive (ex: \"Que peut-on en penser ?\" au lieu de \"Qu'en penses-tu ?\").",
+                "options": {}
+            },
+            "id": "648a3fb3-045b-442e-8f81-dcbb9020aa86",
+            "name": "AI Agent (Comment Generator)",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1.7,
+            "position": [
+                2416,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {}
+            },
+            "id": "5eb4458f-ab33-4092-ad6c-511f9994d9fa",
+            "name": "OpenAI Chat Model",
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1,
+            "position": [
+                2416,
+                432
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "t2cz4ELY3Z7liWec",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "return [{\n  json: {\n    comment: $input.item.json.output,\n    threadUrn: $('Extract URN').item.json.threadUrn\n  }\n}];"
+            },
+            "id": "9f8b4ffc-569c-44fa-aa90-959f810e5070",
+            "name": "Merge Comment + URN",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2784,
+                208
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "sendAndWait",
+                "sendTo": "j.sam.bruce@gmail.com",
+                "subject": "Community Agent: New LinkdIn Comment ",
+                "message": "=<h2>New LinkedIn Comment Ready for Review</h2>",
+                "responseType": "customForm",
+                "formFields": {
+                    "values": [
+                        {
+                            "fieldLabel": "={{ $('Gate: Has URN?').item.json.post_text }}",
+                            "fieldType": "textarea",
+                            "placeholder": "=",
+                            "defaultValue": "={{ $('Merge Comment + URN').item.json.comment }}",
+                            "requiredField": true
+                        }
+                    ]
+                },
+                "options": {
+                    "messageButtonLabel": "Review comment",
+                    "responseFormCustomCss": ":root {\n\t--font-family: 'Open Sans', sans-serif;\n\t--font-weight-normal: 400;\n\t--font-weight-bold: 600;\n\t--font-size-body: 12px;\n\t--font-size-label: 14px;\n\t--font-size-test-notice: 12px;\n\t--font-size-input: 14px;\n\t--font-size-header: 20px;\n\t--font-size-paragraph: 14px;\n\t--font-size-link: 12px;\n\t--font-size-error: 12px;\n\t--font-size-html-h1: 28px;\n\t--font-size-html-h2: 20px;\n\t--font-size-html-h3: 16px;\n\t--font-size-html-h4: 14px;\n\t--font-size-html-h5: 12px;\n\t--font-size-html-h6: 10px;\n\t--font-size-subheader: 14px;\n\n\t/* Colors */\n\t--color-background: #fbfcfe;\n\t--color-test-notice-text: #e6a23d;\n\t--color-test-notice-bg: #fefaf6;\n\t--color-test-notice-border: #f6dcb7;\n\t--color-card-bg: #ffffff;\n\t--color-card-border: #dbdfe7;\n\t--color-card-shadow: rgba(99, 77, 255, 0.06);\n\t--color-link: #7e8186;\n\t--color-header: #525356;\n\t--color-label: #555555;\n\t--color-input-border: #dbdfe7;\n\t--color-input-text: #71747A;\n\t--color-focus-border: rgb(90, 76, 194);\n\t--color-submit-btn-bg: #ff6d5a;\n\t--color-submit-btn-text: #ffffff;\n\t--color-error: #ea1f30;\n\t--color-required: #ff6d5a;\n\t--color-clear-button-bg: #7e8186;\n\t--color-html-text: #555;\n\t--color-html-link: #ff6d5a;\n\t--color-header-subtext: #7e8186;\n\n\t/* Border Radii */\n\t--border-radius-card: 8px;\n\t--border-radius-input: 6px;\n\t--border-radius-clear-btn: 50%;\n\t--card-border-radius: 8px;\n\n\t/* Spacing */\n\t--padding-container-top: 24px;\n\t--padding-card: 24px;\n\t--padding-test-notice-vertical: 12px;\n\t--padding-test-notice-horizontal: 24px;\n\t--margin-bottom-card: 16px;\n\t--padding-form-input: 12px;\n\t--card-padding: 24px;\n\t--card-margin-bottom: 16px;\n\n\t/* Dimensions */\n\t--container-width: 448px;\n\t--submit-btn-height: 48px;\n\t--checkbox-size: 18px;\n\n\t/* Others */\n\t--box-shadow-card: 0px 4px 16px 0px var(--color-card-shadow);\n\t--opacity-placeholder: 0.5;\n}"
+                }
+            },
+            "type": "n8n-nodes-base.gmail",
+            "typeVersion": 2.2,
+            "position": [
+                3216,
+                224
+            ],
+            "id": "4ed3a6a4-6cfd-4abf-9c24-2078ff26fef8",
+            "name": "Send message and wait for response",
+            "webhookId": "bd7b6554-1bfb-4750-ae61-1c68482ea481",
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "JPCWUsQ8qGzBUnPt",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "url": "https://api.linkedin.com/v2/userinfo",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "options": {}
+            },
+            "id": "84cba6f7-a1f7-403a-a3ac-8cf3c601458f",
+            "name": "Get My LinkedIn ID1",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                3024,
+                512
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ \"https://api.linkedin.com/v2/socialActions/\" + encodeURIComponent($('Merge Comment + URN').item.json.threadUrn) + \"/comments\" }}",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "X-Restli-Protocol-Version",
+                            "value": "2.0.0"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"actor\": \"urn:li:person:{{ $node[\"Get My LinkedIn ID1\"].json.sub }}\",\n  \"message\": {\n    \"text\": \"{{ $('Merge Comment + URN').item.json.comment }}\"\n  }\n}",
+                "options": {}
+            },
+            "id": "7401f463-15b3-4576-a4dc-0ad462a622ca",
+            "name": "LinkedIn: Publish Comment1",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                3488,
+                224
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            },
+            "notes": "Requires w_member_social OAuth scope."
+        },
+        {
+            "parameters": {
+                "operation": "sendAndWait",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.googleChat",
+            "typeVersion": 1,
+            "position": [
+                3296,
+                512
+            ],
+            "id": "7d999ffe-445a-4657-ad74-3c0f203869fd",
+            "name": "Send message and wait for response1",
+            "webhookId": "bd5a697d-8b4f-4b8b-bb3d-66358493584a",
+            "disabled": true
+        }
+    ],
+    "connections": {
+        "Webhook: from Apps Script": {
+            "main": [
+                [
+                    {
+                        "node": "Gmail: Get Full Message",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gmail: Get Full Message": {
+            "main": [
+                [
+                    {
+                        "node": "Parse Gmail Message",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse Gmail Message": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Post URL from Email",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Post URL from Email": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Has URL?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Has URL?": {
+            "main": [
+                [
+                    {
+                        "node": "Follow Redirect (Get Real URL)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Follow Redirect (Get Real URL)": {
+            "main": [
+                [
+                    {
+                        "node": "Extract URN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract URN": {
+            "main": [
+                [
+                    {
+                        "node": "Gate: Has URN?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Gate: Has URN?": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Agent (Comment Generator)": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Comment + URN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge Comment + URN": {
+            "main": [
+                [
+                    {
+                        "node": "Get My LinkedIn ID1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Send message and wait for response": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get My LinkedIn ID1": {
+            "main": [
+                [
+                    {
+                        "node": "Send message and wait for response",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {
+        "Webhook: from Apps Script": [
+            {
+                "headers": {
+                    "host": "n8n.srv863249.hstgr.cloud",
+                    "user-agent": "Mozilla/5.0 (compatible; Google-Apps-Script; beanserver; +https://script.google.com; id: UAEmdDd83fyK8RMAFhniULJMJkFFCkFfUbA)",
+                    "content-length": "97",
+                    "accept-encoding": "gzip, deflate, br",
+                    "content-type": "application/json",
+                    "x-forwarded-for": "107.178.192.5",
+                    "x-forwarded-host": "n8n.srv863249.hstgr.cloud",
+                    "x-forwarded-port": "443",
+                    "x-forwarded-proto": "https",
+                    "x-forwarded-server": "dee00addc6bc",
+                    "x-real-ip": "107.178.192.5"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                    "messageId": "19c7c94700f3e1d6",
+                    "subject": "Jean-Luc Le Roux vient de publier du nouveau contenu"
+                },
+                "webhookUrl": "https://n8n.srv863249.hstgr.cloud/webhook/linkedin-apps-script",
+                "executionMode": "production"
+            }
+        ]
+    },
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "2066d44b6582e11313e53d7aafdb0f2bb55b706de5515e8a6d09b5c3a9da8c28"
+    }
+}

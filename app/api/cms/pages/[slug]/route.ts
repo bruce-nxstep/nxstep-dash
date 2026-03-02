@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getPageBySlug } from '@/lib/cms';
+import { getPageBySlugAnyStatus } from '@/lib/cms';
+
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -8,7 +10,7 @@ interface PageProps {
 export async function GET(request: Request, { params }: PageProps) {
     try {
         const { slug } = await params;
-        const post = await getPageBySlug(slug);
+        const post = await getPageBySlugAnyStatus(slug);
 
         if (!post) {
             return NextResponse.json({ error: 'Page not found' }, { status: 404 });

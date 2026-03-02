@@ -1,0 +1,108 @@
+﻿c:\Users\jeanl\OneDrive
+\Desktop\JM_project_nxs
+tep\nxstep_site\wealth_
+agent\venv\Scripts\pyth
+on.exe : Traceback 
+(most recent call 
+last):
+Au caractère Ligne:1 : 
+1
++ c:\Users\jeanl\OneDri
+ve\Desktop\JM_project_n
+xstep\nxstep_site\wealt
+h_ ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Traceback (mo   
+ st recent call las    
+t)::String) [], Re    
+moteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\test_swar
+m2.py", line 11, in 
+<module>
+    response = client.r
+un(agent=main_agent, 
+messages=messages, 
+debug=True)
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\venv\Lib\
+site-packages\swarm\cor
+e.py", line 280, in run
+    partial_response = 
+self.handle_tool_calls(
+        
+message.tool_calls, act
+ive_agent.functions, 
+context_variables, 
+debug
+    )
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\venv\Lib\
+site-packages\swarm\cor
+e.py", line 122, in 
+handle_tool_calls
+    raw_result = functi
+on_map[name](**args)
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\src\orche
+strator.py", line 63, 
+in scrape_google_maps
+    added = scraper.sea
+rch_google_maps(search_
+query, max_results=10)
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\src\scrap
+er.py", line 52, in 
+search_google_maps
+    print(f"\U0001f50d 
+DÚmarrage du scraper 
+Google Maps pour 
+'{query}' (Max: 
+{max_results} 
+rÚsultats)...")
+    ~~~~~^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "C:\Python313\Li
+b\encodings\cp1252.py",
+ line 19, in encode
+    return codecs.charm
+ap_encode(input,self.er
+rors,encoding_table)[0]
+           ~~~~~~~~~~~~
+~~~~~~~~~^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 
+'charmap' codec can't 
+encode character 
+'\U0001f50d' in 
+position 0: character 
+maps to <undefined>
+Running swarm...
+[97m[[90m2026-02-24 10:51:06[97m][90m Getting chat completion for...: [{'role': 'system', 'content': 'Tu es le Manager principal de l\'Agence Lead Gen IA. Tu diriges une Úquipe d\'agents experts.\nTon r¶le est de comprendre la demande de l\'utilisateur, de planifier des tÔches (Cron) si nÚcessaire, ou de transfÚrer le travail Ó un sous-agent spÚcialisÚ.\n- Si l\'utilisateur veut chercher des entreprises (sur Google Maps) ou enrichir des e-mails, transfÞre Ó \'Scraper Agent\'.\n- Si l\'utilisateur veut rÚdiger/gÚnÚrer des messages avec l\'IA, transfÞre Ó \'Writer Agent\'.\n- Si l\'utilisateur veut envoyer la campagne d\'e-mails, transfÞre Ó \'Outreach Agent\'.\n- Si l\'utilisateur veut faire plusieurs choses d\'affilÚe (ex: Cherche des prospects ET envoie les mails), planifie bien ou transfÞre au premier agent compÚtent, qui te rendra la main.\n- Si l\'utilisateur te demande de planifier une tÔche rÚcurrente (ex: "Tous les lundis Ó 08:30 fais þa"), utilise l\'outil `schedule_task`.\nRÚponds toujours poliment et explique de maniÞre concise qui tu vas solliciter.'}, {'role': 'user', 'content': 'recherche des entreprises moyen dans le 78'}][0m
+[97m[[90m2026-02-24 10:51:08[97m][90m Received completion: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_imUW7qKQbZWYGY1ZZmTk9Qd7', function=Function(arguments='{}', name='transfer_to_scraper'), type='function')])[0m
+[97m[[90m2026-02-24 10:51:08[97m][90m Processing tool call: transfer_to_scraper with arguments {}[0m
+[97m[[90m2026-02-24 10:51:08[97m][90m Getting chat completion for...: [{'role': 'system', 'content': "Tu t'appelles Polo, le Prospecteur. Tu es un expert en rÚcupÚration de donnÚes et scraping.\nTon seul r¶le est de chercher des entreprises (`scrape_google_maps`) et de trouver leurs e-mails (`enrich_emails`).\nUne fois ta tÔche terminÚe, donne le compte rendu exact renvoyÚ par l'outil.\nSi l'utilisateur demande une autre compÚtence, retourne ou transfÞre la demande Ó l'agent compÚtent."}, {'role': 'user', 'content': 'recherche des entreprises moyen dans le 78'}, {'content': None, 'refusal': None, 'role': 'assistant', 'annotations': [], 'audio': None, 'function_call': None, 'tool_calls': [{'id': 'call_imUW7qKQbZWYGY1ZZmTk9Qd7', 'function': {'arguments': '{}', 'name': 'transfer_to_scraper'}, 'type': 'function'}], 'sender': 'Manager Agent'}, {'role': 'tool', 'tool_call_id': 'call_imUW7qKQbZWYGY1ZZmTk9Qd7', 'tool_name': 'transfer_to_scraper', 'content': '{"assistant": "Scraper Agent (Polo)"}'}][0m
+[97m[[90m2026-02-24 10:51:09[97m][90m Received completion: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_o0tukRHYtCMiA58hkcj04dWX', function=Function(arguments='{"search_query":"entreprises moyennes dans le 78"}', name='scrape_google_maps'), type='function')])[0m
+[97m[[90m2026-02-24 10:51:09[97m][90m Processing tool call: scrape_google_maps with arguments {'search_query': 'entreprises moyennes dans le 78'}[0m

@@ -1,0 +1,510 @@
+{
+    "name": "Zero Cost LinkedIn Monitor (Google Alerts RSS)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 6
+                        }
+                    ]
+                }
+            },
+            "id": "schedule-trigger",
+            "name": "Every 6 Hours",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                0,
+                300
+            ],
+            "notes": "Polls all configured RSS feeds every 6 hours. Adjust frequency as needed."
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// CONFIGURATION — Add your Google Alert RSS URLs here.\n//\n// HOW TO CREATE A GOOGLE ALERT RSS FEED:\n// 1. Go to https://www.google.com/alerts\n// 2. Search for: site:linkedin.com/posts \"Person Name\"\n//    e.g.  site:linkedin.com/posts \"Jean-Marie Bruce\"\n// 3. Click 'Show options' → Deliver to: RSS Feed\n// 4. Click 'Create Alert' → copy the RSS URL shown.\n// 5. Paste it below.\n// ============================================================\n\nreturn [\n  {\n    json: {\n      person: \"Jean-Marie Bruce\",\n      rss_url: \"https://www.google.com/alerts/feeds/YOUR_FEED_ID_1/YOUR_FEED_TOKEN_1\"\n    }\n  },\n  {\n    json: {\n      person: \"Bill Gates\",\n      rss_url: \"https://www.google.com/alerts/feeds/YOUR_FEED_ID_2/YOUR_FEED_TOKEN_2\"\n    }\n  }\n  // Add more people here following the same pattern\n];"
+            },
+            "id": "config-rss-feeds",
+            "name": "Config: RSS Feed URLs",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                240,
+                300
+            ],
+            "notes": "Edit this node to add/remove monitored people."
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "id": "split-in-batches",
+            "name": "Loop Over People",
+            "type": "n8n-nodes-base.splitInBatches",
+            "typeVersion": 3,
+            "position": [
+                480,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.rss_url }}",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "User-Agent",
+                            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                        },
+                        {
+                            "name": "Accept",
+                            "value": "application/rss+xml, application/xml, text/xml, */*"
+                        }
+                    ]
+                },
+                "options": {
+                    "redirect": {
+                        "redirect": {
+                            "followRedirects": true,
+                            "maxRedirects": 5
+                        }
+                    },
+                    "response": {
+                        "response": {
+                            "responseFormat": "text"
+                        }
+                    }
+                }
+            },
+            "id": "fetch-rss-http",
+            "name": "Fetch RSS via HTTP",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                720,
+                180
+            ],
+            "notes": "Fetches Google Alert RSS with a browser User-Agent. The built-in rssFeedRead node causes 404s on Google Alerts because it sends no User-Agent."
+        },
+        {
+            "parameters": {
+                "jsCode": "// ============================================================\n// PARSE RSS XML → individual post items\n//\n// Google Alerts returns Atom 1.0 XML. We parse entries\n// manually using regex — reliable for this feed format.\n// ============================================================\n\nconst xml = $input.item.json.data || \"\";\nconst person = $('Loop Over People').item.json.person || \"\";\nconst rss_url = $('Loop Over People').item.json.rss_url || \"\";\n\nif (!xml || xml.length < 50) {\n  return [{ json: { skip: true, reason: \"Empty RSS response\", rss_url } }];\n}\n\n// Extract <entry> blocks (Atom) or <item> blocks (RSS 2.0)\nconst entryRegex = /<entry[^>]*>([\\s\\S]*?)<\\/entry>/gi;\nconst itemRegex  = /<item[^>]*>([\\s\\S]*?)<\\/item>/gi;\n\nconst blocks = [];\nlet m;\nwhile ((m = entryRegex.exec(xml)) !== null) blocks.push(m[1]);\nif (blocks.length === 0) {\n  while ((m = itemRegex.exec(xml)) !== null) blocks.push(m[1]);\n}\n\nif (blocks.length === 0) {\n  return [{ json: { skip: true, reason: \"No entries found in RSS\", rss_url } }];\n}\n\nfunction tag(block, name) {\n  const cdata = block.match(new RegExp('<' + name + '[^>]*><!\\\\[CDATA\\\\[([\\\\s\\\\S]*?)\\\\]\\\\]><\\/' + name + '>', 'i'));\n  if (cdata) return cdata[1].trim();\n  const plain = block.match(new RegExp('<' + name + '[^>]*>([\\\\s\\\\S]*?)<\\/' + name + '>', 'i'));\n  return plain ? plain[1].trim() : '';\n}\n\nfunction extractLink(block) {\n  // Atom: <link href=\"...\"/>\n  const href = block.match(/<link[^>]+href=[\"']([^\"']+)[\"']/i);\n  if (href) return href[1];\n  // RSS 2.0: <link>url</link>\n  const text = block.match(/<link[^>]*>([^<]+)<\\/link>/i);\n  return text ? text[1].trim() : '';\n}\n\nconst results = [];\nfor (const block of blocks) {\n  let link = extractLink(block);\n  // Google Alerts wraps the real URL: …&url=https%3A…\n  const urlParam = link.match(/[?&]url=([^&]+)/);\n  if (urlParam) link = decodeURIComponent(urlParam[1]);\n\n  const title   = tag(block, 'title');\n  const content = tag(block, 'content') || tag(block, 'summary') || tag(block, 'description');\n  const guid    = tag(block, 'id') || tag(block, 'guid') || link;\n  const pubDate = tag(block, 'published') || tag(block, 'updated') || tag(block, 'pubDate');\n\n  results.push({ json: { link, title, content, guid, pubDate, person } });\n}\n\nreturn results;\n"
+            },
+            "id": "parse-rss-xml",
+            "name": "Parse RSS XML",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                960,
+                180
+            ],
+            "notes": "Parses the raw Atom/RSS XML into individual post items. Handles CDATA, Atom <link href>, and Google's redirect URL wrapping."
+        },
+        {
+            "parameters": {
+                "jsCode": "// Deduplication — skip posts already processed.\n// Uses n8n workflow static data (built-in, no external DB).\n\nconst seen = $getWorkflowStaticData('node');\nif (!seen.processed_guids) seen.processed_guids = [];\n\nconst MAX_HISTORY = 500;\nconst newItems = [];\n\nfor (const item of $input.all()) {\n  const guid = item.json.guid || item.json.link || item.json.title;\n  if (!guid) continue;\n  if (seen.processed_guids.includes(guid)) continue;\n  newItems.push(item);\n  seen.processed_guids.push(guid);\n}\n\nif (seen.processed_guids.length > MAX_HISTORY) {\n  seen.processed_guids = seen.processed_guids.slice(-MAX_HISTORY);\n}\n\nif (newItems.length === 0) {\n  return [{ json: { skip: true, reason: 'No new posts found' } }];\n}\n\nreturn newItems;\n"
+            },
+            "id": "dedup",
+            "name": "Deduplication (Skip Seen)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1200,
+                180
+            ],
+            "notes": "Prevents double-commenting. State persists inside n8n — no database needed."
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "check-skip",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        },
+                        {
+                            "id": "check-linkedin",
+                            "leftValue": "={{ $json.link }}",
+                            "rightValue": "linkedin.com",
+                            "operator": {
+                                "type": "string",
+                                "operation": "contains"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "filter-linkedin-only",
+            "name": "Filter: LinkedIn Posts Only",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                1440,
+                180
+            ],
+            "notes": "Only passes through LinkedIn URLs (Google Alerts can surface other domains too)."
+        },
+        {
+            "parameters": {
+                "jsCode": "const item = $input.item.json;\n\n// Author: prefer config person name, fall back to extracting from URL slug\nlet author = item.person || '';\nif (!author) {\n  const m = (item.link || '').match(/linkedin\\.com\\/posts\\/([^_?/]+)/);\n  if (m) author = m[1].replace(/-/g, ' ');\n}\nauthor = author || 'Author';\n\n// Strip HTML from content snippet\nconst rawText = item.content || item.title || '';\nconst post_text = rawText.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\n\nreturn {\n  json: {\n    post_url:  item.link || '',\n    post_text: post_text,\n    author:    author,\n    pub_date:  item.pubDate || '',\n    guid:      item.guid || item.link || item.title\n  }\n};\n"
+            },
+            "id": "parse-rss-item",
+            "name": "Parse RSS Item",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1680,
+                180
+            ],
+            "notes": "Structures the RSS entry data for the AI Agent."
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=You are an Expert LinkedIn Networker and Thought Leader.\nYour task is to write a short, engaging comment on a LinkedIn post.\n\nGuidelines:\n- Use simple words.\n- Use a \"Chris Do style from The Futur\" — direct, insightful, grounded.\n- **Be Concise:** Keep it under 50 words. Short and punchy.\n- Do not make it too excited or use excessive exclamation marks.\n- **Add Value:** Do not say \"Great post\" or \"Thanks for sharing\". Offer a specific insight, agreement, or polite counter-point.\n- **Engage:** End with a short, open-ended question to encourage a reply.\n- **Tone:** Professional but conversational. No hashtags. No emojis.\n\nContext:\n- Author: {{ $json.author }}\n- Post URL: {{ $json.post_url }}\n- Post Text (Google Alerts snippet): {{ $json.post_text }}\n\nWrite ONLY the comment text — no preamble, no labels.",
+                "options": {}
+            },
+            "id": "ai-agent",
+            "name": "AI Agent (Comment Generator)",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1.6,
+            "position": [
+                1920,
+                180
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {
+                    "temperature": 0.5
+                }
+            },
+            "id": "openai-model",
+            "name": "OpenAI Chat Model",
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1,
+            "position": [
+                2016,
+                420
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "t2cz4ELY3Z7liWec",
+                    "name": "OpenAi account"
+                }
+            },
+            "notes": "Switch to gpt-4o-mini to reduce cost ~10x."
+        },
+        {
+            "parameters": {
+                "jsCode": "// Extract LinkedIn post URN from the URL\n// e.g. ugcPost-7212480850238582785 → urn:li:ugcPost:7212480850238582785\n\nconst postUrl   = $('Parse RSS Item').item.json.post_url || '';\nconst aiComment = $input.item.json.output || '';\n\nlet urn = '';\n\nconst ugc  = postUrl.match(/ugcPost-([0-9]+)/);\nconst shr  = postUrl.match(/share-([0-9]+)/);\nconst act  = postUrl.match(/activity-([0-9]+)/);\n\nif (ugc)      urn = 'urn:li:ugcPost:'  + ugc[1];\nelse if (shr) urn = 'urn:li:share:'   + shr[1];\nelse if (act) urn = 'urn:li:activity:' + act[1];\n\nif (!urn) {\n  return { json: { skip: true, reason: 'No URN in URL: ' + postUrl, post_url: postUrl } };\n}\n\nreturn { json: { urn, comment: aiComment, post_url: postUrl } };\n"
+            },
+            "id": "extract-urn",
+            "name": "Extract Post URN",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2160,
+                180
+            ],
+            "notes": "Parses ugcPost/share/activity URN from the LinkedIn URL — no API call needed."
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "check-urn-skip",
+                            "leftValue": "={{ $json.skip }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "notEquals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "filter-has-urn",
+            "name": "Filter: Has Valid URN",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                2400,
+                180
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.linkedin.com/v2/userinfo",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "options": {}
+            },
+            "id": "get-my-linkedin-id",
+            "name": "Get My LinkedIn ID",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2640,
+                180
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ \"https://api.linkedin.com/v2/socialActions/\" + encodeURIComponent($('Extract Post URN').item.json.urn) + \"/comments\" }}",
+                "authentication": "predefinedCredentialType",
+                "nodeCredentialType": "linkedInOAuth2Api",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "X-Restli-Protocol-Version",
+                            "value": "2.0.0"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"actor\": \"urn:li:person:{{ $json.sub }}\",\n  \"message\": {\n    \"text\": \"{{ $('Extract Post URN').item.json.comment }}\"\n  }\n}",
+                "options": {}
+            },
+            "id": "publish-comment",
+            "name": "LinkedIn: Publish Comment",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2880,
+                180
+            ],
+            "credentials": {
+                "linkedInOAuth2Api": {
+                    "id": "UdCVjLXqJvkO1mPe",
+                    "name": "LinkedIn account"
+                }
+            },
+            "notes": "Requires w_member_social OAuth scope."
+        },
+        {
+            "parameters": {
+                "jsCode": "return $input.all();\n"
+            },
+            "id": "loop-back",
+            "name": "Continue Loop",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                3120,
+                180
+            ]
+        }
+    ],
+    "connections": {
+        "Every 6 Hours": {
+            "main": [
+                [
+                    {
+                        "node": "Config: RSS Feed URLs",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Config: RSS Feed URLs": {
+            "main": [
+                [
+                    {
+                        "node": "Loop Over People",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Loop Over People": {
+            "main": [
+                [],
+                [
+                    {
+                        "node": "Fetch RSS via HTTP",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch RSS via HTTP": {
+            "main": [
+                [
+                    {
+                        "node": "Parse RSS XML",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse RSS XML": {
+            "main": [
+                [
+                    {
+                        "node": "Deduplication (Skip Seen)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Deduplication (Skip Seen)": {
+            "main": [
+                [
+                    {
+                        "node": "Filter: LinkedIn Posts Only",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Filter: LinkedIn Posts Only": {
+            "main": [
+                [
+                    {
+                        "node": "Parse RSS Item",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse RSS Item": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Agent (Comment Generator)": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Post URN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent (Comment Generator)",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Post URN": {
+            "main": [
+                [
+                    {
+                        "node": "Filter: Has Valid URN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Filter: Has Valid URN": {
+            "main": [
+                [
+                    {
+                        "node": "Get My LinkedIn ID",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get My LinkedIn ID": {
+            "main": [
+                [
+                    {
+                        "node": "LinkedIn: Publish Comment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "LinkedIn: Publish Comment": {
+            "main": [
+                [
+                    {
+                        "node": "Continue Loop",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Continue Loop": {
+            "main": [
+                [
+                    {
+                        "node": "Loop Over People",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true
+    },
+    "staticData": null,
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true
+    }
+}

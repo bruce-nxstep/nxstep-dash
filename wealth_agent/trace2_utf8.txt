@@ -1,0 +1,44 @@
+﻿c:\Users\jeanl\OneDrive
+\Desktop\JM_project_nxs
+tep\nxstep_site\wealth_
+agent\venv\Scripts\pyth
+on.exe : Traceback 
+(most recent call 
+last):
+Au caractère Ligne:1 : 
+1
++ c:\Users\jeanl\OneDri
+ve\Desktop\JM_project_n
+xstep\nxstep_site\wealt
+h_ ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Traceback (mo   
+ st recent call las    
+t)::String) [], Re    
+moteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  File "C:\Users\jeanl\
+OneDrive\Desktop\JM_pro
+ject_nxstep\nxstep_site
+\wealth_agent\test_swar
+m2.py", line 6, in 
+<module>
+    from orchestrator 
+import client, 
+main_agent
+ImportError: cannot 
+import name 'client' 
+from 'orchestrator' (C:
+\Users\jeanl\OneDrive\D
+esktop\JM_project_nxste
+p\nxstep_site\wealth_ag
+ent\src\orchestrator.py
+)
