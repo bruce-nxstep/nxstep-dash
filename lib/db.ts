@@ -50,6 +50,22 @@ export function getDb() {
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (collection_id) REFERENCES collections (id) ON DELETE CASCADE
       );
+
+      CREATE TABLE IF NOT EXISTS content_plan (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          linkedin_account_id INTEGER,
+          title TEXT NOT NULL,
+          post_idea TEXT,
+          post_type TEXT DEFAULT 'Post',
+          content TEXT,
+          media_files TEXT,
+          img1 TEXT, img2 TEXT, img3 TEXT, img4 TEXT, img5 TEXT,
+          img6 TEXT, img7 TEXT, img8 TEXT, img9 TEXT, img10 TEXT,
+          scheduled_at TEXT,
+          status TEXT DEFAULT 'Brouillon',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
     `);
     }
     return db;

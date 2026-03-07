@@ -16,6 +16,7 @@ from outreach import OutreachManager
 from google_sync import GoogleSheetSync
 from cms_database import CMSDatabase as _CMSDB
 from site_generator import SiteGenerator as _SiteGen
+from stitch_manager import stitch_mgr
 import pandas as pd
 import time
 import subprocess
@@ -55,6 +56,17 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 
 # --- HELPERS ---
+def check_storybook_health():
+    import socket
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1.0)
+        result = sock.connect_ex(('127.0.0.1', 6006))
+        sock.close()
+        return result == 0
+    except:
+        return False
+
 def get_image_base64(path):
     if not path or not os.path.exists(path):
         return None
@@ -74,8 +86,14 @@ st.set_page_config(page_title="Wealth Agent (NXSTEP)",
                    page_icon="🤖", layout="wide")
 
 
+if "llm_provider" not in st.session_state:
+    import dotenv
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+    dotenv.load_dotenv(env_path, override=True)
+    st.session_state.llm_provider = os.getenv("ACTIVE_LLM_PROVIDER", "OpenAI (GPT-4o)")
+
 # --- INITIALISATION DES MODULES ---
-def init_modules():
+def init_modules(provider="OpenAI"):
     db_path = os.path.join(os.path.dirname(__file__),
                            'data', 'leads_database.db')
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
@@ -84,13 +102,14 @@ def init_modules():
         "db": db,
         "scraper": ScraperManager(db),
         "enricher": EnricherManager(db),
-        "ai": AIWriter(db),
+        "ai": AIWriter(db, provider=provider),
         "outreach": OutreachManager(db),
         "google_sync": GoogleSheetSync('https://docs.google.com/spreadsheets/d/1t_wqRbUD4KhdGHlwALBKzgBJcFskGV9QJqGHm892NuU')
     }
 
 
-modules = init_modules()
+modules = init_modules(st.session_state.llm_provider)
+
 db = modules["db"]
 google_sync = modules["google_sync"]
 
@@ -119,17 +138,17 @@ def is_port_in_use(port: int) -> bool:
 @st.cache_resource
 def start_storybook_server():
     """Starts Storybook in the background if it's not already running."""
-    if is_port_in_use(6008):
-        print(">>> Storybook is already running on port 6008.")
+    if is_port_in_use(6006):
+        print(">>> Storybook is already running on port 6006.")
         return None
 
-    print(">>> Starting Storybook automatically in the background...")
+    print(">>> Starting Storybook automatically in the background (port 6006)...")
     # Find the nxstep_site root directory
     app_dir = os.path.dirname(os.path.dirname(__file__))
 
-    # Run npx storybook dev -p 6008 in a separated process
+    # Run npx storybook dev -p 6006 in a separated process
     process = subprocess.Popen(
-        "npx storybook dev -p 6008",
+        "npx storybook dev -p 6006",
         cwd=app_dir,
         shell=True,
         stdout=subprocess.DEVNULL,
@@ -154,17 +173,17 @@ def load_chat_history():
                 return json.load(f)
         except:
             pass
-    return {"lead_messages": [], "kanban_messages": [], "design_messages": [], "cms_messages": [], "stitch_messages": [], "community_messages": []}
+    return {"lead_messages": [], "kanban_messages": [], "design_messages": [], "cms_messages": [], "sekai_messages": [], "community_messages": []}
 
 
-def save_chat_history(lead_msgs, kanban_msgs, design_msgs, cms_msgs=None, stitch_msgs=None, community_msgs=None):
+def save_chat_history(lead_msgs, kanban_msgs, design_msgs, cms_msgs=None, sekai_msgs=None, community_msgs=None):
     with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
         json.dump({
             "lead_messages": lead_msgs,
             "kanban_messages": kanban_msgs,
             "design_messages": design_msgs,
             "cms_messages": cms_msgs or [],
-            "stitch_messages": stitch_msgs or [],
+            "sekai_messages": sekai_msgs or [],
             "community_messages": community_msgs or [],
         }, f, ensure_ascii=False, indent=2)
 
@@ -193,7 +212,7 @@ if "design_messages" not in st.session_state:
         st.session_state.design_messages = persisted_history["design_messages"]
     else:
         st.session_state.design_messages = [
-            {"role": "assistant", "content": "Bienvenue ! Je suis Archi, l'Agent Design System 🎨✨. Comment puis-je vous aider avec l'interface aujourd'hui ?"}
+            {"role": "assistant", "content": "Bienvenue ! Je suis Sekai, le Maître Architecte 🎨✨. Comment puis-je vous aider avec l'interface aujourd'hui ?"}
         ]
 
 if "cms_messages" not in st.session_state:
@@ -205,12 +224,12 @@ if "cms_messages" not in st.session_state:
                 "content": "Bonjour ! Je suis votre **Expert Content Architect** ✍️\n\nJe structure et génère du contenu pour votre CMS Headless en JSON prêt à l'API.\n\n**Que puis-je faire pour vous ?**\n- Créer une nouvelle page ou un article\n- Optimiser le SEO (meta-titres, descriptions, H1-H6)\n- Structurer du contenu existant\n- Générer des slugs propres\n\n*Exemple : \"Crée une page de présentation pour NXSTEP, ton de marque professionnel\"*"}
         ]
 
-if "stitch_messages" not in st.session_state:
-    if persisted_history.get("stitch_messages"):
-        st.session_state.stitch_messages = persisted_history["stitch_messages"]
+if "sekai_messages" not in st.session_state:
+    if persisted_history.get("sekai_messages"):
+        st.session_state.sekai_messages = persisted_history["sekai_messages"]
     else:
-        st.session_state.stitch_messages = [
-            {"role": "assistant", "content": "Bonjour ! Je suis Archi, votre **Stitch Agent** 🎨✨\n\nJe suis connecté au serveur Stitch pour générer des designs web haute-fidélité avec Tailwind CSS.\n\n**Que souhaitez-vous créer ?**\n- Une landing page pour un nouveau produit\n- Un dashboard SaaS moderne\n- Une section Hero animée\n\n*Une fois le design généré, vous pourrez l'importer directement dans votre CMS !*"}
+        st.session_state.sekai_messages = [
+            {"role": "assistant", "content": "Bienvenue. Je suis Sekai. Quel monde numérique allons-nous faire naître aujourd'hui ?"}
         ]
 
 if "community_messages" not in st.session_state:
@@ -221,23 +240,133 @@ if "community_messages" not in st.session_state:
             {"role": "assistant", "content": "Salut ! Je suis Joy, votre **Community Manager** 📱✨. Je vous aide à planifier vos posts LinkedIn et vos carrousels. Prêt à faire exploser votre visibilité ?"}
         ]
 
-# Un seul appel CSS minimal - uniquement pour masquer le branding Streamlit
-st.markdown(
-    '<style>#MainMenu,footer,[data-testid="stToolbar"]{visibility:hidden}</style>', unsafe_allow_html=True)
+# Injection CSS stylisée (Design "Stitch" NXSTEP IA)
+st.markdown("""
+<style>
+    /* Masquer le branding et outils Streamlit par défaut */
+    #MainMenu, footer {visibility: hidden;}
+    
+    /* Gérer l'espace global (padding réduit) */
+    .block-container {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+        max-width: 1400px;
+    }
+
+    /* Arrière-plan de la page principale */
+    .stApp {
+        background-color: #191022 !important;
+        color: #f8fafc !important;
+    }
+    
+    /* Couleur de la Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #191022 !important; /* Même couleur que le fond pour la continuité, ou #1f142b pour détacher */
+        border-right: 1px solid rgba(168, 85, 247, 0.2) !important;
+    }
+    
+    /* Conteneurs et cartes (Cards) stylisés */
+    div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        border-radius: 0.75rem !important;
+        border: 1px solid rgba(168, 85, 247, 0.1) !important;
+        background-color: rgba(31, 20, 43, 0.4) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        backdrop-filter: blur(8px);
+    }
+    
+    /* Boutons secondaires */
+    button[kind="secondary"] {
+        border-radius: 0.5rem !important;
+        border: 1px solid rgba(168, 85, 247, 0.2) !important;
+        background-color: transparent !important;
+        color: #a855f7 !important;
+        transition: all 0.2s ease-in-out;
+    }
+    button[kind="secondary"]:hover {
+        background-color: rgba(168, 85, 247, 0.1) !important;
+        border-color: #a855f7 !important;
+    }
+
+    /* Boutons primaires (ex: Deploy) */
+    button[kind="primary"] {
+        border-radius: 0.5rem !important;
+        background-color: #a855f7 !important;
+        color: white !important;
+        font-weight: 500 !important;
+        border: none !important;
+        box-shadow: 0 4px 14px 0 rgba(168, 85, 247, 0.39) !important;
+        transition: all 0.2s ease-in-out;
+    }
+    button[kind="primary"]:hover {
+        background-color: #9333ea !important;
+    }
+    
+    /* Tables et Dataframes */
+    [data-testid="stDataFrame"] {
+        border-radius: 0.5rem !important;
+        border: 1px solid rgba(168, 85, 247, 0.2) !important;
+    }
+    
+    /* Inputs et Selectbox */
+    .stTextInput > div > div > input,
+    .stSelectbox > div > div > div {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(168, 85, 247, 0.2) !important;
+        border-radius: 0.5rem !important;
+        color: #f8fafc !important;
+    }
+    
+    /* Textes et métriques */
+    h1, h2, h3, h4, [data-testid="stMetricValue"] {
+        font-family: 'Inter', sans-serif !important;
+        color: #f8fafc !important;
+        font-weight: 700 !important;
+    }
+    /* Appliquer Inter seulement aux textes, PAS aux icônes (span.material-symbols-rounded) */
+    p, label, span:not(.material-symbols-rounded):not([class*="icon"]):not([data-testid="stIconMaterial"]) {
+        font-family: 'Inter', sans-serif !important;
+        color: #94a3b8;
+    }
+    
+    /* Style Chat message user vs assistant */
+    [data-testid="stChatMessage"] {
+        border-radius: 1rem !important;
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+        background-color: transparent !important;
+        border: none !important;
+    }
+    /* Enlever les carrés de couleur autour des avatars personnalisés (fallback color) */
+    [data-testid="stChatMessageAvatar"] {
+        background-color: transparent !important;
+    }
+    
+    /* Make chat input sticky globally and transparent */
+    div[data-testid="stChatInput"] {
+        position: sticky !important;
+        bottom: 0px !important;
+        z-index: 999;
+        background-color: transparent !important;
+        padding-bottom: 2rem;
+        padding-top: 1rem;
+    }
+    
+</style>
+""", unsafe_allow_html=True)
 
 # --- SIDEBAR & NAVIGATION ---
 PAGES = [
-    "► Prospection Lead",
-    "▦ Kanban & Organisation",
-    "📱 Community Manager",
-    "▤ Base de données",
-    "◈ Design System",
-    "✍️ Agent CMS",
-    "🎨 Stitch Design",
-    "❓ FAQ Stitch",
+    "Prospection Lead",
+    "Kanban & Organisation",
+    "Community Manager",
+    "Base de données",
+    "Design System",
+    "Agent CMS",
+    "🎨 Sekai (世界の創り手)",
+    "Paramètres"
 ]
 PAGE_KEYS = ["lead", "kanban", "community", "database",
-             "design", "cms", "stitch", "faq_stitch"]
+             "design", "cms", "sekai", "settings"]
 
 # Read page from URL query param (survives browser reload)
 _url_page = st.query_params.get("page", "lead")
@@ -245,6 +374,60 @@ _default_idx = PAGE_KEYS.index(_url_page) if _url_page in PAGE_KEYS else 0
 
 with st.sidebar:
     st.markdown("### ◆ NXSTEP IA")
+    
+    st.markdown("---")
+    with st.expander("Paramètres Systèmes", expanded=False):
+        st.markdown("**Modèle IA**")
+        
+        def on_llm_change():
+            new_val = st.session_state.llm_provider_widget
+            st.session_state.llm_provider = new_val
+            import dotenv
+            env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+            if os.path.exists(env_path):
+                dotenv.set_key(env_path, "ACTIVE_LLM_PROVIDER", new_val)
+        current_index = 0 if "OpenAI" in st.session_state.llm_provider else 1
+        st.selectbox(
+            "Fournisseur",
+            ["OpenAI (GPT-4o)", "Google (Gemini 3.1 Flash-Lite)"],
+            key="llm_provider_widget",
+            index=current_index,
+            on_change=on_llm_change
+        )
+        
+        import dotenv
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+        if not os.path.exists(env_path):
+            open(env_path, 'a').close()
+            
+        current_openai = os.getenv("OPENAI_API_KEY", "")
+        current_gemini = os.getenv("GEMINI_API_KEY", "")
+        
+        new_openai = st.text_input("OpenAI API Key", value=current_openai, type="password")
+        new_gemini = st.text_input("Gemini API Key", value=current_gemini, type="password")
+        
+        if st.button("Sauvegarder les clés", use_container_width=True):
+            if new_openai:
+                dotenv.set_key(env_path, "OPENAI_API_KEY", new_openai)
+                os.environ["OPENAI_API_KEY"] = new_openai
+            if new_gemini:
+                dotenv.set_key(env_path, "GEMINI_API_KEY", new_gemini)
+                os.environ["GEMINI_API_KEY"] = new_gemini
+            st.success("Clés enregistrées avec succès !")
+
+        # Stitch configuration and API key section suppressed
+        pass
+
+
+    st.markdown("---")
+    st.subheader("💡 État des Services Local")
+    sb_up = check_storybook_health()
+    if sb_up:
+        st.success("🟢 Storybook (Port 6006) est UP")
+    else:
+        st.error("🔴 Storybook (Port 6006) est DOWN")
+        st.info("Lancez `npm run storybook` à la racine.")
+    st.markdown("---")
 
     current_page = st.radio(
         "Navigation",
@@ -282,7 +465,7 @@ with st.sidebar:
 
 # --- AFFICHAGE DE LA VUE SELECTIONNEE ---
 
-if current_page == "► Prospection Lead":
+if current_page == "Prospection Lead":
     st.title("► Prospection Lead")
     st.markdown(
         "Votre expert en scraping B2B, enrichissement et envoi d'e-mails.")
@@ -342,7 +525,7 @@ if current_page == "► Prospection Lead":
         time.sleep(1)
         st.rerun()
 
-elif current_page == "▤ Base de données":
+elif current_page == "Base de données":
     st.title("▤ Base de données Leads")
     st.subheader("Tous les leads prospectés")
     df_all_leads = db.get_all_leads_as_df()
@@ -401,7 +584,7 @@ elif current_page == "▤ Base de données":
         st.info(
             "Aucun lead dans la base pour le moment. Demandez au robot d'en chercher !")
 
-elif current_page == "▦ Kanban & Organisation":
+elif current_page == "Kanban & Organisation":
     st.title("▦ Kanban & Organisation")
     st.markdown("Pilotez vos chantiers IA et Automatisation au quotidien.")
 
@@ -789,7 +972,7 @@ elif current_page == "▦ Kanban & Organisation":
             st.info(
                 "Aucune tâche dans le Kanban. Vous pouvez importer le Google Sheet ou créer une tâche.")
 
-elif current_page == "📱 Community Manager":
+elif current_page == "Community Manager":
     st.title("📱 Community Manager & Planning")
     # --- LINKEDIN AUTH FLOW ---
     from linkedin_automator import LinkedInAutomator
@@ -854,22 +1037,33 @@ elif current_page == "📱 Community Manager":
         else:
             st.info("Veuillez d'abord configurer vos identifiants Client ID et Client Secret.")
 
-    tab_chat, tab_plan, tab_calendar, tab_logs = st.tabs(["💬 Conversation", "📅 Planning Table", "🗓️ Calendrier Visuel", "📊 Activité & Logs"])
+    # --- WORKER STATUS INDICATORS ---
+    logs_df = db.get_publication_logs(limit=50)
+    if not logs_df.empty:
+        last_pub = logs_df[logs_df['status'] == 'Heartbeat'].iloc[0] if not logs_df[logs_df['status'] == 'Heartbeat'].empty else None
+        last_gen = logs_df[logs_df['status'] == 'Generator Heartbeat'].iloc[0] if not logs_df[logs_df['status'] == 'Generator Heartbeat'].empty else None
+        
+        c1, c2, c3 = st.columns([1, 1, 1])
+        with c1:
+            if last_pub is not None:
+                st.success(f"📟 **Worker Pub Actif** (`{last_pub['message'].split()[-1]}`)")
+            else:
+                st.error("📟 **Worker Pub Inactif**")
+        with c2:
+            if last_gen is not None:
+                st.success(f"🎨 **Generator Actif** (`{last_gen['message'].split()[-1]}`)")
+            else:
+                st.error("🎨 **Generator Inactif**")
+        with c3:
+            if st.button("🔄 Actualiser Statut", use_container_width=True):
+                st.rerun()
+        st.markdown("---")
+
+    tab_chat, tab_plan, tab_template, tab_calendar, tab_logs = st.tabs(["💬 Conversation", "📅 Planning Table", "🖼️ Template Carrousel", "🗓️ Calendrier Visuel", "📊 Activité & Logs"])
 
     with tab_logs:
         st.markdown("### 📊 Historique d'Activité du Worker")
-        
-        # Affichage des logs
-        logs_df = db.get_publication_logs(limit=20)
-        
         if not logs_df.empty:
-            # Indicateur d'état du worker (basé sur le dernier heartbeat)
-            last_heartbeat = logs_df[logs_df['status'] == 'Heartbeat'].iloc[0] if not logs_df[logs_df['status'] == 'Heartbeat'].empty else None
-            if last_heartbeat is not None:
-                st.success(f"🤖 **Worker Actif** (Dernier signal : `{last_heartbeat['message'].split()[-1]}`)")
-            else:
-                st.warning("⚠️ **Worker Inactif** ou en attente de démarrage.")
-            
             st.dataframe(
                 logs_df,
                 use_container_width=True,
@@ -883,6 +1077,58 @@ elif current_page == "📱 Community Manager":
             )
         else:
             st.info("Aucune activité enregistrée pour le moment. Lancez le fichier `start_all.bat` pour démarrer le worker.")
+
+    with tab_template:
+        st.markdown("### 🖼️ Templates de Carrousel")
+        st.info("Uploadez ici jusqu'à 10 images qui serviront de base pour vos carrousels. L'IA les utilisera comme modèles visuels.")
+        
+        templates = db.get_carousel_templates()
+        upload_dir = os.path.join(os.path.dirname(__file__), 'uploads', 'templates')
+        os.makedirs(upload_dir, exist_ok=True)
+        
+        cols = st.columns(5)
+        for i in range(1, 6):
+            with cols[i-1]:
+                st.markdown(f"**Slide {i}**")
+                path = templates.get(f'img{i}') if templates else None
+                if path and os.path.exists(path):
+                    st.image(path, use_container_width=True)
+                    if st.button(f"Supprimer {i}", key=f"del_tmpl_{i}"):
+                        db.update_carousel_templates({f"img{i}": ""})
+                        st.rerun()
+                else:
+                    up = st.file_uploader(f"Upload {i}", key=f"up_tmpl_{i}", label_visibility="collapsed")
+                    if up:
+                        fname = f"template_slide_{i}_{int(time.time())}.{up.name.split('.')[-1]}"
+                        fpath = os.path.join(upload_dir, fname)
+                        with open(fpath, "wb") as f:
+                            f.write(up.getbuffer())
+                        db.update_carousel_templates({f"img{i}": fpath})
+                        st.success(f"Slide {i} OK")
+                        time.sleep(0.5)
+                        st.rerun()
+
+        cols2 = st.columns(5)
+        for i in range(6, 11):
+            with cols2[i-6]:
+                st.markdown(f"**Slide {i}**")
+                path = templates.get(f'img{i}') if templates else None
+                if path and os.path.exists(path):
+                    st.image(path, use_container_width=True)
+                    if st.button(f"Supprimer {i}", key=f"del_tmpl_{i}"):
+                        db.update_carousel_templates({f"img{i}": ""})
+                        st.rerun()
+                else:
+                    up = st.file_uploader(f"Upload {i}", key=f"up_tmpl_{i}", label_visibility="collapsed")
+                    if up:
+                        fname = f"template_slide_{i}_{int(time.time())}.{up.name.split('.')[-1]}"
+                        fpath = os.path.join(upload_dir, fname)
+                        with open(fpath, "wb") as f:
+                            f.write(up.getbuffer())
+                        db.update_carousel_templates({f"img{i}": fpath})
+                        st.success(f"Slide {i} OK")
+                        time.sleep(0.5)
+                        st.rerun()
 
     with tab_chat:
         st.markdown("### 🤖 Agent Joy")
@@ -957,7 +1203,7 @@ elif current_page == "📱 Community Manager":
                 "title": st.column_config.TextColumn("Titre / Sujet", width="medium"),
                 "post_idea": st.column_config.TextColumn("💡 Idée de post", width="medium"),
                 "post_type": st.column_config.SelectboxColumn("Type", options=["Post", "Carousel"]),
-                "status": st.column_config.SelectboxColumn("Statut", options=["Brouillon", "Prêt", "Published"]),
+                "status": st.column_config.SelectboxColumn("Statut", options=["Brouillon", "Ready for Visuals", "Visuals Generated", "Prêt", "Published"]),
                 "scheduled_at": st.column_config.DatetimeColumn("Date & Heure publication", format="DD/MM/YYYY HH:mm"),
                 "content": st.column_config.TextColumn("Contenu (Texte)", width="medium"),
                 "media_files": st.column_config.TextColumn("Médias (JSON)", width="small"),
@@ -974,9 +1220,15 @@ elif current_page == "📱 Community Manager":
             for i in range(1, 11):
                 df_display[f'img{i}'] = df_display[f'img{i}'].apply(get_image_base64)
 
+            # Version pour forcer le rafraîchissement si nécessaire (ex: après IA)
+            if "editor_version" not in st.session_state:
+                st.session_state.editor_version = 0
+            
+            editor_key = f"content_editor_v{st.session_state.editor_version}"
+
             # Fonction de sauvegarde automatique
             def auto_save_planning():
-                changes = st.session_state.get("content_editor", {})
+                changes = st.session_state.get(editor_key, {})
                 if not changes:
                     return
                 
@@ -1025,7 +1277,7 @@ elif current_page == "📱 Community Manager":
                 use_container_width=True,
                 hide_index=True,
                 num_rows="dynamic",
-                key="content_editor",
+                key=editor_key,
                 column_config=col_config,
                 on_change=auto_save_planning
             )
@@ -1035,15 +1287,36 @@ elif current_page == "📱 Community Manager":
             st.markdown("#### 📸 Gestion des Médias & Aperçu")
             
             # On permet de choisir le post à modifier via un selectbox pour plus de stabilité
-            post_titles = df_content['title'].tolist()
-            selected_post_title = st.selectbox("Choisir une publication pour gérer ses visuels :", post_titles, key="community_post_selector")
+            post_options = {int(row['id']): f"ID {row['id']} - {row['title']}" for _, row in df_content.iterrows()}
+            selected_item_id = st.selectbox(
+                "Choisir une publication pour gérer ses visuels :", 
+                list(post_options.keys()), 
+                format_func=lambda x: post_options[x],
+                key="community_post_selector"
+            )
             
-            item = df_content[df_content['title'] == selected_post_title].iloc[0]
-            selected_item_id = int(item['id'])
+            item = df_content[df_content['id'] == selected_item_id].iloc[0]
             
             st.markdown(f"**Publication sélectionnée :** ID {selected_item_id} - {item['title']}")
             with st.expander("📸 Gestionnaire de Médias (Images Carousel)", expanded=True):
-                st.info("Chargez vos images ici. Elles apparaîtront sous forme de miniatures dans le tableau.")
+                if st.button("✨ Générer les visuels par IA (Style Chris Do)", use_container_width=True, type="primary", key=f"ai_gen_btn_{selected_item_id}"):
+                    fallback_info = getattr(modules['ai'], 'fallback_reason', 'None')
+                    st.warning(f"DEBUG: Fournisseur demandé={st.session_state.llm_provider}, Fournisseur réel AIWriter={modules['ai'].provider} (Reason: {fallback_info})")
+                    with st.spinner("L'IA analyse vos templates et génère vos slides... cela peut prendre 1-2 minutes."):
+                        from asset_generator import AssetGenerator
+                        gen = AssetGenerator(db, modules["ai"])
+                        result = gen.generate_ai_visuals(item)
+                        if isinstance(result, tuple) and not result[0]:
+                            st.error(f"Erreur : {result[1]}")
+                        elif result:
+                            st.session_state.editor_version += 1
+                            st.success("Visuels générés avec succès !")
+                            time.sleep(1)
+                            st.rerun()
+                        else:
+                            st.error("Désolé, une erreur technique inattendue est survenue.")
+
+                st.info("Chargez vos images ici ou utilisez le bouton ci-dessus pour que l'IA génère les visuels en respectant le style de vos templates.")
                 
                 # Dossier d'upload
                 upload_dir = os.path.join(os.path.dirname(__file__), 'uploads', 'community')
@@ -1200,7 +1473,7 @@ elif current_page == "📱 Community Manager":
                     st.markdown("**Contenu rédigé :**")
                     st.code(item['content'], language="markdown")
 
-elif current_page == "◈ Design System":
+elif current_page == "Design System":
     st.title("◈ Design System")
     st.markdown(
         "Pilotez l'UX/UI Ultra-Premium et gardez un œil sur votre Storybook.")
@@ -1209,7 +1482,7 @@ elif current_page == "◈ Design System":
         ["Chat", "Design Tokens", "Storybook"])
 
     with chat_tab:
-        st.markdown("### 🤖 Chat Archi")
+        st.markdown("### 🤖 Chat Sekai")
         st.caption("Posez des questions sur vos composants ou demandez un audit.")
 
         chat_container = st.container(height=500, border=False)
@@ -1311,7 +1584,7 @@ elif current_page == "◈ Design System":
             "🖌️ /brand-color-change": "Je souhaite utiliser le workflow /brand-color-change. AVANT de faire quoi que ce soit, pose-moi les questions suivantes et ATTENDS mes réponses : 1) Quelle est la nouvelle couleur principale (code hex exact) ? 2) Quels composants doivent être affectés ? 3) Est-ce un changement permanent ou un test ? Ne touche aucun fichier avant d'avoir mes réponses.",
             "📋 Liste composants": "Liste tous les composants du dashboard Storybook avec leurs variants disponibles.",
             "🛡️ Check intégrité CSS": "Vérifie que globals.css contient bien `@import tailwindcss`, le bloc `@theme`, et les utilitaires `.glass` et `.glass-card`. Signale tout ce qui manque.",
-            "📸 Voir Storybook": "Ouvre et décris le rendu actuel du story DashboardOverview/ImperialPurple dans Storybook sur le port 6008.",
+            "📸 Voir Storybook": "Ouvre et décris le rendu actuel du story DashboardOverview/ImperialPurple dans Storybook sur le port 6006.",
         }
         quick_help = {
             "🎨 Audit Design": "Lance un audit complet du design system : composants, variants, et conformité au DESIGN_SYSTEM.md.",
@@ -1319,7 +1592,7 @@ elif current_page == "◈ Design System":
             "🖌️ /brand-color-change": "Démarre le processus guidé pour changer la couleur de marque sans effets de bord.",
             "📋 Liste composants": "Affiche tous les composants du dashboard et leurs variants (purple, gold, etc.).",
             "🛡️ Check intégrité CSS": "Vérifie que globals.css est intact : @import tailwindcss, @theme, et les classes glass sont présentes.",
-            "📸 Voir Storybook": "Demande à Archi de décrire le rendu visuel actuel dans Storybook (port 6008).",
+            "📸 Voir Storybook": "Demande à Sekai de décrire le rendu visuel actuel dans Storybook (port 6006).",
         }
 
         if "quick_cmd_trigger" not in st.session_state:
@@ -1353,27 +1626,22 @@ elif current_page == "◈ Design System":
                 with st.chat_message("user"):
                     st.markdown(prompt_design)
 
-            # Exécution Swarm Archi
-            try:
-                from orchestrator import client
-                sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-                from design_agent import design_agent  # Assuming design_agent is defined here
-
-                with chat_container:
-                    with st.chat_message("assistant"):
-                        with st.spinner("Archi analyse le Design System..."):
-                            swarm_messages = [{"role": msg["role"], "content": msg["content"]}
-                                              for msg in st.session_state.design_messages]
+            # Exécution Swarm Sekai
+            with chat_container:
+                with st.chat_message("assistant"):
+                    try:
+                        with st.status("Sekai analyse le Design System...", expanded=True) as status:
+                            from orchestrator import client, sekai_agent
                             response = client.run(
-                                agent=design_agent, messages=swarm_messages, context_variables={})
-                            response_content = response.messages[-1].get(
-                                "content", "")
+                                agent=sekai_agent,
+                                messages=st.session_state.design_messages,
+                            )
+                            response_content = response.messages[-1]["content"]
                             st.markdown(response_content)
-            except Exception as e:
-                response_content = f"Une erreur technique est survenue avec Archi :\n```\n{e}\n```"
-                with chat_container:
-                    with st.chat_message("assistant"):
-                        st.markdown(response_content)
+                            status.update(label="Analyse terminée !", state="complete")
+                    except Exception as e:
+                        response_content = f"Une erreur technique est survenue avec Sekai :\n```\n{e}\n```"
+                        st.error(response_content)
 
             st.session_state.design_messages.append(
                 {"role": "assistant", "content": response_content})
@@ -1705,7 +1973,7 @@ elif current_page == "◈ Design System":
 # ██████████████████████████████████████████████████████████████████████████████
 # ✍️  CMS AGENT TAB  —  WordPress-like interface
 # ██████████████████████████████████████████████████████████████████████████████
-elif current_page == "✍️ Agent CMS":
+elif current_page == "Agent CMS":
     import json as _json
     import re as _re_cms
 
@@ -2381,7 +2649,19 @@ FORMAT JSON :
                         st.markdown(_prompt_cms)
                 try:
                     from openai import OpenAI as _OAI
-                    _oai = _OAI(api_key=os.environ.get("OPENAI_API_KEY"))
+                    active_provider = os.getenv("ACTIVE_LLM_PROVIDER", "OpenAI")
+                    if "Google" in active_provider or "Gemini" in active_provider:
+                        gemini_key = os.getenv("GEMINI_API_KEY")
+                        if gemini_key:
+                            _oai = _OAI(api_key=gemini_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
+                            _model_to_use = "gemini-3.1-flash-lite-preview"
+                        else:
+                            _oai = _OAI(api_key=os.environ.get("OPENAI_API_KEY"))
+                            _model_to_use = "gpt-4o"
+                    else:
+                        _oai = _OAI(api_key=os.environ.get("OPENAI_API_KEY"))
+                        _model_to_use = "gpt-4o"
+                        
                     _msgs_api = [
                         {"role": "system", "content": CMS_SYSTEM_PROMPT}]
                     for _hm in st.session_state.cms_messages:
@@ -2391,7 +2671,7 @@ FORMAT JSON :
                         with st.chat_message("assistant"):
                             with st.spinner("L'Agent structure le contenu…"):
                                 _comp = _oai.chat.completions.create(
-                                    model="gpt-4o", messages=_msgs_api, temperature=0.7)
+                                    model=_model_to_use, messages=_msgs_api, temperature=0.7)
                                 _cms_resp = _comp.choices[0].message.content or ""
                                 _pjson = _extract_json(_cms_resp)
                                 if _pjson:
@@ -2478,156 +2758,375 @@ FORMAT JSON :
                             indent=2), language="json")
 
 # ██████████████████████████████████████████████████████████████████████████████
+# 📱 COMMUNITY MANAGER  —  Joy · Calendrier Editorial · LinkedIn Content
+# ██████████████████████████████████████████████████████████████████████████████
+
+elif current_page == "Community Manager":
+    st.title("📱 Community Manager — Joy")
+    st.markdown(
+        "Planifiez vos publications LinkedIn, créez vos carrousels et pilotez votre **calendrier éditorial** avec Joy.")
+
+    # --- Quick Actions ---
+    _cq1, _cq2, _cq3, _cq4, _cq5 = st.columns(5)
+    _community_quick = None
+    if _cq1.button("📅 Plan de la semaine", use_container_width=True, key="cm_q1"):
+        _community_quick = "Montre-moi le planning éditorial de cette semaine et propose des idées de posts LinkedIn pour les jours vides."
+    if _cq2.button("🎠 Créer un carrousel", use_container_width=True, key="cm_q2"):
+        _community_quick = "Aide-moi à créer un carrousel LinkedIn de 5 slides sur un sujet tendance IA. Propose la structure et le contenu de chaque slide."
+    if _cq3.button("✍️ Rédiger un post", use_container_width=True, key="cm_q3"):
+        _community_quick = "Rédige un post LinkedIn engageant pour NXSTEP sur le thème de l'automatisation IA en B2B. Style professionnel mais humain."
+    if _cq4.button("📊 État du planning", use_container_width=True, key="cm_q4"):
+        _community_quick = "Fais le point sur tout le planning éditorial : combien de posts en brouillon, prêts, et publiés ?"
+    if _cq5.button("🗑️ Reset Chat", use_container_width=True, key="cm_q5"):
+        st.session_state.community_messages = [st.session_state.community_messages[0]]
+        save_chat_history(st.session_state.lead_messages, st.session_state.kanban_messages,
+                          st.session_state.design_messages, community_msgs=st.session_state.community_messages)
+        st.rerun()
+
+    st.markdown("")
+
+    # --- SPLIT LAYOUT: Chat Joy | Calendrier Éditorial ---
+    _cm_chat_col, _cm_cal_col = st.columns([1, 1.4], gap="large")
+
+    # ── LEFT: Chat with Joy ─────────────────────────────────────────────────
+    with _cm_chat_col:
+        st.markdown("### 🤖 Joy — Community Manager")
+        st.caption("Votre assistante pour créer et planifier du contenu LinkedIn.")
+
+        _cm_chat_container = st.container(height=480, border=False)
+        with _cm_chat_container:
+            for _cm_msg in st.session_state.community_messages:
+                with st.chat_message(_cm_msg["role"]):
+                    st.markdown(_cm_msg["content"])
+
+        _cm_prompt = _community_quick or st.chat_input(
+            "Ex: Planifie 3 posts LinkedIn pour la semaine prochaine…", key="community_chat_input")
+
+        if _cm_prompt:
+            st.session_state.community_messages.append(
+                {"role": "user", "content": _cm_prompt})
+            save_chat_history(st.session_state.lead_messages, st.session_state.kanban_messages,
+                              st.session_state.design_messages,
+                              community_msgs=st.session_state.community_messages)
+            with _cm_chat_container:
+                with st.chat_message("user"):
+                    st.markdown(_cm_prompt)
+
+            # Execution via Swarm Community Agent
+            from orchestrator import client, community_agent
+            with _cm_chat_container:
+                with st.chat_message("assistant"):
+                    with st.spinner("Joy réfléchit à votre stratégie de contenu…"):
+                        _cm_swarm_msgs = [{"role": m["role"], "content": m["content"]}
+                                          for m in st.session_state.community_messages]
+                        try:
+                            _cm_response = client.run(
+                                agent=community_agent, messages=_cm_swarm_msgs, context_variables={})
+                            _cm_resp_content = _cm_response.messages[-1].get(
+                                "content", "")
+                        except Exception as _cm_e:
+                            _cm_resp_content = f"Erreur de Joy: {_cm_e}"
+                        st.markdown(_cm_resp_content)
+
+            st.session_state.community_messages.append(
+                {"role": "assistant", "content": _cm_resp_content})
+            save_chat_history(st.session_state.lead_messages, st.session_state.kanban_messages,
+                              st.session_state.design_messages,
+                              community_msgs=st.session_state.community_messages)
+            time.sleep(0.3)
+            st.rerun()
+
+    # ── RIGHT: Calendrier Éditorial ──────────────────────────────────────────
+    with _cm_cal_col:
+        st.markdown("### 📅 Calendrier Éditorial")
+
+        # Load content plan from DB
+        _cm_df = db.get_all_content_df()
+
+        # Build calendar events
+        _cm_events = []
+        _status_colors = {
+            "Brouillon": "#6b7280",   # gray
+            "Prêt": "#f59e0b",         # amber
+            "Published": "#22c55e",    # green
+        }
+        if not _cm_df.empty:
+            for _, _cm_row in _cm_df.iterrows():
+                _sched = _cm_row.get("scheduled_at")
+                if _sched and str(_sched).strip() and str(_sched) != "None":
+                    # Parse date for calendar event
+                    _evt_date = str(_sched).replace("Z", "").split(".")[0]
+                    _evt_color = _status_colors.get(str(_cm_row.get("status", "Brouillon")), "#6b7280")
+                    _evt_title = str(_cm_row.get("title", "Sans titre"))
+                    _type_badge = "🎠" if str(_cm_row.get("post_type", "")) == "Carousel" else "📝"
+                    _cm_events.append({
+                        "title": f"{_type_badge} {_evt_title}",
+                        "start": _evt_date,
+                        "backgroundColor": _evt_color,
+                        "borderColor": _evt_color,
+                    })
+
+        # Calendar widget options
+        _cal_options = {
+            "editable": False,
+            "selectable": True,
+            "headerToolbar": {
+                "left": "prev,next today",
+                "center": "title",
+                "right": "dayGridMonth,timeGridWeek,listWeek",
+            },
+            "initialView": "dayGridMonth",
+            "locale": "fr",
+            "height": 480,
+        }
+
+        _cal_result = calendar(
+            events=_cm_events,
+            options=_cal_options,
+            key="community_calendar",
+        )
+
+        # Legend
+        _leg1, _leg2, _leg3 = st.columns(3)
+        _leg1.markdown(
+            '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6b7280;margin-right:4px"></span> Brouillon',
+            unsafe_allow_html=True)
+        _leg2.markdown(
+            '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin-right:4px"></span> Prêt',
+            unsafe_allow_html=True)
+        _leg3.markdown(
+            '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#22c55e;margin-right:4px"></span> Publié',
+            unsafe_allow_html=True)
+
+    # ── BOTTOM: Content Plan Data Table ──────────────────────────────────────
+    st.markdown("---")
+    st.markdown("### 📋 Planning Éditorial — Vue Tableau")
+
+    _cm_df_all = db.get_all_content_df()
+    if not _cm_df_all.empty:
+        # Select display columns
+        _display_cols = ["id", "title", "post_type", "post_idea", "status", "scheduled_at", "content"]
+        _existing_cols = [c for c in _display_cols if c in _cm_df_all.columns]
+        _cm_display_df = _cm_df_all[_existing_cols].copy()
+
+        # Rename for readability
+        _col_renames = {
+            "id": "ID", "title": "Titre", "post_type": "Type",
+            "post_idea": "💡 Idée", "status": "Statut",
+            "scheduled_at": "📅 Prévu le", "content": "Contenu",
+        }
+        _cm_display_df.rename(columns={k: v for k, v in _col_renames.items() if k in _cm_display_df.columns}, inplace=True)
+
+        _cm_edited = st.data_editor(
+            _cm_display_df,
+            use_container_width=True,
+            hide_index=True,
+            num_rows="dynamic",
+            key="community_content_editor",
+            column_config={
+                "Type": st.column_config.SelectboxColumn(
+                    options=["Post", "Carousel"],
+                    default="Post",
+                ),
+                "Statut": st.column_config.SelectboxColumn(
+                    options=["Brouillon", "Prêt", "Published"],
+                    default="Brouillon",
+                ),
+            },
+        )
+
+        # Save changes
+        _cm_c1, _cm_c2 = st.columns([1, 3])
+        if _cm_c1.button("💾 Sauvegarder les modifications", use_container_width=True, key="cm_save"):
+            _cm_changes = st.session_state.get("community_content_editor", {})
+            try:
+                # Deletions
+                for _del_idx in _cm_changes.get("deleted_rows", []):
+                    _del_id = int(_cm_df_all.iloc[_del_idx]["id"])
+                    db.delete_content_item(_del_id)
+
+                # Additions
+                for _new_row in _cm_changes.get("added_rows", []):
+                    db.add_content_item(
+                        title=_new_row.get("Titre", "Nouveau post"),
+                        post_type=_new_row.get("Type", "Post"),
+                        post_idea=_new_row.get("💡 Idée", ""),
+                        status=_new_row.get("Statut", "Brouillon"),
+                        scheduled_at=_new_row.get("📅 Prévu le"),
+                        content=_new_row.get("Contenu", ""),
+                    )
+
+                # Updates
+                _reverse_renames = {v: k for k, v in _col_renames.items()}
+                for _row_idx_str, _cell_updates in _cm_changes.get("edited_rows", {}).items():
+                    _row_idx = int(_row_idx_str)
+                    _item_id = int(_cm_df_all.iloc[_row_idx]["id"])
+                    _db_updates = {}
+                    for _disp_col, _val in _cell_updates.items():
+                        _db_col = _reverse_renames.get(_disp_col, _disp_col)
+                        _db_updates[_db_col] = _val
+                    if _db_updates:
+                        db.update_content_item(_item_id, _db_updates)
+
+                st.success("Planning éditorial mis à jour avec succès ! 🎉")
+                time.sleep(0.5)
+                st.rerun()
+            except Exception as _cm_save_e:
+                st.error(f"Erreur lors de la sauvegarde : {_cm_save_e}")
+    else:
+        st.info("Le planning éditorial est vide. Demandez à Joy de créer vos premiers posts ! 🚀")
+
+# ██████████████████████████████████████████████████████████████████████████████
 # 🎨 STITCH DESIGN AGENT  —  High-Fidelity UI Generation
 # ██████████████████████████████████████████████████████████████████████████████
-elif current_page == "🎨 Stitch Design":
-    from src.stitch_manager import stitch_mgr
+# Sekai dashboard starts here
+elif current_page == "🎨 Sekai (世界の創り手)":
+    st.title("🎨 Sekai (世界の創り手) — Créateur de Mondes")
+    st.markdown("Concevez des univers web spectaculaires avec l'équilibre et la précision du maître architecte Sekai.")
 
-    st.markdown("## 🎨 Stitch Design Studio")
-    st.caption(
-        "Générez des interfaces premium avec l'IA Stitch et exportez-les vers votre CMS.")
+    # --- SIDE-BY-SIDE LAYOUT ---
+    col_left, col_right = st.columns([1, 1], gap="medium")
 
-    # Check for API Key (Env or DB)
-    if not os.environ.get("STITCH_API_KEY") and not stitch_mgr.get_config("stitch_api_key"):
-        st.warning(
-            "⚠️ **Clé API Stitch manquante.** Pour utiliser Archi, vous devez configurer votre clé dans la section en bas de page.")
-        # But we still show the chat to allow them to configure it
-        st.session_state.stitch_project_id = stitch_mgr.get_config(
-            "last_project_id")
+    with col_left:
+        st.markdown("### 💬 Dialogue avec Sekai")
+        # Initialize messages if not present
+        if "sekai_messages" not in st.session_state:
+            st.session_state.sekai_messages = [
+                {"role": "assistant", "content": "Bienvenue. Je suis Sekai. Quel monde numérique allons-nous faire naître aujourd'hui ? Décrivez votre vision, et je lui donnerai forme et vie."}
+            ]
 
-    _col_chat, _col_preview = st.columns([1, 1])
+        # Chat display container
+        chat_container = st.container(height=500)
+        with chat_container:
+            for msg in st.session_state.sekai_messages:
+                if msg["role"] == "user":
+                    st.chat_message("user").write(msg["content"])
+                else:
+                    st.chat_message("assistant", avatar="🎨").write(msg["content"])
 
-    with _col_chat:
-        st.markdown("### 💬 Conversation avec Archi")
-        for m in st.session_state.stitch_messages:
-            with st.chat_message(m["role"]):
-                st.markdown(m["content"])
+        # Chat input below
+        if prompt := st.chat_input("Insufflez une idée à Sekai..."):
+            st.session_state.sekai_messages.append({"role": "user", "content": prompt})
+            st.rerun()
 
-        if prompt := st.chat_input("Décrivez le design que vous voulez générer...", key="stitch_input"):
-            st.session_state.stitch_messages.append(
-                {"role": "user", "content": prompt})
-            with st.chat_message("user"):
-                st.markdown(prompt)
+    # Right Column: Live Preview & Actions
+    with col_right:
+        st.markdown("### 🖼️ Vision du Monde (Preview)")
+        
+        # Get latest ID from DB or state
+        current_sid = stitch_mgr.get_config("current_screen_id")
+        if current_sid:
+            st.session_state.current_stitch_screen_id = current_sid
+            
+            # Action bar
+            ca, cb = st.columns(2)
+            with ca:
+                if st.button("✏️ Éditer & Publier", use_container_width=True, type="primary"):
+                    # Use a dialog for editing
+                    @st.dialog("Éditeur Sekai", width="large")
+                    def sekai_editor(sid, html):
+                        st.subheader(f"Finalisation du Monde : `{sid[:8]}`")
+                        t1, t2 = st.tabs(["Paramètres", "Code"])
+                        with t1:
+                            title = st.text_input("Nom du Monde", value=f"Sekai Design {sid[:6]}")
+                            slug = st.text_input("Chemin (Slug)", value="")
+                            if st.button("🚀 Manifester sur le Site", use_container_width=True):
+                                stitch_mgr.save_screen_to_cms(title, html, slug=slug if slug else None)
+                                _trigger_ssg()
+                                st.success("Le monde est désormais public.")
+                                time.sleep(1)
+                                st.rerun()
+                        with t2:
+                            st.code(html, language="html")
+                    
+                    # Fetch code
+                    try:
+                        code = stitch_mgr.get_screen_code(current_sid)
+                        sekai_editor(current_sid, code)
+                    except Exception as e:
+                        st.error(f"Erreur : {e}")
+            with cb:
+                if st.button("🔄 Nouvelle Variation", use_container_width=True):
+                    st.session_state.sekai_messages.append({"role": "user", "content": "Propose une variation radicale de cette vision."})
+                    st.rerun()
 
-            with st.chat_message("assistant"):
-                with st.status("Génération du design via Stitch...", expanded=True) as status:
-                    from src.orchestrator import client, stitch_agent
-                    response = client.run(
-                        agent=stitch_agent,
-                        messages=st.session_state.stitch_messages,
-                    )
-                    _resp = response.messages[-1]["content"]
-                    st.markdown(_resp)
-                    status.update(label="Design généré !", state="complete")
+            # Preview Iframe with Custom Scrollbar
+            try:
+                raw_html = stitch_mgr.get_screen_code(current_sid)
+                custom_style = """
+                <style>
+                    ::-webkit-scrollbar { width: 8px; }
+                    ::-webkit-scrollbar-track { background: #111827; }
+                    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+                    ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+                </style>
+                """
+                if "</head>" in raw_html:
+                    raw_html = raw_html.replace("</head>", f"{custom_style}</head>")
+                else:
+                    raw_html = f"{custom_style}{raw_html}"
 
-            st.session_state.stitch_messages.append(
-                {"role": "assistant", "content": _resp})
+                # macOS frame for elegance
+                preview_html = f"""
+                <div style="border: 2px solid #374151; border-radius: 12px; overflow: hidden; background: #111827; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <div style="background: #1f2937; padding: 10px; display: flex; gap: 6px; border-bottom: 1px solid #374151;">
+                        <div style="display: flex; gap: 4px;">
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #fbbf24;"></div>
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+                        </div>
+                    </div>
+                    <iframe srcdoc="{raw_html.replace('"', '&quot;')}" style="width: 100%; height: 600px; border: none;"></iframe>
+                </div>
+                """
+                st.components.v1.html(preview_html, height=650)
+            except:
+                st.info("Chargement de la vision en cours...")
+        else:
+            st.info("Sekai attend votre premier mot pour créer un monde.")
+
+    # Processing trigger (Bottom or top level check)
+    if len(st.session_state.sekai_messages) > 0 and st.session_state.sekai_messages[-1]["role"] == "user":
+        with st.spinner("Sekai façonne le monde..."):
+            from orchestrator import client, sekai_agent
+            response = client.run(agent=sekai_agent, messages=st.session_state.sekai_messages)
+            st.session_state.sekai_messages.append({"role": "assistant", "content": response.messages[-1]["content"]})
             save_chat_history(st.session_state.lead_messages, st.session_state.kanban_messages,
                               st.session_state.design_messages, st.session_state.cms_messages, 
                               st.session_state.stitch_messages, community_msgs=st.session_state.community_messages)
             st.rerun()
 
-    with _col_preview:
-        st.markdown("### 🖼️ Aperçu & Actions")
-
-        # Project/Screen Status (Direct Connection)
-        st.info("✅ **Connexion Directe Active** (via Stitch MCP Server)")
-
-        # Display latest screen if available
-        current_screen_id = st.session_state.get("current_stitch_screen_id")
-        if not current_screen_id:
-            current_screen_id = stitch_mgr.get_config("current_screen_id")
-
-        if not current_screen_id:
-            st.info(
-                "Aucun design n'est actuellement affiché. Demandez à Archi d'en créer un !")
-        else:
-            st.success(f"Design ID: `{current_screen_id}`")
-            if st.button("🚀 Exporter vers le CMS NXSTEP", use_container_width=True):
-                with st.spinner("Récupération du code et export vers le CMS..."):
-                    res = stitch_mgr.fetch_and_export_to_cms(
-                        current_screen_id, f"Design Stitch {current_screen_id[:8]}")
-                    if res.get("success"):
-                        _trigger_ssg()  # Générer les fichiers statiques immédiatement
-                        st.balloons()
-                        st.success(
-                            f"Page exportée et publiée avec succès ! (ID CMS: {res['post_id']}).")
-                    else:
-                        st.error(
-                            f"Erreur lors de l'export : {res.get('error')}")
-
-    st.markdown("---")
-    with st.expander("🛠️ Configuration Stitch & Connexion"):
-        st.caption(
-            "Une **Stitch API Key** est désormais REQUISE pour le fonctionnement d'Archi.")
-
-        # Charger la clé depuis la DB si elle n'est pas déjà dans l'environement
-        saved_key = stitch_mgr.get_config("stitch_api_key")
-        current_env_key = os.environ.get("STITCH_API_KEY", "")
-
-        _api_key = st.text_input(
-            "Stitch API Key (Requis)", value=saved_key or current_env_key, type="password")
-
-        if _api_key:
-            os.environ["STITCH_API_KEY"] = _api_key
-            if _api_key != saved_key:
-                stitch_mgr.set_config("stitch_api_key", _api_key)
-
-            # S'assurer que le client est initialisé avec la bonne clé
-            from src.mcp_client import get_stitch_client
-            get_stitch_client(api_key=_api_key)
-
-        _mc1, _mc2 = st.columns(2)
-        saved_pid = stitch_mgr.get_config("last_project_id") or ""
-        saved_sid = stitch_mgr.get_config("current_screen_id") or ""
-        new_pid = _mc1.text_input("Project ID Stitch", value=st.session_state.get(
-            "stitch_project_id", saved_pid))
-        new_sid = _mc2.text_input("Screen ID Actuel", value=st.session_state.get(
-            "current_stitch_screen_id", saved_sid))
-
-        if st.button("Sauvegarder la configuration", use_container_width=True):
-            stitch_mgr.set_config("last_project_id", new_pid)
-            stitch_mgr.set_config("current_screen_id", new_sid)
-            st.session_state.stitch_project_id = new_pid
-            st.session_state.current_stitch_screen_id = new_sid
-            st.success(
-                "Paramètres enregistrés. La session Archi est désormais autonome.")
-elif current_page == "❓ FAQ Stitch":
-    st.title("❓ FAQ : Utilisation de Stitch Agent")
-    st.markdown(
-        "Suivez ce guide pour configurer Archi et générer vos designs premium.")
-
-    with st.expander("🔑 Comment obtenir ma Stitch API Key ?", expanded=True):
-        st.markdown("""
-        L'agent Archi nécessite une clé API pour communiquer avec le moteur de design Google Stitch.
+elif current_page == "Paramètres":
+    st.title("⚙️ Paramètres & Branding")
+    st.markdown("Personnalisez l'identité visuelle de votre portail et de vos agents de design.")
+    
+    st.subheader("🖼️ Logo de la Marque")
+    st.markdown("Ce logo sera utilisé sur votre site web public et pourra être lu par les agents IA (ex: pour générer un design aligné avec votre marque).")
+    
+    # Chemin vers le dossier public de Next.js
+    nextjs_public_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "brand")
+    os.makedirs(nextjs_public_dir, exist_ok=True)
+    logo_path = os.path.join(nextjs_public_dir, "logo.png")
+    
+    # Affichage du logo existant
+    if os.path.exists(logo_path):
+        st.markdown("**Logo actuel :**")
+        st.image(logo_path, width=200)
+    else:
+        st.info("Aucun logo configuré pour le moment.")
         
-        **Étapes pour obtenir votre clé :**
-        1.  **Google AI Studio** : Rendez-vous sur [Google AI Studio (Gemini)](https://aistudio.google.com/app/apikey).
-        2.  **Création** : Cliquez sur **'Create API Key'**.
-        3.  **Copie** : Copiez la clé générée (elle commence généralement par `AIza...`).
-        4.  **Configuration** : Retournez dans l'onglet **🎨 Stitch Design** de ce dashboard, dépliez la section **Configuration** en bas, et collez votre clé.
-        
-        > [!NOTE]
-        > La clé Stitch est en réalité une clé API Gemini standard qui dispose des permissions pour utiliser les outils de génération d'UI Stitch.
-        """)
-
-    with st.expander("🚀 Comment utiliser Archi pour créer un site ?"):
-        st.markdown("""
-        Une fois votre clé configurée :
-        1.  **Chat** : Allez dans **🎨 Stitch Design** et décrivez votre besoin à Archi (ex: *"Crée une landing page sombre pour une agence de cybersécurité"*).
-        2.  **Attente** : La génération prend environ 1 à 2 minutes. La connexion est directe et autonome.
-        3.  **Export** : Une fois le design ID affiché, cliquez sur **'Exporter vers le CMS'**.
-        4.  **Publication** : Allez dans **✍️ Agent CMS**, retrouvez votre design dans l'onglet **Pages**, et publiez-le pour qu'il soit visible sur votre site statique.
-        """)
-
-    with st.expander("🛠️ Dépannage : Erreur 'pywintypes'"):
-        st.markdown("""
-        Si vous voyez une erreur mentionnant `ModuleNotFoundError: No module named 'pywintypes'` :
-        - C'est un problème courant sur Windows lié aux environnements virtuels.
-        - **Solution** : J'ai intégré un correctif automatique au démarrage de l'application. Si l'erreur persiste, fermez votre terminal et relancez le dashboard avec :
-        ```cmd
-        .\\\\venv\\\\Scripts\\\\python -m streamlit run chat_app.py
-        ```
-        """)
-
-    st.info("💡 **Conseil** : Pour des designs optimaux, soyez précis dans vos prompts (couleurs, style, sections souhaitées).")
+    uploaded_logo = st.file_uploader("Importer un nouveau logo (PNG, JPG)", type=["png", "jpg", "jpeg"])
+    
+    if uploaded_logo is not None:
+        if st.button("Sauvegarder le logo", use_container_width=True, type="primary"):
+            from PIL import Image
+            try:
+                # Lecture et conversion en PNG pour standardiser
+                img = Image.open(uploaded_logo)
+                # Convertir en RGBA (gestion de la transparence) puis sauvegarder en PNG
+                img = img.convert("RGBA")
+                img.save(logo_path, format="PNG")
+                st.success(f"Logo sauvegardé avec succès ! Il est accessible via `/brand/logo.png`.")
+                st.rerun()
+            except Exception as e:
+                st.error(f"Erreur lors de la sauvegarde du logo : {e}")
